@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Yachakuna (Estudiante) </title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --duo-green: #58cc02; --duo-green-shadow: #58a700;
+            --duo-red: #ff4b4b; --duo-red-shadow: #ea2b2b;
+            --duo-yellow: #ffc800; --duo-blue: #1cb0f6;
+            --duo-blue-shadow: #1899d6; --bg: #ffffff;
+            --card-bg: #f7f7f7; --text: #3c3c3c;
+            --border: #e5e5e5; --path-gray: #e5e5e5;
+        }
+
+        body { font-family: 'Nunito', sans-serif; background-color: var(--bg); color: var(--text); max-width: 600px; margin: 0 auto; padding: 20px; }
+        h1, h2, h3 { text-align: center; color: var(--text); }
+
+        .tabs { display: flex; gap: 5px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; background: var(--card-bg); color: #afafaf; border: 2px solid var(--border); border-bottom: 4px solid var(--border); border-radius: 16px; font-size: 12px; padding: 10px 5px; cursor: pointer; font-weight: 800; text-transform: uppercase; transition: all 0.1s; text-align: center; word-wrap: break-word; }
+        .tab-btn.active { color: var(--duo-blue); border-color: var(--duo-blue); border-bottom-color: var(--duo-blue-shadow); background: #eef9fe; }
+
+        .progress-bar-container { width: 100%; height: 18px; background-color: var(--border); border-radius: 10px; margin-bottom: 20px; overflow: hidden; display: none; }
+        .progress-bar-fill { height: 100%; background-color: var(--duo-green); width: 0%; transition: width 0.4s ease-out; border-radius: 10px; position: relative; }
+        .progress-bar-fill::after { content: ""; position: absolute; top: 4px; left: 10px; right: 10px; height: 4px; background: rgba(255,255,255,0.3); border-radius: 4px; }
+
+        button { font-family: 'Nunito', sans-serif; background-color: var(--duo-green); color: white; border: none; border-bottom: 4px solid var(--duo-green-shadow); border-radius: 16px; padding: 14px 20px; font-size: 16px; font-weight: 800; cursor: pointer; text-transform: uppercase; width: 100%; transition: transform 0.1s, border-bottom 0.1s; box-sizing: border-box; }
+        button:active { transform: translateY(4px); border-bottom: 0px solid transparent; margin-bottom: 4px; }
+        button.secondary { background-color: var(--card-bg); color: var(--duo-blue); border: 2px solid var(--border); border-bottom: 4px solid var(--border); }
+        button.special { background-color: var(--duo-yellow); border-bottom: 4px solid #d4a600; color: white; }
+        
+        .btn-mc { background-color: white; color: var(--text); border: 2px solid var(--border); border-bottom: 4px solid var(--border); text-transform: none; font-size: 18px; margin-bottom: 10px; }
+        .btn-mc.mc-correct { background-color: #d7ffb8; border-color: var(--duo-green); border-bottom-color: var(--duo-green-shadow); color: #2b7a0b; }
+        .btn-mc.mc-wrong { background-color: #ffdfe0; border-color: var(--duo-red); border-bottom-color: var(--duo-red-shadow); color: #a30000; }
+
+        .container { background: var(--card-bg); padding: 20px; border-radius: 20px; border: 2px solid var(--border); margin-bottom: 20px; }
+        input[type="text"], select { font-family: 'Nunito', sans-serif; padding: 14px; border: 2px solid var(--border); border-radius: 16px; font-size: 16px; box-sizing: border-box; width: 100%; margin-bottom: 10px; background: #fff; outline: none; }
+        input[type="text"]:focus, select:focus { border-color: var(--duo-blue); }
+        .flex-row { display: flex; gap: 10px; margin-bottom: 10px; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+        .stat-card { background: white; padding: 15px; border-radius: 16px; text-align: center; border: 2px solid var(--border); font-weight: 700; }
+        .stat-number { font-size: 24px; font-weight: 800; display: block; }
+        .color-green { color: var(--duo-green); } .color-yellow { color: var(--duo-yellow); } .color-blue { color: var(--duo-blue); } .color-red { color: var(--duo-red); }
+
+        .verb-card { background: white; border: 2px solid var(--border); padding: 16px; margin-bottom: 12px; border-radius: 16px; position: relative; }
+        .card-pinned { border-color: var(--duo-yellow); background-color: #fffde7; }
+        
+        .btn-icon { width: 40px; height: 40px; padding: 0; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; border-bottom: 3px solid; cursor: pointer; }
+        .btn-speak { background: var(--duo-blue); border-color: var(--duo-blue-shadow); color: white; }
+        .btn-pin { background: white; border: 2px solid var(--border); border-bottom: 3px solid var(--border); color: #ccc; }
+        .btn-pin.active { color: var(--duo-yellow); border-color: var(--duo-yellow); border-bottom-color: #d4a600; }
+
+        .practice-banner { padding: 20px; border-radius: 16px; margin-top: 15px; font-weight: bold; display: none; font-size: 18px; }
+        .banner-correct { background: #d7ffb8; color: #2b7a0b; border: 2px solid var(--duo-green); }
+        .banner-incorrect { background: #ffdfe0; color: #a30000; border: 2px solid var(--duo-red); }
+
+        .path-container { display: flex; flex-direction: column; align-items: center; padding: 40px 0; position: relative; }
+        .path-container::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 10px; background-color: var(--path-gray); transform: translateX(-50%); z-index: 1; border-radius: 10px; }
+        .unit-node-wrapper { position: relative; z-index: 2; margin-bottom: 40px; display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .unit-node-wrapper:nth-child(even) { align-items: flex-end; padding-right: 20%; }
+        .unit-node-wrapper:nth-child(odd) { align-items: flex-start; padding-left: 20%; }
+        
+        .unit-node { width: 80px; height: 80px; border-radius: 50%; background-color: var(--duo-blue); border: 4px solid white; box-shadow: 0 8px 0 var(--duo-blue-shadow); display: flex; align-items: center; justify-content: center; font-size: 32px; cursor: pointer; transition: transform 0.1s, box-shadow 0.1s; position: relative; }
+        .unit-node:active { transform: translateY(8px); box-shadow: 0 0px 0 var(--duo-blue-shadow); }
+        .unit-node.mastered { background-color: var(--duo-yellow); box-shadow: 0 8px 0 #d4a600; }
+        .unit-crown { position: absolute; top: -15px; right: -10px; font-size: 24px; display: none; }
+        .unit-node.mastered .unit-crown { display: block; }
+        .unit-title { background: white; padding: 5px 15px; border-radius: 12px; font-weight: 800; margin-top: 15px; border: 2px solid var(--border); font-size: 14px; text-transform: uppercase; color: var(--text); text-align: center; }
+
+        .hidden { display: none !important; }
+        
+        .trophy-card { background: white; border: 2px solid var(--border); border-radius: 16px; padding: 15px; text-align: center; width: calc(33.333% - 10px); box-sizing: border-box; }
+        .trophy-card.unlocked { border-color: var(--duo-yellow); }
+        .trophy-icon { font-size: 40px; margin-bottom: 10px; transition: filter 0.3s; }
+        .trophy-card.locked .trophy-icon { filter: grayscale(100%) opacity(0.3); }
+        .trophy-title { font-size: 12px; font-weight: 800; color: var(--text); }
+
+        .order-zone { min-height: 70px; border-top: 2px solid var(--border); border-bottom: 2px solid var(--border); background-color: #fcfcfc; margin: 20px 0; padding: 15px 10px; display: flex; flex-wrap: wrap; gap: 10px; border-radius: 12px; }
+        .word-bank { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; min-height: 100px; padding: 10px; }
+        .word-token { background-color: white; color: var(--text); border: 2px solid var(--border); border-bottom: 4px solid var(--border); border-radius: 16px; padding: 12px 16px; font-size: 18px; font-weight: 800; cursor: pointer; user-select: none; }
+    </style>
+</head>
+<body>
+
+    <h1>Yachakuna 🦙</h1>
+
+    <div class="tabs">
+        <button type="button" class="tab-btn active" id="tab-dict" onclick="switchTab('dict')">📚 Biblioteca</button>
+        <button type="button" class="tab-btn" id="tab-practice" onclick="switchTab('practice')">🎮 Yachakunapaj</button>
+        <button type="button" class="tab-btn" id="tab-awards" onclick="switchTab('awards')">🏆 Ñaupajman</button>
+    </div>
+
+    <div id="section-dict">
+        
+        <div id="statsDashboard" style="background: white; border: 2px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 20px; justify-content: center; box-shadow: 0 4px 0 var(--border);">
+            <div style="width: 150px; height: 150px; position: relative;">
+                <canvas id="statsChart"></canvas>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <h3 style="margin: 0 0 10px 0; color: var(--duo-blue); font-weight: 800; text-align: left;">Tu Progreso</h3>
+                <div id="statsList" style="font-size: 15px; color: #666; display: flex; flex-direction: column; gap: 6px;">
+                    </div>
+            </div>
+        </div>
+
+        <div id="studentControls" style="background: #f0f0f0; padding: 25px; border-radius: 20px; text-align: center; border: 2px dashed var(--duo-blue); margin-bottom: 20px;">
+            <h3 style="margin-top:0; color: var(--duo-blue); font-weight: 800;">📥 CARGAR LECCIONES</h3>
+            <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Selecciona el archivo <b>.json</b> para actualizar tu biblioteca.</p>
+            <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importData(event)">
+            <div class="flex-row" style="justify-content: center;">
+                <button type="button" onclick="document.getElementById('importFile').click()" style="background: var(--duo-blue); border-bottom: 4px solid var(--duo-blue-shadow); min-width: 200px;">
+                    SELECCIONAR ARCHIVO
+                </button>
+            </div>
+        </div>
+
+        <div class="container" style="padding: 15px;">
+            <select id="voiceSelect" style="width: auto; margin-bottom: 10px; padding: 8px;">
+                <option value="">Cargando voces...</option>
+            </select>
+            <input type="text" id="searchInput" placeholder="🔍 Buscar palabras..." onkeyup="renderCards()" style="margin-bottom: 0;">
+        </div>
+
+        <div id="entriesContainer"></div>
+    </div>
+
+    <div id="section-practice" class="hidden">
+        
+        <div class="progress-bar-container" id="progressContainer">
+            <div class="progress-bar-fill" id="practiceProgress"></div>
+        </div>
+
+        <div class="stats-grid" id="practiceStats" style="display:none;">
+            <div class="stat-card"><span class="stat-number color-red" id="lives">❤️ 3</span>Vidas</div>
+            <div class="stat-card"><span class="stat-number color-yellow" id="xp">⭐ 0</span>XP</div>
+            <div class="stat-card"><span class="stat-number color-blue" id="streak">🔥 0</span>Racha</div>
+        </div>
+
+        <div id="practiceMenu">
+            <div class="container" style="padding: 15px;">
+                <h3 style="margin-top:0;">⚙️ Ajustes</h3>
+                <div class="flex-row" style="margin-bottom:0;">
+                    <select id="optDirection">
+                        <option value="mix">Aleatorio 🔀</option>
+                        <option value="q2e">Quechua ➡️ Español</option>
+                        <option value="e2q">Español ➡️ Quechua</option>
+                    </select>
+                    <select id="optMode">
+                        <option value="mix-mode">Aleatorio 🔀</option>
+                        <option value="mc">4 Opciones 🎯</option>
+                        <option value="write">Teclado ⌨️</option>
+                        <option value="fill">Completar 🧩</option>
+                        <option value="order">Ordenar</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="display:flex; gap:10px; margin-bottom: 20px;">
+                <button type="button" class="special" onclick="startPractice('all')">Repaso General 🧠</button>
+                <button type="button" class="secondary" onclick="startPractice('favs')">Favoritos ⭐</button>
+            </div>
+
+            <h2 style="color:var(--text); text-transform:uppercase;">El Camino</h2>
+            <div class="path-container" id="unitPathContainer"></div>
+        </div>
+
+        <div class="container" id="practiceBox" style="display:none; text-align: center; padding: 40px 20px;">
+            <h3 id="currentUnitTitle" style="color:var(--duo-blue); margin-top:0; text-transform:uppercase;">Unidad</h3>
+            <h2 id="practiceInstruction" style="color: var(--text); margin-bottom: 30px;">Traduce esto</h2>
+            
+            <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 30px;">
+                <button type="button" class="btn-icon btn-speak" onclick="speakCurrentPractice()" style="width: 50px; height: 50px; font-size: 24px;">🔊</button>
+                <div id="practiceSentence" style="font-size: 24px; font-weight: 800; color: var(--duo-blue);"></div>
+            </div>
+
+            <div id="modeWrite" class="hidden">
+                <input id="practiceInput" type="text" placeholder="Escribe aquí..." style="text-align: center; font-size: 20px; padding: 20px; margin-bottom: 10px;" onkeypress="handlePracticeEnter(event)">
+                <button type="button" id="btnMic" onclick="startListening()" class="btn-mc" style="border-color: var(--duo-blue); color: var(--duo-blue); width: 100%;">🎙️ Dictar por voz</button>
+            </div>
+
+            <div id="modeFill" class="hidden">
+                <p id="fillSentenceDisplay" style="font-size: 24px; font-weight: 800; color: var(--text); margin-bottom: 20px;"></p>
+                <input id="fillInput" type="text" placeholder="Falta..." style="text-align: center; font-size: 20px; padding: 20px;" onkeypress="handlePracticeEnter(event)">
+            </div>
+
+            <div id="modeOrder" class="hidden">
+                <p style="color: #afafaf; font-weight: bold; font-size: 14px;">Toca las palabras</p>
+                <div id="orderDropZone" class="order-zone"></div>
+                <div id="orderWordBank" class="word-bank"></div>
+            </div>
+
+            <div id="modeMC" class="hidden" style="display: flex; flex-direction: column; gap: 10px;"></div>
+
+            <div class="practice-banner" id="practiceResult"></div>
+
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" id="btnCheck" onclick="checkPracticeWritten()" class="hidden">Comprobar</button>
+                <button type="button" id="btnNext" onclick="nextPractice()" class="secondary hidden">Siguiente</button>
+            </div>
+            
+            <button type="button" class="secondary" onclick="endPractice(false)" style="margin-top: 20px; border:none; border-bottom:none; background:none; color:#afafaf;">🛑 Abandonar sesión</button>
+        </div>
+    </div>
+
+    <div id="section-awards" class="hidden">
+        <h2 style="text-align: center; color: var(--text);">Salón de la Fama 🏆</h2>
+        <p style="text-align: center; color: #afafaf; font-weight: bold; margin-bottom: 30px;">
+            ¡Completa unidades sin perder vidas para desbloquear estos trofeos!
+        </p>
+        <div id="awardsContainer" style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;"></div>
+    </div>
+
+    <script>
+        let myChart = null;
+        let dictionary = [];
+        let unitProgress = {}; 
+        let perfectUnits = {};
+        
+        let practiceQueue = [];
+        let currentPracticeIndex = 0;
+        let lives = 3;
+        let currentUnit = null; 
+        let currentQuestion = null;
+        let currentFillAnswer = "";
+        let currentStreak = 0;
+        
+        // --- NUEVAS VARIABLES PARA ESTADÍSTICAS ---
+        let totalXP = 0;
+        let totalAttempts = 0;
+        let correctAttempts = 0;
+        let studyTimeMs = 0;
+        let practiceStartTime = 0;
+
+        // --- SISTEMA DE AUDIO EFECTOS ---
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = new AudioContext();
+
+        function playCorrectSound() {
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+            osc.type = 'sine'; osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
+            osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); 
+            gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.4);
+        }
+
+        function playIncorrectSound() {
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+            osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, audioCtx.currentTime); 
+            osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.3);
+            gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+        }
+
+        // --- CARGA DE DATOS ---
+        try {
+            const storedData = localStorage.getItem('rimay_vMaster');
+            if (storedData) dictionary = JSON.parse(storedData);
+            
+            const storedProgress = localStorage.getItem('rimay_Progress');
+            if (storedProgress) unitProgress = JSON.parse(storedProgress);
+
+            const storedPerfect = localStorage.getItem('rimay_Perfect');
+            if (storedPerfect) perfectUnits = JSON.parse(storedPerfect);
+            
+            const storedXP = localStorage.getItem('rimay_XP');
+            if (storedXP) totalXP = parseInt(storedXP);
+
+            // Cargar nuevas estadísticas
+            const storedAttempts = localStorage.getItem('rimay_Attempts');
+            if (storedAttempts) {
+                const parsed = JSON.parse(storedAttempts);
+                totalAttempts = parsed.total || 0;
+                correctAttempts = parsed.correct || 0;
+            }
+            const storedTime = localStorage.getItem('rimay_Time');
+            if (storedTime) studyTimeMs = parseInt(storedTime);
+
+        } catch(e) { console.error("Error cargando:", e); }
+
+        // --- GUARDADO ---
+        function save() { 
+            localStorage.setItem('rimay_vMaster', JSON.stringify(dictionary)); 
+            localStorage.setItem('rimay_Progress', JSON.stringify(unitProgress));
+            localStorage.setItem('rimay_Perfect', JSON.stringify(perfectUnits)); 
+            localStorage.setItem('rimay_XP', totalXP);
+            localStorage.setItem('rimay_Attempts', JSON.stringify({total: totalAttempts, correct: correctAttempts}));
+            localStorage.setItem('rimay_Time', studyTimeMs);
+            renderStatsChart(); // Actualiza gráfica visual
+        }
+
+        // --- VOCES SINTÉTICAS ---
+        const hasAudioSupport = ('speechSynthesis' in window);
+        let voices = [];
+        function populateVoices() {
+            if (!hasAudioSupport) return;
+            voices = window.speechSynthesis.getVoices();
+            const voiceSelect = document.getElementById('voiceSelect');
+            voiceSelect.innerHTML = '';
+            const spanishVoices = voices.filter(v => v.lang.includes('es'));
+            const displayVoices = spanishVoices.length > 0 ? spanishVoices : voices;
+            displayVoices.forEach(voice => {
+                const option = document.createElement('option');
+                option.value = voice.name; 
+                option.textContent = voice.name;
+                voiceSelect.appendChild(option);
+            });
+        }
+        if (hasAudioSupport && speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = populateVoices;
+
+        function speak(text) {
+            if (!hasAudioSupport || !text) return;
+            window.speechSynthesis.cancel(); 
+            const utterance = new SpeechSynthesisUtterance();
+            utterance.rate = 0.85; 
+            const voiceSelect = document.getElementById('voiceSelect');
+            if (voiceSelect && voiceSelect.value) {
+                const selectedVoice = voices.find(v => v.name === voiceSelect.value);
+                if (selectedVoice) utterance.voice = selectedVoice;
+            } else utterance.lang = 'es-PE'; 
+
+            // Pequeña corrección fonética
+            let phoneticText = text.toLowerCase().replace(/ph/g, 'f').replace(/q/g, 'g').replace(/ll/g, 'ia');
+            utterance.text = phoneticText;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // --- FUNCIONES DE LA BIBLIOTECA (ESTUDIANTE) ---
+       function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    if (Array.isArray(importedData)) {
+                        if(confirm(`¿Deseas integrar ${importedData.length} palabras a tu biblioteca?`)) {
+                            
+                            importedData.forEach(newItem => {
+                                // Buscamos si la palabra ya existe
+                                const index = dictionary.findIndex(item => item.verb.toLowerCase().trim() === newItem.verb.toLowerCase().trim());
+                                
+                                if (index !== -1) {
+                                    // 1. EL SECRETO: Guardamos los datos del estudiante antes de sobreescribir
+                                    const studentPinnedStatus = dictionary[index].pinned;
+                                    
+                                    // 2. Actualizamos textos y unidad con lo que manda el profesor
+                                    dictionary[index] = { ...dictionary[index], ...newItem };
+                                    
+                                    // 3. Le devolvemos su estrella (favorito) al estudiante si la tenía
+                                    dictionary[index].pinned = studentPinnedStatus;
+                                } else {
+                                    // Es una palabra nueva, la agregamos
+                                    dictionary.push(newItem);
+                                }
+                            });
+                            
+                            // Guardamos y actualizamos toda la pantalla
+                            save(); 
+                            renderCards(); 
+                            if (typeof renderPath === 'function') renderPath(); 
+                            if (typeof renderAwards === 'function') renderAwards();
+                            
+                            alert("¡Biblioteca actualizada con éxito! Tus estadísticas están a salvo. ✅");
+                        }
+                    }
+                } catch (err) { 
+                    alert("Error: El archivo JSON no es válido."); 
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = ''; // Limpiamos el input
+        }
+
+        function togglePin(index) {
+            dictionary[index].pinned = !dictionary[index].pinned;
+            save(); renderCards();
+        }
+
+        function renderCards() {
+            const container = document.getElementById('entriesContainer');
+            if (!container) return;
+            const q = document.getElementById('searchInput') ? document.getElementById('searchInput').value.toLowerCase() : "";
+            container.innerHTML = '';
+
+            let filteredList = dictionary.filter(item => {
+                const v = item.verb || ""; const t = item.translation || ""; const u = item.unit || "";
+                return !q || v.toLowerCase().includes(q) || t.toLowerCase().includes(q) || u.toLowerCase().includes(q);
+            });
+
+            if (filteredList.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#afafaf; padding: 20px;">No hay palabras.</p>'; return;
+            }
+
+            const groups = {};
+            filteredList.forEach(item => {
+                const u = item.unit || "Sin Unidad";
+                if (!groups[u]) groups[u] = [];
+                groups[u].push(item);
+            });
+
+            const sortedUnits = Object.keys(groups).sort((a, b) => a.localeCompare(b, undefined, {numeric: true}));
+
+            sortedUnits.forEach(unit => {
+                const header = document.createElement('h3');
+                header.style.cssText = "color: var(--duo-blue); border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-top: 30px; margin-bottom: 10px; text-transform: uppercase; text-align: left; font-size: 16px;";
+                header.innerText = `📦 ${unit}`;
+                container.appendChild(header);
+
+                groups[unit].sort((a, b) => (b.pinned === a.pinned) ? 0 : b.pinned ? 1 : -1);
+
+                groups[unit].forEach(item => {
+                    const globalIndex = dictionary.indexOf(item);
+                    const card = document.createElement('div');
+                    card.className = "verb-card " + (item.pinned ? 'card-pinned' : '');
+                    card.innerHTML = `
+                        <div style="display:flex; gap:15px; align-items:center;">
+                            <button type="button" class="btn-icon btn-speak" onclick="speak('${item.verb.replace(/'/g, "\\'")}')">🔊</button>
+                            <div style="flex-grow:1;">
+                                <div style="font-size:18px; font-weight:800;">${item.verb}</div>
+                                <div style="font-weight:600; font-size:15px; color: var(--duo-blue);">${item.translation}</div>
+                            </div>
+                            <button type="button" class="btn-icon btn-pin ${item.pinned ? 'active' : ''}" onclick="togglePin(${globalIndex})">⭐</button>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            });
+            renderStatsChart();
+        }
+
+// --- DICTADO POR VOZ (MICRÓFONO) ---
+        function startListening() {
+            // Verificamos si el navegador soporta el reconocimiento de voz
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            
+            if (!SpeechRecognition) {
+                alert("Tu navegador no soporta el dictado por voz. Intenta usar Google Chrome o Microsoft Edge.");
+                return;
+            }
+
+            const recognition = new SpeechRecognition();
+            
+            // Si el modo es Quechua a Español, escuchamos en español. 
+            // Si es Español a Quechua, intentamos escuchar en español de Perú (o general) porque no hay soporte oficial de voz para Quechua en la mayoría de navegadores.
+            let dir = document.getElementById('optDirection').value;
+            if (dir === 'mix') dir = Math.random() > 0.5 ? 'q2e' : 'e2q';
+            
+            // Configuramos el idioma (puedes ajustarlo si lo necesitas)
+            recognition.lang = 'es-PE'; 
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            const btnMic = document.getElementById('btnMic');
+            const originalText = btnMic.innerHTML;
+            
+            recognition.onstart = function() {
+                btnMic.innerHTML = "🔴 Escuchando...";
+                btnMic.style.backgroundColor = "#ffdfe0";
+            };
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                // Colocamos lo que escuchó en el input de texto
+                document.getElementById('practiceInput').value = transcript;
+            };
+
+            recognition.onerror = function(event) {
+                console.error("Error de micrófono: ", event.error);
+                alert("Hubo un error con el micrófono: " + event.error);
+            };
+
+            recognition.onend = function() {
+                btnMic.innerHTML = originalText;
+                btnMic.style.backgroundColor = "white";
+            };
+
+            // ¡A escuchar!
+            recognition.start();
+        }
+
+        // --- SISTEMA DE ESTADÍSTICAS Y GRÁFICOS AVANZADOS ---
+        function getRank(xp) {
+            if (xp < 100) return "🌱 Qallarej (Principiante)";
+            if (xp < 200) return "🌿 Purej (Caminante)";
+            if (xp < 400) return "🔥 Yachakoj (Estudiante)";
+            if (xp < 800) return "⭐ Yachachej (Maestro)";
+            if (xp < 1600) return "👑 Yachayniyoj (Sabio)";
+        }
+
+        function renderStatsChart() {
+            const canvas = document.getElementById('statsChart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            
+            const total = dictionary.length;
+            const pinned = dictionary.filter(item => item.pinned).length;
+            const others = total - pinned;
+            
+            // Cálculos
+            const accuracy = totalAttempts === 0 ? 0 : Math.round((correctAttempts / totalAttempts) * 100);
+            const minutes = Math.floor(studyTimeMs / 60000);
+            const rank = getRank(totalXP);
+
+            document.getElementById('statsList').innerHTML = `
+                <span>🌱 Nivel: <b>${rank}</b></span>
+                <span>🎯 Precisión: <b>${accuracy}%</b></span>
+                <span>⏳ Tiempo: <b>${minutes} min</b></span>
+                <span>🏆 Trofeos: <b>${Object.keys(perfectUnits).length}</b></span>
+                <span>⭐ Favoritas: <b>${pinned} / ${total || 1}</b></span>
+            `;
+
+            if (myChart) myChart.destroy();
+            myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Favoritas', 'Otras'],
+                    datasets: [{
+                        data: [pinned, others || 1], 
+                        backgroundColor: ['#ffc800', '#e5e5e5'],
+                        borderWidth: 0
+                    }]
+                },
+                options: { cutout: '75%', plugins: { legend: { display: false } } }
+            });
+        }
+
+        // --- LÓGICA DE PRÁCTICA Y JUEGO ---
+        function getUniqueUnits() {
+            let units = new Set();
+            dictionary.forEach(item => { if(item.unit) units.add(item.unit.trim()); });
+            return Array.from(units).sort((a, b) => a.localeCompare(b, undefined, {numeric: true}));
+        }
+
+        function renderPath() {
+            const container = document.getElementById('unitPathContainer'); container.innerHTML = '';
+            const units = getUniqueUnits();
+            if (units.length === 0) { container.innerHTML = '<p style="z-index:2; background:white; padding:10px; border-radius:10px;">Carga unidades para ver el camino.</p>'; return; }
+
+            units.forEach((u, i) => {
+                const isMastered = unitProgress[u] === true;
+                const icons = ['🌟','🚀','🔥','🧠','🎯']; const icon = isMastered ? '👑' : icons[i % icons.length];
+                const node = document.createElement('div'); node.className = 'unit-node-wrapper';
+                node.innerHTML = `
+                    <div class="unit-node ${isMastered ? 'mastered' : ''}" onclick="startPractice('${u.replace(/'/g, "\\'")}')">
+                        ${icon}<div class="unit-crown">👑</div>
+                    </div>
+                    <div class="unit-title">${u}</div>
+                `;
+                container.appendChild(node);
+            });
+        }
+
+        function renderAwards() {
+            const container = document.getElementById('awardsContainer'); container.innerHTML = '';
+            getUniqueUnits().forEach((u) => {
+                const isPerfect = perfectUnits[u] === true;
+                const card = document.createElement('div');
+                card.className = `trophy-card ${isPerfect ? 'unlocked' : 'locked'}`;
+                card.innerHTML = `<div class="trophy-icon">${isPerfect ? '🏆' : '🔒'}</div><div class="trophy-title">${u}</div>`;
+                container.appendChild(card);
+            });
+        }
+
+        function startPractice(filter) {
+            currentUnit = (filter !== 'all' && filter !== 'favs') ? filter : null;
+            let pool = filter === 'all' ? [...dictionary] : filter === 'favs' ? dictionary.filter(d => d.pinned) : dictionary.filter(d => d.unit === filter);
+            
+            if (pool.length === 0) { alert("No hay suficientes palabras para practicar."); return; }
+            
+            // Inicia cronómetro de estudio
+            practiceStartTime = Date.now();
+
+            practiceQueue = pool.sort(() => 0.5 - Math.random()).slice(0, 10);
+            currentPracticeIndex = 0; lives = 3;
+
+            document.getElementById('practiceMenu').style.display = 'none';
+            document.getElementById('practiceBox').style.display = 'block';
+            document.getElementById('progressContainer').style.display = 'block';
+            document.getElementById('practiceStats').style.display = 'grid';
+            document.getElementById('lives').innerHTML = `❤️ ${lives}`;
+            document.getElementById('streak').innerHTML = `🔥 ${currentStreak}`;
+            document.getElementById('practiceProgress').style.width = '0%';
+            nextPractice();
+        }
+
+        function endPractice(completed) {
+            // Detiene el reloj y suma el tiempo
+            if (practiceStartTime > 0) {
+                studyTimeMs += (Date.now() - practiceStartTime);
+                practiceStartTime = 0;
+            }
+            save(); // Guarda el progreso de tiempo, XP y aciertos
+
+            document.getElementById('practiceMenu').style.display = 'block';
+            document.getElementById('practiceBox').style.display = 'none';
+            document.getElementById('progressContainer').style.display = 'none';
+            document.getElementById('practiceStats').style.display = 'none';
+            renderPath(); renderAwards();
+        }
+
+        function nextPractice() {
+            if (lives <= 0) { alert("¡Te quedaste sin vidas! 💔"); endPractice(false); return; }
+            if (currentPracticeIndex >= practiceQueue.length) {
+                playCorrectSound(); alert("¡Práctica completada! 🎉 +10 XP");
+                totalXP += 10;
+                if (currentUnit) {
+                    unitProgress[currentUnit] = true;
+                    if (lives === 3) perfectUnits[currentUnit] = true;
+                }
+                endPractice(true); return;
+            }
+
+            currentQuestion = practiceQueue[currentPracticeIndex];
+            document.getElementById('practiceProgress').style.width = `${(currentPracticeIndex / practiceQueue.length) * 100}%`;
+            document.getElementById('currentUnitTitle').innerText = currentQuestion.unit || 'Repaso General';
+            document.getElementById('practiceResult').style.display = 'none';
+            document.getElementById('btnNext').classList.add('hidden');
+            document.getElementById('btnCheck').classList.remove('hidden');
+
+            let mode = document.getElementById('optMode').value;
+            if (mode === 'mix-mode') mode = ['mc', 'write', 'fill', 'order'][Math.floor(Math.random() * 4)];
+            let dir = document.getElementById('optDirection').value;
+            if (dir === 'mix') dir = Math.random() > 0.5 ? 'q2e' : 'e2q';
+
+            currentQuestion.ask = dir === 'q2e' ? currentQuestion.verb : currentQuestion.translation;
+            currentQuestion.answer = dir === 'q2e' ? currentQuestion.translation : currentQuestion.verb;
+            
+            document.getElementById('practiceSentence').innerText = currentQuestion.ask;
+            ['modeWrite', 'modeMC', 'modeFill', 'modeOrder'].forEach(id => document.getElementById(id).classList.add('hidden'));
+
+            if (mode === 'write') {
+                document.getElementById('modeWrite').classList.remove('hidden');
+                document.getElementById('practiceInput').value = '';
+            } else if (mode === 'mc') {
+                document.getElementById('modeMC').classList.remove('hidden');
+                document.getElementById('btnCheck').classList.add('hidden'); 
+                generateMC(currentQuestion, dir);
+            } else if (mode === 'fill') {
+                document.getElementById('modeFill').classList.remove('hidden');
+                document.getElementById('fillInput').value = '';
+                let words = currentQuestion.answer.split(' ');
+                let blank = Math.floor(Math.random() * words.length);
+                currentFillAnswer = words[blank].replace(/[.,!?]/g,'');
+                words[blank] = "______";
+                document.getElementById('fillSentenceDisplay').innerText = words.join(' ');
+            } else {
+                document.getElementById('modeOrder').classList.remove('hidden');
+                document.getElementById('btnCheck').classList.add('hidden');
+                generateOrderMode(currentQuestion.answer);
+            }
+        }
+
+        function generateMC(q, dir) {
+            const mcContainer = document.getElementById('modeMC'); mcContainer.innerHTML = '';
+            let options = new Set([q.answer]);
+            while(options.size < 4 && dictionary.length >= 4) {
+                let rItem = dictionary[Math.floor(Math.random() * dictionary.length)];
+                options.add(dir === 'q2e' ? rItem.translation : rItem.verb);
+            }
+            Array.from(options).sort(() => 0.5 - Math.random()).forEach(opt => {
+                const btn = document.createElement('button'); btn.className = 'btn-mc'; btn.innerText = opt;
+                btn.onclick = () => checkPractice(opt.toLowerCase() === q.answer.toLowerCase(), q.answer, btn);
+                mcContainer.appendChild(btn);
+            });
+        }
+
+        function generateOrderMode(answer) {
+            const dropZone = document.getElementById('orderDropZone'); const wordBank = document.getElementById('orderWordBank');
+            dropZone.innerHTML = ''; wordBank.innerHTML = '';
+            let words = answer.split(/\s+/).map(w => w.replace(/[.,?!]/g, '')).filter(w => w.length > 0);
+            let totalWords = words.length;
+
+            [...words].sort(() => 0.5 - Math.random()).forEach((word, index) => {
+                let token = document.createElement('div'); token.className = 'word-token'; token.innerText = word; token.id = 'word-' + index;
+                token.onclick = () => {
+                    (token.parentElement.id === 'orderWordBank' ? dropZone : wordBank).appendChild(token);
+                    document.getElementById('btnCheck').classList.toggle('hidden', dropZone.children.length !== totalWords);
+                };
+                wordBank.appendChild(token);
+            });
+        }
+
+        function checkPracticeWritten() {
+            let input = ""; let ans = "";
+            if (!document.getElementById('modeFill').classList.contains('hidden')) { input = document.getElementById('fillInput').value; ans = currentFillAnswer; }
+            else if (!document.getElementById('modeOrder').classList.contains('hidden')) { input = Array.from(document.getElementById('orderDropZone').children).map(el => el.innerText).join(' '); ans = currentQuestion.answer; }
+            else { input = document.getElementById('practiceInput').value; ans = currentQuestion.answer; }
+            checkPractice(input.toLowerCase().trim() === ans.toLowerCase().trim(), ans);
+        }
+
+        function checkPractice(isCorrect, correctAnswer, btnNode = null) {
+            if (!document.getElementById('btnNext').classList.contains('hidden')) return;
+            
+            // --- REGISTRO DE ESTADÍSTICAS ---
+            totalAttempts++;
+            if(isCorrect) correctAttempts++;
+
+            document.getElementById('btnCheck').classList.add('hidden');
+            document.getElementById('btnNext').classList.remove('hidden');
+            const banner = document.getElementById('practiceResult'); banner.style.display = 'block';
+            
+            if (isCorrect) {
+                playCorrectSound(); currentStreak++; 
+                banner.className = 'practice-banner banner-correct'; banner.innerHTML = '¡Excelente! ✨';
+                if(btnNode) btnNode.classList.add('mc-correct');
+                if (currentStreak > 0 && currentStreak % 5 === 0) showLlamaPopup(currentStreak);
+            } else {
+                playIncorrectSound(); currentStreak = 0; lives--;
+                document.getElementById('lives').innerHTML = `❤️ ${lives}`;
+                banner.className = 'practice-banner banner-incorrect'; banner.innerHTML = `Respuesta correcta:<br><strong>${correctAnswer}</strong>`;
+                if(btnNode) {
+                    btnNode.classList.add('mc-wrong');
+                    document.querySelectorAll('.btn-mc').forEach(b => { if (b.innerText.toLowerCase() === correctAnswer.toLowerCase()) b.classList.add('mc-correct'); });
+                }
+                practiceQueue.push(currentQuestion);
+            }
+            document.getElementById('streak').innerHTML = `🔥 ${currentStreak}`;
+            document.getElementById('xp').innerHTML = `⭐ ${totalXP}`;
+            currentPracticeIndex++;
+        }
+
+        function showLlamaPopup(streakNumber) {
+            const popup = document.getElementById('llamaPopup');
+            document.getElementById('llamaStreakText').innerText = `¡${streakNumber} aciertos seguidos!`;
+            popup.style.transform = 'translateY(0)';
+            setTimeout(() => popup.style.transform = 'translateY(200%)', 3500);
+        }
+
+        function speakCurrentPractice() { if (currentQuestion) speak(document.getElementById('practiceSentence').innerText); }
+        function switchTab(t) { document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); document.getElementById('tab-'+t).classList.add('active'); ['dict','practice','awards'].forEach(id => document.getElementById('section-'+id).classList.add('hidden')); document.getElementById('section-'+t).classList.remove('hidden'); if(t==='practice') renderPath(); if(t==='awards') renderAwards(); }
+
+        // --- INICIO ---
+        renderCards(); renderPath(); renderAwards();
+        if (hasAudioSupport) setTimeout(populateVoices, 100);
+
+    </script>
+
+    <div id="llamaPopup" style="position: fixed; bottom: 20px; right: 20px; background: white; border: 4px solid var(--duo-green); border-radius: 20px; padding: 15px 25px; display: flex; align-items: center; gap: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index: 1000; transform: translateY(200%); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+        <div style="width: 70px; height: 70px; border-radius: 50%; background: var(--duo-yellow); display: flex; align-items: center; justify-content: center; border: 3px solid var(--duo-green); overflow: hidden; flex-shrink: 0;">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjI1MCIgZmlsbD0iI2ZmYzgwMCIvPjxwYXRoIGQ9Ik0zNjAgMTYwdjgwYzAgNjAtNDAgMTAwLTEwMCAxMDBzLTEwMC00MC0xMDAtMTAwdjgwYzAtNjAgNDAtMTAwIDEwMC0xMDBzMTAwIDQwIDEwMCAxMDB6IiBmaWxsPSIjZmZmIi8+PHBhdGggZD0iTTI1NiAzNjBjLTYwIDAtMTAwLTQwLTEwMC0xMDBoMjAwYzAgNjAtNDAgMTAwLTEwMCAxMDB6IiBmaWxsPSIjZWVlIi8+PGNpcmNsZSBjeD0iMjAwIiBjeT0iMjAwIiByPSIxNSIgZmlsbD0iIzMzMyIvPjxjaXJjbGUgY3g9IjMxMiIgY3k9IjIwMCIgcj0iMTUiIGZpbGw9IiMzMzMiLz48cGF0aCBkPSJNMjMwIDI4MGMwIDIwIDE1IDM1IDI2IDM1czY2LTE1IDY2LTM1IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZjRiNGIiIHN0cm9rZS13aWR0aD0iOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTE4MCAxMjBsMjAtMzBNMzMyIDEyMGwtMjAtMzAiIHN0cm9rZT0iI2NjYyIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+" alt="Llama" style="width: 80%; height: 80%;">
+        </div>
+        <div>
+            <h3 style="margin: 0; color: var(--duo-green); font-size: 22px; font-weight: 900;">¡May sumajpuni!</h3>
+            <p id="llamaStreakText" style="margin: 5px 0 0 0; color: #777; font-weight: bold; font-size: 16px;">¡5 aciertos seguidos!</p>
+        </div>
+    </div>
+
+</body>
+</html>
