@@ -8,21 +8,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --duo-green: #58cc02; --duo-green-shadow: #58a700;
-            --duo-red: #ff4b4b; --duo-red-shadow: #ea2b2b;
-            --duo-yellow: #ffc800; --duo-blue: #1cb0f6;
-            --duo-blue-shadow: #1899d6; --bg: #ffffff;
-            --card-bg: #f7f7f7; --text: #3c3c3c;
-            --border: #e5e5e5; --path-gray: #e5e5e5;
+            /* 🇧🇴 Paleta Bolivia x Duolingo x Anki */
+            --duo-green: #2a9d3f;
+            --duo-green-shadow: #1e7a2e;
+            --duo-red: #d62828;
+            --duo-red-shadow: #a81e1e;
+            --duo-yellow: #f5a623;
+            --duo-blue: #c0392b;
+            --duo-blue-shadow: #922b21;
+            --bg: #fdf8f2;
+            --card-bg: #f5ede0;
+            --text: #2c1a0e;
+            --border: #ddd0b8;
+            --path-gray: #ddd0b8;
         }
 
         body { font-family: 'Nunito', sans-serif; background-color: var(--bg); color: var(--text); max-width: 600px; margin: 0 auto; padding: 20px; }
         h1, h2, h3 { text-align: center; color: var(--text); }
 
-        .tabs { display: flex; gap: 5px; margin-bottom: 20px; }
-	.tabs { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 20px; }
+        .tabs { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 20px; }
         .tab-btn { flex: 1; background: var(--card-bg); color: #afafaf; border: 2px solid var(--border); border-bottom: 4px solid var(--border); border-radius: 16px; font-size: 12px; padding: 10px 5px; cursor: pointer; font-weight: 800; text-transform: uppercase; transition: all 0.1s; text-align: center; word-wrap: break-word; }
-        .tab-btn.active { color: var(--duo-blue); border-color: var(--duo-blue); border-bottom-color: var(--duo-blue-shadow); background: #eef9fe; }
+        .tab-btn.active { color: var(--duo-blue); border-color: var(--duo-blue); border-bottom-color: var(--duo-blue-shadow); background: #fdecea; }
 
         .progress-bar-container { width: 100%; height: 18px; background-color: var(--border); border-radius: 10px; margin-bottom: 20px; overflow: hidden; display: none; }
         .progress-bar-fill { height: 100%; background-color: var(--duo-green); width: 0%; transition: width 0.4s ease-out; border-radius: 10px; position: relative; }
@@ -34,8 +40,8 @@
         button.special { background-color: var(--duo-yellow); border-bottom: 4px solid #d4a600; color: white; }
         
         .btn-mc { background-color: white; color: var(--text); border: 2px solid var(--border); border-bottom: 4px solid var(--border); text-transform: none; font-size: 18px; margin-bottom: 10px; }
-        .btn-mc.mc-correct { background-color: #d7ffb8; border-color: var(--duo-green); border-bottom-color: var(--duo-green-shadow); color: #2b7a0b; }
-        .btn-mc.mc-wrong { background-color: #ffdfe0; border-color: var(--duo-red); border-bottom-color: var(--duo-red-shadow); color: #a30000; }
+        .btn-mc.mc-correct { background-color: #d4f5dc; border-color: var(--duo-green); border-bottom-color: var(--duo-green-shadow); color: #1e7a2e; }
+        .btn-mc.mc-wrong { background-color: #fde8e8; border-color: var(--duo-red); border-bottom-color: var(--duo-red-shadow); color: #922b21; }
 
         .container { background: var(--card-bg); padding: 20px; border-radius: 20px; border: 2px solid var(--border); margin-bottom: 20px; }
         input[type="text"], select { font-family: 'Nunito', sans-serif; padding: 14px; border: 2px solid var(--border); border-radius: 16px; font-size: 16px; box-sizing: border-box; width: 100%; margin-bottom: 10px; background: #fff; outline: none; }
@@ -56,8 +62,8 @@
         .btn-pin.active { color: var(--duo-yellow); border-color: var(--duo-yellow); border-bottom-color: #d4a600; }
 
         .practice-banner { padding: 20px; border-radius: 16px; margin-top: 15px; font-weight: bold; display: none; font-size: 18px; }
-        .banner-correct { background: #d7ffb8; color: #2b7a0b; border: 2px solid var(--duo-green); }
-        .banner-incorrect { background: #ffdfe0; color: #a30000; border: 2px solid var(--duo-red); }
+        .banner-correct { background: #d4f5dc; color: #1e7a2e; border: 2px solid var(--duo-green); }
+        .banner-incorrect { background: #fde8e8; color: #922b21; border: 2px solid var(--duo-red); }
 
         .path-container { display: flex; flex-direction: column; align-items: center; padding: 40px 0; position: relative; }
         .path-container::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 10px; background-color: var(--path-gray); transform: translateX(-50%); z-index: 1; border-radius: 10px; }
@@ -71,6 +77,8 @@
         .unit-crown { position: absolute; top: -15px; right: -10px; font-size: 24px; display: none; }
         .unit-node.mastered .unit-crown { display: block; }
         .unit-title { background: white; padding: 5px 15px; border-radius: 12px; font-weight: 800; margin-top: 15px; border: 2px solid var(--border); font-size: 14px; text-transform: uppercase; color: var(--text); text-align: center; }
+
+        #modeMC:not(.hidden) { display: flex; flex-direction: column; gap: 10px; }
 
         .hidden { display: none !important; }
         
@@ -89,7 +97,7 @@
         .flashcard { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer; }
         .flashcard.flipped { transform: rotateY(180deg); }
         .flashcard-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; background: white; border: 2px solid var(--border); border-radius: 20px; box-shadow: 0 8px 0 var(--border); padding: 20px; box-sizing: border-box; }
-        .flashcard-back { transform: rotateY(180deg); border-color: var(--duo-blue); box-shadow: 0 8px 0 var(--duo-blue-shadow); background: #f2faff; }
+        .flashcard-back { transform: rotateY(180deg); border-color: var(--duo-green); box-shadow: 0 8px 0 var(--duo-green-shadow); background: #eafaf0; }
         .srs-buttons { display: flex; gap: 8px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
         .btn-srs { flex: 1; padding: 12px 5px; border-radius: 16px; font-weight: bold; border: none; cursor: pointer; color: white; min-width: 70px; font-family: 'Nunito', sans-serif; font-size: 14px; display: flex; flex-direction: column; align-items: center; gap: 5px; }
         .btn-srs small { font-size: 11px; opacity: 0.9; font-weight: normal; }
@@ -111,7 +119,7 @@
         #storyContent { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
         .story-bubble { font-size: 18px; padding: 15px; border-radius: 15px; background: white; border: 2px solid var(--border); position: relative; animation: popIn 0.3s ease-out; cursor: pointer;}
         .story-translation { font-size: 14px; color: #888; margin-top: 5px; font-style: italic; display: none; }
-        .story-question-box { padding: 20px; border-radius: 15px; background: #f0f8ff; border: 2px solid var(--duo-blue); animation: popIn 0.3s ease-out; }
+        .story-question-box { padding: 20px; border-radius: 15px; background: #fef9ec; border: 2px solid var(--duo-yellow); animation: popIn 0.3s ease-out; }
         #storyFooter { padding: 20px; background: white; border-top: 2px solid var(--border); }
         @keyframes popIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -134,8 +142,25 @@
 
         <div class="container" style="border-left: 5px solid var(--duo-blue); margin-bottom: 15px;">
             <h3 style="color: var(--duo-blue); margin-top: 0;">📢 Audio y Pronunciación</h3>
-            <p style="font-size: 14px; line-height: 1.5;">
-                La voz depende de tu dispositivo. Para una mejor experiencia en Quechua, instala el paquete de voz <b>"Español (Perú)"</b> en los ajustes de idioma de tu sistema.
+            <p style="font-size: 14px; line-height: 1.5; margin-bottom: 10px;">
+                La app usa el motor de voz de tu dispositivo. Para la mejor experiencia en Quechua, instalá la voz <b>"Español (Perú)"</b>:
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
+                <div style="background: #f0f0f0; border-radius: 10px; padding: 10px 14px;">
+                    <b>🪟 Windows 11/10:</b> Configuración → Hora e idioma → Voz → Agregar voces → buscar <i>"Español (Perú)"</i>
+                </div>
+                <div style="background: #f0f0f0; border-radius: 10px; padding: 10px 14px;">
+                    <b>🤖 Android:</b> Ajustes → Administración general → Idioma → Texto a voz → Instalar datos de voz → <i>Español (Perú)</i>
+                </div>
+                <div style="background: #f0f0f0; border-radius: 10px; padding: 10px 14px;">
+                    <b>🍎 iOS/Mac:</b> Ajustes → Accesibilidad → Contenido hablado → Voces → Español → <i>Mónica (Perú)</i>
+                </div>
+                <div style="background: #f0f0f0; border-radius: 10px; padding: 10px 14px;">
+                    <b>🐧 Linux:</b> Instalá <code>espeak-ng</code> con el paquete de datos <code>espeak-ng-data</code> y activá el español.
+                </div>
+            </div>
+            <p style="font-size: 12px; color: #afafaf; margin-top: 10px; margin-bottom: 0;">
+                💡 Si no tenés es-PE, la app usará automáticamente la mejor voz española disponible.
             </p>
         </div>
 
@@ -217,10 +242,10 @@
             </p>
 
             <div style="background: #ffeeee; padding: 10px; border-radius: 12px; border: 1px dashed #ff4b4b; margin-top: 10px;">
-                <p style="color: #a30000; font-size: 13px; margin: 0; font-weight: 800;">
+                <p style="color: #922b21; font-size: 13px; margin: 0; font-weight: 800;">
                     ⚠️ ¡ADVERTENCIA DE PÉRDIDA!
                 </p>
-                <p style="color: #a30000; font-size: 13px; margin: 5px 0 0 0;">
+                <p style="color: #922b21; font-size: 13px; margin: 5px 0 0 0;">
                     Los trofeos y coronas <b>no son permanentes</b>. Si no repasas las tarjetas de esa unidad en la Biblioteca y dejas que la unidad se "rompa" (💔), el trofeo se bloqueará de nuevo hasta que restaures su salud practicando.
                 </p>
             </div>
@@ -263,9 +288,11 @@
             </div>
 
             <div class="container" style="padding: 15px;">
-                <select id="voiceSelect" style="width: auto; margin-bottom: 10px; padding: 8px;">
+                <label style="font-size: 12px; font-weight: 800; color: #afafaf; text-transform: uppercase; display: block; margin-bottom: 6px;">🔊 Voz para Quechua</label>
+                <select id="voiceSelect" style="width: 100%; margin-bottom: 6px; padding: 8px;">
                     <option value="">Cargando voces...</option>
                 </select>
+                <div id="voiceQualityBadge" style="font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 8px; display: inline-block; margin-bottom: 10px;"></div>
                 <input type="text" id="searchInput" placeholder="🔍 Buscar palabras..." onkeyup="renderCards()" style="margin-bottom: 0;">
             </div>
 
@@ -283,8 +310,8 @@
                         <h2 id="srsFrontText" style="margin: 0; font-size: 32px; text-align: center;">...</h2>
                     </div>
                     <div class="flashcard-face flashcard-back">
-                        <span style="font-size: 16px; color: var(--duo-blue); font-weight: bold; margin-bottom: 10px;">QUECHUA</span>
-                        <h2 id="srsBackText" style="margin: 0; font-size: 36px; color: var(--duo-blue); text-align: center;">...</h2>
+                        <span style="font-size: 16px; color: var(--duo-green); font-weight: bold; margin-bottom: 10px;">QUECHUA</span>
+                        <h2 id="srsBackText" style="margin: 0; font-size: 36px; color: var(--duo-green); text-align: center;">...</h2>
                     </div>
                 </div>
             </div>
@@ -387,7 +414,7 @@
                 <div id="orderWordBank" class="word-bank"></div>
             </div>
 
-            <div id="modeMC" class="hidden" style="display: flex; flex-direction: column; gap: 10px;"></div>
+            <div id="modeMC" class="hidden"></div>
 
             <div class="practice-banner" id="practiceResult"></div>
 
@@ -428,10 +455,10 @@
                 icon: '🦊',
                 level: 'Básico',
                 scenes: [
-                    { type: 'text', q: 'Juk p\'unchay, atojqa chajrapi kashan.', e: 'Un día, el zorro está en la chacra.' },
-                    { type: 'text', q: 'Alqo jamun, atojtaj mancharisqa.', e: 'El perro viene, y el zorro está asustado.' },
-                    { type: 'question', title: '¿Imataj pasashan?', text: '¿Quién se asustó?', options: ['Alqo (el perro)', 'Atoj (el zorro)', 'Chajra'], correct: 1 },
-                    { type: 'text', q: 'Atojqa phawan orqoman.', e: 'El zorro corre al cerro.' },
+                    { type: 'text', q: "Uj p'unchay, atojqa chajrapi kashan.", e: 'Un día, el zorro está en la chacra.' },
+                    { type: 'text', q: 'Alqo jamun, atojtaj mancharisqa kashan.', e: 'El perro viene, y el zorro está asustado.' },
+                    { type: 'question', title: '¿Pitaj mancharisqa kashan?', text: '¿Quién está asustado?', options: ['Alqo (el perro)', 'Atoj (el zorro)', 'Chajra'], correct: 1 },
+                    { type: 'text', q: 'Atojqa orqoman corren.', e: 'El zorro corre al cerro.' },
                     { type: 'text', q: 'Kunanqa, atojqa kusisqa kashan.', e: 'Ahora, el zorro está feliz.' }
                 ]
             }
@@ -440,6 +467,7 @@
         let dictionary = [];
         let unitProgress = {}; 
         let perfectUnits = {};
+        let completedStories = {};
         
         // --- VARIABLES GLOBALES ---
         let currentStory = null;
@@ -463,14 +491,21 @@
         let currentSrsCardIndex = -1;
 
         // --- INICIALIZACIÓN DE DATOS GUARDADOS ---
-        try {
-            // Cargar Diccionario
-            const storedData = localStorage.getItem('rimay_vMaster');
-            if (storedData) {
-                dictionary = JSON.parse(storedData);
-                dictionary.forEach(item => { if (!item.srs) item.srs = { ef: 2.5, interval: 0, reps: 0, due: Date.now() }; });
-            }
-            
+       try {
+    // Cargar Diccionario
+    const storedData = localStorage.getItem('rimay_vMaster');
+    if (storedData) {
+        // 1. Primero lo guardamos en una variable temporal
+        let rawData = JSON.parse(storedData);
+        
+        // 2. APLICAMOS EL FILTRO: Solo nos quedamos con los elementos que realmente tengan verbo y traducción
+        dictionary = rawData.filter(item => item && item.verb && item.translation);
+        
+        // 3. Asignamos los valores SRS a la data ya limpia
+        dictionary.forEach(item => { 
+            if (!item.srs) item.srs = { ef: 2.5, interval: 0, reps: 0, due: Date.now() }; 
+        });
+    }
             // Cargar Historias Guardadas
             const savedStories = localStorage.getItem('rimay_Stories');
             if (savedStories) {
@@ -486,18 +521,24 @@
             const savedXP = localStorage.getItem('rimay_XP'); if (savedXP) totalXP = parseInt(savedXP);
             const savedProgress = localStorage.getItem('rimay_Progress'); if (savedProgress) unitProgress = JSON.parse(savedProgress);
             const savedPerfect = localStorage.getItem('rimay_Perfect'); if (savedPerfect) perfectUnits = JSON.parse(savedPerfect);
+            const savedStories2 = localStorage.getItem('rimay_CompletedStories'); if (savedStories2) completedStories = JSON.parse(savedStories2);
         } catch (error) {
             console.error("Error al cargar los datos guardados:", error);
         }
 
         // --- SISTEMA DE AUDIO Y SONIDOS ---
         const AudioContext = window.AudioContext || window.webkitAudioContext;
-        const audioCtx = new AudioContext();
+        let audioCtx = null;
+function getAudioCtx() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return audioCtx;
+}
 
         function playCorrectSound() {
-            if(audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-            osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+           const audioCtx = getAudioCtx();
+if(audioCtx.state === 'suspended') audioCtx.resume();
+const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
+osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             osc.type = 'sine'; osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
             osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); 
             gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
@@ -505,9 +546,10 @@
         }
 
         function playIncorrectSound() {
-            if(audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-            osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+    const audioCtx = getAudioCtx();
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+    const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
+    osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, audioCtx.currentTime); 
             osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.3);
             gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
@@ -516,44 +558,147 @@
 
         const hasAudioSupport = ('speechSynthesis' in window);
         let voices = [];
+        let selectedVoiceName = localStorage.getItem('rimay_voice') || '';
+
+        function getVoiceQuality(voice) {
+            const lang = voice.lang.toLowerCase();
+            const name = voice.name.toLowerCase();
+            if (lang === 'es-pe') return 3; // ¡Ideal! Español Perú
+            if (lang.startsWith('es') && (name.includes('peru') || name.includes('perú'))) return 3;
+            if (lang === 'es-419' || lang === 'es-us' || lang === 'es-mx' || lang === 'es-co') return 2; // Latinoamérica
+            if (lang.startsWith('es')) return 1; // Otro español
+            return 0;
+        }
+
+        function getQualityLabel(quality) {
+            if (quality === 3) return { text: '🇵🇪 Español Perú — Ideal para Quechua', bg: '#d4f5dc', color: '#1e7a2e' };
+            if (quality === 2) return { text: '🌎 Español Latinoamericano — Bueno', bg: '#fff3cd', color: '#856404' };
+            if (quality === 1) return { text: '🇪🇸 Otro español — Aceptable', bg: '#fde8e8', color: '#922b21' };
+            return { text: '⚠️ Voz no española — Instala es-PE', bg: '#fde8e8', color: '#922b21' };
+        }
+
         function populateVoices() {
             if (!hasAudioSupport) return;
             voices = window.speechSynthesis.getVoices();
             const voiceSelect = document.getElementById('voiceSelect');
+            if (!voiceSelect) return;
             voiceSelect.innerHTML = '';
-            const spanishVoices = voices.filter(v => v.lang.includes('es'));
-            const displayVoices = spanishVoices.length > 0 ? spanishVoices : voices;
-            displayVoices.forEach(voice => {
-                const option = document.createElement('option'); option.value = voice.name; option.textContent = voice.name;
-                voiceSelect.appendChild(option);
-            });
+
+            // Separar voces por categoría
+            const esPE   = voices.filter(v => getVoiceQuality(v) === 3);
+            const esLatam = voices.filter(v => getVoiceQuality(v) === 2);
+            const esOther = voices.filter(v => getVoiceQuality(v) === 1);
+
+            const addGroup = (label, list) => {
+                if (list.length === 0) return;
+                const group = document.createElement('optgroup');
+                group.label = label;
+                list.forEach(v => {
+                    const opt = document.createElement('option');
+                    opt.value = v.name;
+                    opt.textContent = v.name;
+                    group.appendChild(opt);
+                });
+                voiceSelect.appendChild(group);
+            };
+
+            addGroup('🇵🇪 Español Perú (Ideal)', esPE);
+            addGroup('🌎 Español Latinoamérica (Bueno)', esLatam);
+            addGroup('🇪🇸 Otro Español (Aceptable)', esOther);
+
+            if (esPE.length === 0 && esLatam.length === 0 && esOther.length === 0) {
+                // Sin voces en español: mostrar todas
+                voices.forEach(v => {
+                    const opt = document.createElement('option');
+                    opt.value = v.name; opt.textContent = v.name;
+                    voiceSelect.appendChild(opt);
+                });
+            }
+
+            // Autoselección inteligente: es-PE > latam > otro español > guardada
+            const bestVoice = esPE[0] || esLatam[0] || esOther[0];
+            const savedVoice = voices.find(v => v.name === selectedVoiceName);
+            const toSelect = savedVoice || bestVoice;
+            if (toSelect) voiceSelect.value = toSelect.name;
+
+            updateVoiceBadge();
         }
-        if (hasAudioSupport && speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = populateVoices;
+
+        function updateVoiceBadge() {
+            const badge = document.getElementById('voiceQualityBadge');
+            if (!badge) return;
+            const voiceSelect = document.getElementById('voiceSelect');
+            const selected = voices.find(v => v.name === voiceSelect?.value);
+            const quality = selected ? getVoiceQuality(selected) : 0;
+            const label = getQualityLabel(quality);
+            badge.textContent = label.text;
+            badge.style.background = label.bg;
+            badge.style.color = label.color;
+        }
+
+        if (hasAudioSupport) {
+            if (speechSynthesis.onvoiceschanged !== undefined) {
+                speechSynthesis.onvoiceschanged = populateVoices;
+            }
+            // Algunos browsers (Firefox) cargan voces sincrónicamente
+            if (window.speechSynthesis.getVoices().length > 0) populateVoices();
+        }
+
+        // Guardar preferencia de voz al cambiar
+        document.addEventListener('change', (e) => {
+            if (e.target.id === 'voiceSelect') {
+                selectedVoiceName = e.target.value;
+                localStorage.setItem('rimay_voice', selectedVoiceName);
+                updateVoiceBadge();
+            }
+        });
 
         function speak(text) {
             if (!hasAudioSupport || !text) return;
-            window.speechSynthesis.cancel(); 
+            window.speechSynthesis.cancel();
             const utterance = new SpeechSynthesisUtterance();
-            utterance.rate = 0.85; 
+            utterance.rate = 0.82;
+            utterance.pitch = 1.0;
+
             const voiceSelect = document.getElementById('voiceSelect');
-            if (voiceSelect && voiceSelect.value) {
-                const selectedVoice = voices.find(v => v.name === voiceSelect.value);
-                if (selectedVoice) utterance.voice = selectedVoice;
-            } else utterance.lang = 'es-PE'; 
-            let phoneticText = text.toLowerCase().replace(/ph/g, 'f').replace(/q/g, 'g').replace(/ll/g, 'ia');
+            const selectedVoice = voices.find(v => v.name === voiceSelect?.value);
+
+            if (selectedVoice) {
+                utterance.voice = selectedVoice;
+                utterance.lang = selectedVoice.lang;
+            } else {
+                // Fallback: buscar es-PE directamente
+                const fallback = voices.find(v => v.lang === 'es-PE')
+                    || voices.find(v => v.lang.startsWith('es-') && v.lang !== 'es-ES')
+                    || voices.find(v => v.lang.startsWith('es'));
+                if (fallback) { utterance.voice = fallback; utterance.lang = fallback.lang; }
+                else utterance.lang = 'es-PE';
+            }
+
+            // Transliteración fonética para Quechua (mejorada)
+            let phoneticText = text
+                .replace(/qh/gi, 'k')
+                .replace(/ph/gi, 'p')
+                .replace(/ch'/gi, 'ch')
+                .replace(/q'/gi, 'k')
+                .replace(/\bq\b/gi, 'k')
+                .replace(/(?<![aeiou])q(?=[aeiou])/gi, 'k')
+                .replace(/ll/gi, 'y')
+                .replace(/ñ/gi, 'ni');
             utterance.text = phoneticText;
             window.speechSynthesis.speak(utterance);
         }
 
         // --- MANEJO DE ARCHIVOS E IMPORTACIÓN ---
-        function save() { 
+        function save(updateChart = false) { 
             localStorage.setItem('rimay_vMaster', JSON.stringify(dictionary)); 
             localStorage.setItem('rimay_Progress', JSON.stringify(unitProgress));
             localStorage.setItem('rimay_Perfect', JSON.stringify(perfectUnits)); 
             localStorage.setItem('rimay_XP', totalXP);
             localStorage.setItem('rimay_Attempts', JSON.stringify({total: totalAttempts, correct: correctAttempts}));
             localStorage.setItem('rimay_Time', studyTimeMs);
-            renderStatsChart();
+            localStorage.setItem('rimay_CompletedStories', JSON.stringify(completedStories));
+            if (updateChart) renderStatsChart();
         }
 
         function importData(event) {
@@ -591,7 +736,7 @@
                                         dictionary.push(newItem);
                                     }
                                 });
-                                save();
+                                save(true);
                                 renderCards();
                                 alert("¡Biblioteca actualizada! ✅");
                             }
@@ -634,12 +779,14 @@
                 const card = document.createElement('div');
                 card.className = 'story-card';
                 card.onclick = () => startStory(s.id);
+                const isDone = completedStories[s.id];
                 card.innerHTML = `
                     <div class="story-icon">${s.icon || '📖'}</div>
-                    <div class="story-info">
-                        <h3>${s.title}</h3>
+                    <div class="story-info" style="flex:1;">
+                        <h3>${s.title} ${isDone ? '<span style="color:var(--duo-yellow); font-size:16px;">🏅</span>' : ''}</h3>
                         <p>${s.subtitle || ''} • ${s.level || 'Básico'}</p>
                     </div>
+                    ${isDone ? '<div style="color:var(--duo-green); font-weight:800; font-size:13px;">✓ Completada</div>' : ''}
                 `;
                 container.appendChild(card);
             });
@@ -654,13 +801,43 @@
             nextScene();
         }
 
-        function nextScene() {
-            if (currentSceneIndex >= currentStory.scenes.length) {
-                playCorrectSound();
-                alert("¡Felicidades! Terminaste la historia. 🎉");
-                exitStory();
-                return;
-            }
+	function nextScene() {
+    if (currentSceneIndex >= currentStory.scenes.length) {
+        playCorrectSound();
+        
+        const isFirstTime = !completedStories[currentStory.id];
+        const xpEarned = isFirstTime ? 15 : 5;
+        totalXP += xpEarned;
+        
+        if (isFirstTime) completedStories[currentStory.id] = true;
+        save(true);
+
+        // Mostrar pantalla de celebración
+        const content = document.getElementById('storyContent');
+        content.innerHTML = `
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; padding: 30px; gap: 20px;">
+                <div style="font-size: 80px; animation: popIn 0.5s ease-out;">${isFirstTime ? '🏅' : '⭐'}</div>
+                <h2 style="color: var(--duo-green); font-size: 28px; margin: 0;">${isFirstTime ? '¡Historia Completada!' : '¡Repasada con éxito!'}</h2>
+                <p style="color: #666; font-size: 16px; margin: 0;">${currentStory.title} — ${currentStory.subtitle}</p>
+                <div style="background: #d4f5dc; border: 2px solid var(--duo-green); border-radius: 20px; padding: 20px 40px;">
+                    <span style="font-size: 36px; font-weight: 900; color: var(--duo-green);">+${xpEarned} XP</span>
+                    ${isFirstTime ? '<p style="margin: 5px 0 0 0; color: #1e7a2e; font-weight: bold;">¡Primera vez completada! 🎉</p>' : '<p style="margin: 5px 0 0 0; color: #1e7a2e; font-size: 14px;">Bonus de repaso</p>'}
+                </div>
+                ${isFirstTime ? `<div style="background: #fff9e6; border: 2px solid var(--duo-yellow); border-radius: 16px; padding: 15px 25px; display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 28px;">🏅</span>
+                    <div style="text-align: left;">
+                        <div style="font-weight: 800; color: #d4a600;">Insignia Desbloqueada</div>
+                        <div style="font-size: 13px; color: #888;">${currentStory.title}</div>
+                    </div>
+                </div>` : ''}
+            </div>
+        `;
+        document.getElementById('storyProgressBar').style.width = '100%';
+        const btnNext = document.getElementById('btnStoryNext');
+        btnNext.innerText = '🏠 Volver a Historias';
+        btnNext.onclick = () => { exitStory(); renderStoriesList(); };
+        return;
+    }
 
             const scene = currentStory.scenes[currentSceneIndex];
             const container = document.getElementById('storyContent');
@@ -901,11 +1078,15 @@
         function renderAwards() {
             const container = document.getElementById('awardsContainer'); container.innerHTML = '';
             const units = getUniqueUnits(); const srsCards = dictionary.filter(c => c.srs && c.srs.reps > 0);
+            const totalStoriesCompleted = Object.keys(completedStories).length;
             const globalAchievements = [
                 { id: 'bandeja', title: 'Bandeja Limpia', desc: '0 pendientes', icon: '🧹', unlocked: (srsCards.length > 0) && (dictionary.filter(c => c.srs && c.srs.due <= Date.now()).length === 0) },
                 { id: 'oro', title: 'Corona de Oro', desc: 'Todas perfectas', icon: '👑', unlocked: (units.length > 0) && units.every(u => getUnitHealth(u).status === 'perfect') },
                 { id: 'erudito', title: 'Erudito Quechua', desc: '50 aprendidas', icon: '📚', unlocked: srsCards.length >= 50 },
-                { id: 'mente', title: 'Mente Maestra', desc: '20 dominadas', icon: '🧠', unlocked: dictionary.filter(c => c.srs && c.srs.interval >= 21).length >= 20 }
+                { id: 'mente', title: 'Mente Maestra', desc: '20 dominadas', icon: '🧠', unlocked: dictionary.filter(c => c.srs && c.srs.interval >= 21).length >= 20 },
+                { id: 'narrador', title: 'Narrador', desc: '1ª historia', icon: '📖', unlocked: totalStoriesCompleted >= 1 },
+                { id: 'cuentista', title: 'Cuentista', desc: '3 historias', icon: '📚', unlocked: totalStoriesCompleted >= 3 },
+                { id: 'sabio_rimay', title: 'Sabio Rimay', desc: 'Todas las historias', icon: '🦙', unlocked: totalStoriesCompleted >= storiesData.length && storiesData.length > 0 }
             ];
             const titleGlobal = document.createElement('h3'); titleGlobal.style = "width: 100%; text-align: center; color: var(--duo-blue); margin-bottom: 15px; font-weight: 800;"; titleGlobal.innerText = "🌟 Logros Especiales"; container.appendChild(titleGlobal);
             globalAchievements.forEach(ach => {
@@ -913,6 +1094,18 @@
                 card.innerHTML = `<div class="trophy-icon">${ach.unlocked ? ach.icon : '🔒'}</div><div class="trophy-title" style="margin-bottom: 5px;">${ach.title}</div><div style="font-size: 11px; color: ${ach.unlocked ? '#888' : '#aaa'};">${ach.desc}</div>`;
                 container.appendChild(card);
             });
+
+            // --- Insignias de Historias ---
+            if (storiesData.length > 0) {
+                const titleStories = document.createElement('h3'); titleStories.style = "width: 100%; text-align: center; color: var(--duo-blue); margin-top: 30px; margin-bottom: 15px; font-weight: 800;"; titleStories.innerText = "📖 Insignias de Historias"; container.appendChild(titleStories);
+                storiesData.forEach(s => {
+                    const isDone = completedStories[s.id];
+                    const card = document.createElement('div'); card.className = `trophy-card ${isDone ? 'unlocked' : 'locked'}`;
+                    card.innerHTML = `<div class="trophy-icon">${isDone ? (s.icon || '📖') : '🔒'}</div><div class="trophy-title" style="margin-bottom: 5px;">${s.title}</div><div style="font-size: 11px; color: ${isDone ? '#888' : '#aaa'};">${isDone ? '¡Completada! 🏅' : s.subtitle || 'Sin completar'}</div>`;
+                    container.appendChild(card);
+                });
+            }
+
             const titleUnits = document.createElement('h3'); titleUnits.style = "width: 100%; text-align: center; color: var(--duo-blue); margin-top: 30px; margin-bottom: 15px; font-weight: 800;"; titleUnits.innerText = "🏆 Trofeos por Unidad"; container.appendChild(titleUnits);
             units.forEach((u) => {
                 const isPerfect = perfectUnits[u] === true; const card = document.createElement('div'); card.className = `trophy-card ${isPerfect ? 'unlocked' : 'locked'}`;
@@ -920,7 +1113,18 @@
             });
         }
 
-        function handlePracticeEnter(e) { if (e.key === 'Enter') { if (document.getElementById('btnNext').classList.contains('hidden')) checkPracticeWritten(); else nextPractice(); } }
+function handlePracticeEnter(e) { 
+    if (e.key === 'Enter') { 
+        // Si el botón "Siguiente" está visible, avanzamos
+        if (!document.getElementById('btnNext').classList.contains('hidden')) {
+            nextPractice(); 
+        } 
+        // Si el botón "Comprobar" está visible, evaluamos
+        else if (!document.getElementById('btnCheck').classList.contains('hidden')) {
+            checkPracticeWritten(); 
+        }
+    } 
+}
 
         function startPractice(filter) {
             currentUnit = (filter !== 'all' && filter !== 'favs') ? filter : null;
@@ -938,43 +1142,105 @@
 
         function endPractice(completed) {
             if (practiceStartTime > 0) { studyTimeMs += (Date.now() - practiceStartTime); practiceStartTime = 0; }
-            save(); 
+            save(true); 
             document.getElementById('practiceMenu').style.display = 'block'; document.getElementById('practiceBox').style.display = 'none';
             document.getElementById('progressContainer').style.display = 'none'; document.getElementById('practiceStats').style.display = 'none';
             renderPath(); renderAwards();
         }
 
-        function nextPractice() {
-            if (lives <= 0) { alert("¡Te quedaste sin vidas! 💔"); endPractice(false); return; }
-            if (currentPracticeIndex >= practiceQueue.length) {
-                playCorrectSound(); alert("¡Práctica completada! 🎉 +10 XP"); totalXP += 10;
-                if (currentUnit) { unitProgress[currentUnit] = true; if (lives === 3) perfectUnits[currentUnit] = true; }
-                endPractice(true); return;
+        function getPracticeConfig() {
+            let mode = document.getElementById('optMode').value;
+            if (mode === 'mix-mode') {
+                const modes = ['mc', 'write', 'fill', 'order'];
+                mode = modes[Math.floor(Math.random() * modes.length)];
             }
+
+            let dir = document.getElementById('optDirection').value;
+            if (dir === 'mix') {
+                dir = Math.random() > 0.5 ? 'q2e' : 'e2q';
+            }
+
+            return { mode, dir };
+        }
+
+        function setupPracticeQuestionDisplay() {
+            document.getElementById('practiceResult').style.display = 'none';
+            document.getElementById('btnNext').classList.add('hidden');
+            document.getElementById('btnCheck').classList.remove('hidden');
+            ['modeWrite', 'modeMC', 'modeFill', 'modeOrder'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+        }
+
+        function applyDirectionToQuestion(question, dir) {
+            question.ask = dir === 'q2e' ? question.verb : question.translation;
+            question.answer = dir === 'q2e' ? question.translation : question.verb;
+            document.getElementById('practiceSentence').innerText = question.ask;
+        }
+
+        function showPracticeMode(mode, dir) {
+            if (mode === 'write') {
+                document.getElementById('modeWrite').classList.remove('hidden');
+                document.getElementById('practiceInput').value = '';
+                document.getElementById('practiceInput').focus();
+                return;
+            }
+
+            if (mode === 'mc') {
+                document.getElementById('modeMC').classList.remove('hidden');
+                document.getElementById('btnCheck').classList.add('hidden');
+                generateMC(currentQuestion, dir);
+                return;
+            }
+
+            if (mode === 'fill') {
+                document.getElementById('modeFill').classList.remove('hidden');
+                document.getElementById('fillInput').value = '';
+                let words = currentQuestion.answer.split(' ');
+                let validIndices = [];
+                words.forEach((w, i) => {
+                    if (w.replace(/[.,!?\/¿¡]/g, '').trim().length > 0) validIndices.push(i);
+                });
+                if (validIndices.length === 0) validIndices = words.map((_, i) => i);
+                let blank = validIndices[Math.floor(Math.random() * validIndices.length)];
+                currentFillAnswer = words[blank].replace(/[.,!?¿¡]/g,'');
+                words[blank] = "______";
+                document.getElementById('fillSentenceDisplay').innerText = words.join(' ');
+                document.getElementById('fillInput').focus();
+                return;
+            }
+
+            document.getElementById('modeOrder').classList.remove('hidden');
+            document.getElementById('btnCheck').classList.add('hidden');
+            generateOrderMode(currentQuestion.answer);
+        }
+
+        function nextPractice() {
+            if (lives <= 0) {
+                alert("¡Te quedaste sin vidas! 💔");
+                endPractice(false);
+                return;
+            }
+            if (currentPracticeIndex >= practiceQueue.length) {
+                playCorrectSound();
+                alert("¡Práctica completada! 🎉 +10 XP");
+                totalXP += 10;
+                if (currentUnit) {
+                    unitProgress[currentUnit] = true;
+                    if (lives === 3) perfectUnits[currentUnit] = true;
+                }
+                endPractice(true);
+                return;
+            }
+
             currentQuestion = practiceQueue[currentPracticeIndex];
             document.getElementById('practiceProgress').style.width = `${(currentPracticeIndex / practiceQueue.length) * 100}%`;
             document.getElementById('currentUnitTitle').innerText = currentQuestion.unit || 'Repaso General';
-            document.getElementById('practiceResult').style.display = 'none'; document.getElementById('btnNext').classList.add('hidden'); document.getElementById('btnCheck').classList.remove('hidden');
-            let mode = document.getElementById('optMode').value;
-            if (mode === 'mix-mode') mode = ['mc', 'write', 'fill', 'order'][Math.floor(Math.random() * 4)];
-            let dir = document.getElementById('optDirection').value;
-            if (dir === 'mix') dir = Math.random() > 0.5 ? 'q2e' : 'e2q';
-            currentQuestion.ask = dir === 'q2e' ? currentQuestion.verb : currentQuestion.translation;
-            currentQuestion.answer = dir === 'q2e' ? currentQuestion.translation : currentQuestion.verb;
-            document.getElementById('practiceSentence').innerText = currentQuestion.ask;
-            ['modeWrite', 'modeMC', 'modeFill', 'modeOrder'].forEach(id => document.getElementById(id).classList.add('hidden'));
 
-            if (mode === 'write') { document.getElementById('modeWrite').classList.remove('hidden'); document.getElementById('practiceInput').value = ''; document.getElementById('practiceInput').focus(); } 
-            else if (mode === 'mc') { document.getElementById('modeMC').classList.remove('hidden'); document.getElementById('btnCheck').classList.add('hidden'); generateMC(currentQuestion, dir); } 
-            else if (mode === 'fill') {
-                document.getElementById('modeFill').classList.remove('hidden'); document.getElementById('fillInput').value = '';
-                let words = currentQuestion.answer.split(' ');
-                let validIndices = []; words.forEach((w, i) => { if (w.replace(/[.,!?\/¿¡]/g, '').trim().length > 0) validIndices.push(i); });
-                if (validIndices.length === 0) validIndices = words.map((_, i) => i);
-                let blank = validIndices[Math.floor(Math.random() * validIndices.length)];
-                currentFillAnswer = words[blank].replace(/[.,!?¿¡]/g,''); words[blank] = "______";
-                document.getElementById('fillSentenceDisplay').innerText = words.join(' '); document.getElementById('fillInput').focus();
-            } else { document.getElementById('modeOrder').classList.remove('hidden'); document.getElementById('btnCheck').classList.add('hidden'); generateOrderMode(currentQuestion.answer); }
+            const { mode, dir } = getPracticeConfig();
+            setupPracticeQuestionDisplay();
+            applyDirectionToQuestion(currentQuestion, dir);
+            showPracticeMode(mode, dir);
         }
 
         function generateMC(q, dir) {
@@ -1000,9 +1266,15 @@
         }
 
         function removeAccents(str) { return str.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
+        function escapeRegexChars(str) { return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
         function checkFlexibleMatch(input, ans) {
-            let cleanInput = removeAccents(input.toLowerCase().trim()).replace(/[.,¡!¿?]/g, ''); let cleanAns = removeAccents(ans.toLowerCase().trim()).replace(/[.,¡!¿?]/g, '');
-            cleanAns = cleanAns.replace(/(\w+)os\s*\/\s*as\b/g, '(?:$1os|$1as)').replace(/(\w+)o\s*\/\s*a\b/g, '(?:$1o|$1a)').replace(/(\S+)\s*\/\s*(\S+)/g, '(?:$1|$2)');
+            let cleanInput = removeAccents(input.toLowerCase().trim()).replace(/[.,¡!¿?]/g, '');
+            let cleanAns = removeAccents(ans.toLowerCase().trim()).replace(/[.,¡!¿?]/g, '');
+            // Escapar caracteres especiales ANTES de construir el patrón de variantes
+            cleanAns = cleanAns
+                .replace(/(\w+)os\s*\/\s*as\b/g, (_, stem) => `(?:${escapeRegexChars(stem)}os|${escapeRegexChars(stem)}as)`)
+                .replace(/(\w+)o\s*\/\s*a\b/g,  (_, stem) => `(?:${escapeRegexChars(stem)}o|${escapeRegexChars(stem)}a)`)
+                .replace(/(\S+)\s*\/\s*(\S+)/g,  (_, a, b) => `(?:${escapeRegexChars(a)}|${escapeRegexChars(b)})`);
             cleanAns = cleanAns.replace(/\s+/g, ' '); cleanInput = cleanInput.replace(/\s+/g, ' ');
             try { return new RegExp('^' + cleanAns + '$', 'i').test(cleanInput); } catch(e) { return cleanInput === cleanAns; }
         }
