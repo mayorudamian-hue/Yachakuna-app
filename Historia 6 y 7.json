@@ -1,0 +1,86 @@
+[
+  {
+    "id": "negacion-plurales",
+    "title": "Mana Chay Alqokuna",
+    "subtitle": "Negación y plurales en el pueblo",
+    "icon": "🐕",
+    "level": "Intermedio",
+    "scenes": [
+      {
+        "type": "text",
+        "q": "Imaynalla! Noqa plazapi kashani. Chaypi ashkha runas kashanku.",
+        "e": "¡Hola! Yo estoy en la plaza. Allí hay muchas personas."
+      },
+      {
+        "type": "text",
+        "q": "Chayqa wasiy. Chayqa mana alqochu, chayqa wasiy, jaja.",
+        "e": "Esa es mi casa. Eso no es un perro, es mi casa, jaja."
+      },
+      {
+        "type": "question",
+        "title": "¿Imataj chay?",
+        "text": "En la frase: \"Chayqa mana alqochu, chayqa wasiy\" ¿qué cosa NO es?",
+        "options": [
+          "Alqo (perro)",
+          "Wasi (casa)"
+        ],
+        "correct": 0
+      },
+      {
+        "type": "text",
+        "q": "Paykunaqa Orqo patapi kashanku. Chaykunaqa orqos, chayqa mana ujlla orqochu.",
+        "e": "Ellos están en la montaña. Esas son montañas, pero esa no es solo una montaña."
+      },
+      {
+        "type": "question",
+        "title": "Plural o singular",
+        "text": "En la oración: \"Chaykunaqa orqos\" ¿qué significa?",
+        "options": [
+          "Esa es una montaña",
+          "Esas son montañas"
+        ],
+        "correct": 1
+      },
+      {
+        "type": "text",
+        "q": "Plazapi alqos kashanku. Chaykunaqa alqos, jinapis chayqa mana alqochu, chayqa uj misi.",
+        "e": "En la plaza están los perros. Esos son perros, pero ese no es un perro, ese es un gato."
+      },
+      {
+        "type": "question",
+        "title": "¿Imataj chaykuna?",
+        "text": "En la frase: \"Chaykunaqa alqos kashanku\" ¿qué son esos?",
+        "options": [
+          "Alqos",
+          "Misis"
+        ],
+        "correct": 0
+      },
+      {
+        "type": "text",
+        "q": "Payqa mana kusisqachu, nitaj llakisqachu. Payqa mana onqosqachu, nitaj phiñasqachu.",
+        "e": "Él no está feliz, y tampoco está triste. No está enfermo ni enojado."
+      },
+      {
+        "type": "question",
+        "title": "Negación de estados",
+        "text": "Según la frase anterior, ¿cómo está él?",
+        "options": [
+          "Onqosqa, phiñasqa",
+          "Mana onqosqachu, mana phiñasqachu"
+        ],
+        "correct": 1
+      },
+      {
+        "type": "text",
+        "q": "Makiyta qhawariy: uj publiacion kapuwan qanpaj.",
+        "e": "Mira mi mano: una publicación tengo para tí."
+      },
+      {
+        "type": "text",
+        "q": "Noqaqa mana sayk'usqachu kashani. Sapa p'unchay llajtayman rini, chaymanta wasiyman kutimuni.",
+        "e": "Yo no estoy cansado. Cada día voy a mi ciudad y luego regreso a mi casa."
+      }
+    ]
+  }
+]

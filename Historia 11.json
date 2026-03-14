@@ -1,0 +1,130 @@
+[
+  {
+    "id": "curso-quechua-viaje",
+    "title": "Al curso de quechua",
+    "subtitle": "Un viaje a la ciudad de 9 de Abril",
+    "icon": "🚍",
+    "level": "Intermedio",
+    "scenes": [
+      {
+        "type": "text",
+        "q": "¿Kunanrí, mayman rishanki?\n9 de abril llajtaman rishani.",
+        "e": "¿Y ahora adónde estás yendo?\nA la ciudad de 9 de Abril estoy yendo."
+      },
+      {
+        "type": "text",
+        "q": "¿Qhechua cursomanchu?\nAri, quechua cursoman.",
+        "e": "¿Al curso de quechua?\nSí, al curso de quechua."
+      },
+      {
+        "type": "text",
+        "q": "¿Maymanta jamunki?\nPotosí llajtamanta jamuni.",
+        "e": "¿De dónde has venido?\nHe venido de Potosí."
+      },
+      {
+        "type": "text",
+        "q": "¿Piwan jamunki?\nAntoniowan, doña Mariawan, don Juliowan.",
+        "e": "¿Con quién has venido?\nCon Antonio, doña María y don Julio."
+      },
+      {
+        "type": "text",
+        "q": "¿Paykunawanchu?\nAri, don Germán, paykunawan jamuni.",
+        "e": "¿Con ellos?\nSí, con ellos he venido, don Germán."
+      },
+      {
+        "type": "text",
+        "q": "¿Imapi jamun don Ramón? ¿Autopichu trenpichu?\nMana trenpichu jamun, autopi jamun.",
+        "e": "¿En qué ha venido don Ramón? ¿En auto o en tren?\nNo ha venido en tren; ha venido en auto."
+      },
+      {
+        "type": "text",
+        "q": "¿Jaqayqa Flores llajtachu, don Germán?\nAri, jaqayqa Flores llajta.",
+        "e": "¿Aquello es la ciudad de Flores, don Germán?\nSí, aquél es el pueblo de Flores."
+      },
+      {
+        "type": "text",
+        "q": "Jatun llajta, ¿icharí?\nAri, a, jatun llajta, don Alberto!",
+        "e": "Es un pueblo grande. ¿Verdad?\nSí, pues, ¡Es un pueblo grande, don Alberto!"
+      },
+
+      {
+        "type": "question",
+        "title": "Destino del viaje",
+        "text": "Cuando dice: \"9 de abril llajtaman rishani\", ¿a dónde está yendo?",
+        "options": [
+          "A la ciudad de 9 de Abril",
+          "A la ciudad de Flores",
+          "A Potosí"
+        ],
+        "correct": 0
+      },
+      {
+        "type": "question",
+        "title": "Motivo del viaje",
+        "text": "Según el diálogo, ¿para qué va a la ciudad?",
+        "options": [
+          "Para visitar a su familia",
+          "Para ir al curso de quechua",
+          "Para ir al mercado"
+        ],
+        "correct": 1
+      },
+      {
+        "type": "question",
+        "title": "Lugar de origen",
+        "text": "En la frase: \"Potosí llajtamanta jamuni\", ¿qué información da el sufijo \"-manta\"?",
+        "options": [
+          "Indica destino (adónde va ir)",
+          "Indica origen (de dónde viene)",
+          "Indica compañía (con quién viene)"
+        ],
+        "correct": 1
+      },
+      {
+        "type": "question",
+        "title": "Compañeros de viaje",
+        "text": "En la respuesta: \"Antoniowan, doña Mariawan, don Juliowan\", ¿qué indican las terminaciones \"-wan\"?",
+        "options": [
+          "Plural de objetos",
+          "Lugar de origen",
+          "Compañía: \"con\" esas personas"
+        ],
+        "correct": 2
+      },
+      {
+        "type": "question",
+        "title": "Medio de transporte de don Ramón",
+        "text": "Interpreta: \"Mana trenpichu jamun, autopi jamun\". ¿Cuál es la mejor traducción?",
+        "options": [
+          "Ha venido en tren, no en auto.",
+          "No ha venido en tren; ha venido en auto.",
+          "Ha venido caminando, no en auto."
+        ],
+        "correct": 1
+      },
+      {
+        "type": "question",
+        "title": "Comprensión de \"Flores llajta\"",
+        "text": "En el contexto del diálogo, \"Flores llajta\" se refiere a:",
+        "options": [
+          "Una persona llamada Flores",
+          "Un pueblo o ciudad llamado Flores",
+          "Un curso de quechua en Flores",
+          "El mercado de Flores"
+        ],
+        "correct": 1
+      },
+      {
+        "type": "question",
+        "title": "Significado de \"jatun llajta\"",
+        "text": "En la última línea dicen: \"jatun llajta\". ¿Cuál es la interpretación más precisa en este diálogo?",
+        "options": [
+          "Un pueblo grande, importante",
+          "Un pueblo pequeño pero bonito",
+          "Una ciudad antigua y abandonada"
+        ],
+        "correct": 0
+      }
+    ]
+  }
+]

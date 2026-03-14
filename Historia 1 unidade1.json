@@ -1,0 +1,13 @@
+[
+  {
+    "id": "zorro-perro",
+    "title": "Atojwan Alqowan",
+    "subtitle": "El zorro y el perro",
+    "icon": "🦊",
+    "level": "Básico",
+    "scenes": [
+      { "type": "text", "q": "Uj p'unchay, atojqa chajrapi kashan.", "e": "Un día, el zorro está en la chacra." },
+      { "type": "question", "title": "¿Pitaj chajrapi kashan?", "text": "¿Quién está en la chacra?", "options": ["Alqo", "Atoj"], "correct": 1 }
+    ]
+  }
+]
