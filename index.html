@@ -153,6 +153,7 @@
         .forum-post { background: white; border: 2px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 14px; box-shadow: 0 3px 0 var(--border); }
         .forum-post-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
         .forum-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--duo-blue); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 16px; flex-shrink: 0; }
+        .forum-avatar.profe { background: var(--duo-green); }
         .forum-author { font-weight: 800; font-size: 15px; color: var(--text); }
         .forum-time { font-size: 12px; color: #aaa; margin-left: auto; }
         .forum-category { display: inline-block; font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; }
@@ -160,11 +161,20 @@
         .cat-sugerencia { background: #d1fae5; color: #065f46; }
         .cat-comentario { background: #fef3c7; color: #92400e; }
         .forum-text { font-size: 15px; line-height: 1.5; color: var(--text); }
-        .forum-likes { display: flex; align-items: center; gap: 6px; margin-top: 10px; }
+        .forum-likes { display: flex; align-items: center; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
         .btn-like { background: none; border: 2px solid var(--border); border-bottom: 2px solid var(--border); border-radius: 20px; padding: 4px 14px; font-size: 13px; font-weight: 800; color: #aaa; cursor: pointer; width: auto; transition: all 0.15s; }
         .btn-like.liked { border-color: var(--duo-red); color: var(--duo-red); background: #fff0f0; }
+        .btn-reply { background: none; border: 2px solid var(--duo-blue); border-bottom: 2px solid var(--duo-blue); border-radius: 20px; padding: 4px 14px; font-size: 13px; font-weight: 800; color: var(--duo-blue); cursor: pointer; width: auto; }
         .forum-input-box { background: var(--card-bg); border: 2px solid var(--border); border-radius: 20px; padding: 18px; margin-bottom: 20px; }
         .forum-name-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        .profe-badge { background: var(--duo-green); color: white; font-size: 11px; font-weight: 900; padding: 2px 8px; border-radius: 20px; margin-left: 6px; }
+        /* Respuestas anidadas */
+        .forum-replies { margin-top: 12px; padding-top: 12px; border-top: 2px dashed var(--border); display: flex; flex-direction: column; gap: 10px; }
+        .forum-reply { background: #f7fbff; border: 2px solid #d0e8ff; border-radius: 12px; padding: 12px; }
+        .forum-reply.profe-reply { background: #f0fff4; border-color: #a7f3d0; }
+        .reply-input-box { margin-top: 12px; padding-top: 12px; border-top: 2px dashed var(--border); display: none; }
+        .reply-input-box textarea { font-family: 'Nunito', sans-serif; width: 100%; box-sizing: border-box; padding: 10px 14px; border: 2px solid var(--border); border-radius: 12px; font-size: 14px; resize: none; height: 70px; outline: none; margin-bottom: 8px; }
+        .reply-input-box .flex-row { margin-bottom: 0; }
 
         /* --- ESTILOS PARA HISTORIAS 📚 --- */
         .story-card { background: white; border: 2px solid var(--border); border-radius: 15px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; cursor: pointer; box-shadow: 0 4px 0 var(--border); transition: 0.2s; }
@@ -502,6 +512,14 @@
     <div id="section-forum" class="hidden">
         <h2 style="text-align:center; color:var(--duo-blue); margin-bottom:5px;">💬 Comenta</h2>
         <p style="text-align:center; color:#afafaf; margin-bottom:20px;">Preguntá, comentá y sugerí mejoras 🦙</p>
+
+        <!-- Login Profe -->
+        <div id="profeLoginBox" style="background:#fff9e6; border:2px solid var(--duo-yellow); border-radius:16px; padding:14px 18px; margin-bottom:16px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <span style="font-weight:800; font-size:14px; color:#92400e;">👨‍🏫 ¿Sos el Profe?</span>
+            <input type="password" id="profePassword" placeholder="Contraseña..." style="flex:1; min-width:120px; margin-bottom:0; padding:10px 14px; font-size:14px;">
+            <button type="button" onclick="loginProfe()" style="width:auto; padding:10px 18px; font-size:14px;">Entrar</button>
+            <span id="profeStatus" style="font-size:13px; color:#aaa;"></span>
+        </div>
 
         <!-- Formulario nuevo mensaje -->
         <div class="forum-input-box">
@@ -1767,10 +1785,13 @@ function handlePracticeEnter(e) {
 
     </script>
 
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, increment, orderBy, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, increment, orderBy, query, serverTimestamp, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyArv7WzklDiQjpiHhckVsrEpc4A_lnwXGE",
@@ -1784,30 +1805,118 @@ function handlePracticeEnter(e) {
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Guardar liked posts en localStorage
+        // --- CONFIG ---
+        const PROFE_PASSWORD = 'Ruwaj';
+        const EMAILJS_SERVICE  = 'service_cgw0hfb';
+        const EMAILJS_TEMPLATE = 'template_fti0tfj';
+        const EMAILJS_KEY      = 'oxNTrWWhjZt7Vh6IZ';
+
+        let isProfe = sessionStorage.getItem('yachakuna_profe') === '1';
         const likedPosts = JSON.parse(localStorage.getItem('rimay_likedPosts') || '{}');
 
+        // Inicializar EmailJS
+        emailjs.init(EMAILJS_KEY);
+
+        // --- UTILIDADES ---
         function timeAgo(ts) {
             if (!ts) return '';
-            const now = Date.now();
-            const diff = Math.floor((now - ts.toMillis()) / 1000);
+            const diff = Math.floor((Date.now() - ts.toMillis()) / 1000);
             if (diff < 60) return 'Ahora mismo';
             if (diff < 3600) return `Hace ${Math.floor(diff/60)} min`;
             if (diff < 86400) return `Hace ${Math.floor(diff/3600)} h`;
             return `Hace ${Math.floor(diff/86400)} día${Math.floor(diff/86400)!==1?'s':''}`;
         }
+        function catClass(c) { return c==='pregunta'?'cat-pregunta':c==='sugerencia'?'cat-sugerencia':'cat-comentario'; }
+        function catLabel(c) { return c==='pregunta'?'❓ Pregunta':c==='sugerencia'?'💡 Sugerencia':'💬 Comentario'; }
 
-        function catClass(cat) {
-            if (cat === 'pregunta') return 'cat-pregunta';
-            if (cat === 'sugerencia') return 'cat-sugerencia';
-            return 'cat-comentario';
-        }
-        function catLabel(cat) {
-            if (cat === 'pregunta') return '❓ Pregunta';
-            if (cat === 'sugerencia') return '💡 Sugerencia';
-            return '💬 Comentario';
+        async function sendEmailNotification(type, author, message) {
+            try {
+                await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+                    type, author, message,
+                    to_email: 'mayoru.damian@gmail.com'
+                });
+            } catch(e) { console.log('EmailJS error:', e); }
         }
 
+        // --- LOGIN PROFE ---
+        window.loginProfe = function() {
+            const pwd = document.getElementById('profePassword').value;
+            const status = document.getElementById('profeStatus');
+            if (pwd === PROFE_PASSWORD) {
+                isProfe = true;
+                sessionStorage.setItem('yachakuna_profe', '1');
+                status.textContent = '✅ Entraste como Profe';
+                status.style.color = 'var(--duo-green)';
+                document.getElementById('profePassword').value = '';
+            } else {
+                status.textContent = '❌ Contraseña incorrecta';
+                status.style.color = 'var(--duo-red)';
+            }
+        };
+
+        // Mostrar estado de profe si ya estaba logueado
+        if (isProfe) {
+            const status = document.getElementById('profeStatus');
+            if (status) { status.textContent = '✅ Sesión activa como Profe'; status.style.color = 'var(--duo-green)'; }
+        }
+
+        // --- RENDERIZAR UN POST ---
+        function renderPost(docSnap, container) {
+            const d = docSnap.data();
+            const id = docSnap.id;
+            const isLiked = !!likedPosts[id];
+            const initials = (d.name || '?').charAt(0).toUpperCase();
+            const isProfePost = !!d.isProfe;
+
+            const post = document.createElement('div');
+            post.className = 'forum-post';
+            post.id = 'post-' + id;
+
+            // Respuestas HTML
+            let repliesHTML = '';
+            if (d.replies && d.replies.length > 0) {
+                repliesHTML = `<div class="forum-replies">` +
+                    d.replies.map(r => `
+                        <div class="forum-reply ${r.isProfe ? 'profe-reply' : ''}">
+                            <div class="forum-post-header">
+                                <div class="forum-avatar ${r.isProfe ? 'profe' : ''}">${(r.name||'?').charAt(0).toUpperCase()}</div>
+                                <div>
+                                    <span class="forum-author">${r.name}${r.isProfe ? '<span class="profe-badge">👨‍🏫 Profe</span>' : ''}</span>
+                                    <div style="font-size:12px;color:#aaa;">${r.time || ''}</div>
+                                </div>
+                            </div>
+                            <div class="forum-text">${r.text}</div>
+                        </div>`).join('') +
+                `</div>`;
+            }
+
+            post.innerHTML = `
+                <div class="forum-post-header">
+                    <div class="forum-avatar ${isProfePost ? 'profe' : ''}">${initials}</div>
+                    <div>
+                        <span class="forum-author">${d.name || 'Anónimo'}${isProfePost ? '<span class="profe-badge">👨‍🏫 Profe</span>' : ''}</span>
+                        <div style="font-size:12px;color:#aaa;">${timeAgo(d.createdAt)}</div>
+                    </div>
+                </div>
+                <span class="forum-category ${catClass(d.category)}">${catLabel(d.category)}</span>
+                <div class="forum-text">${d.text}</div>
+                ${repliesHTML}
+                <div class="forum-likes">
+                    <button type="button" class="btn-like ${isLiked ? 'liked' : ''}" id="like-${id}" onclick="window.toggleLike('${id}', ${d.likes||0})">❤️ ${d.likes || 0}</button>
+                    <button type="button" class="btn-reply" onclick="window.toggleReplyBox('${id}')">↩️ Responder</button>
+                </div>
+                <div class="reply-input-box" id="reply-box-${id}">
+                    <textarea id="reply-text-${id}" placeholder="Escribí tu respuesta..."></textarea>
+                    <div class="flex-row">
+                        <input type="text" id="reply-name-${id}" placeholder="Tu nombre..." style="margin-bottom:0; flex:1;">
+                        <button type="button" onclick="window.submitReply('${id}')" style="width:auto; padding:10px 16px; font-size:14px;">Responder</button>
+                    </div>
+                </div>
+            `;
+            container.appendChild(post);
+        }
+
+        // --- CARGAR POSTS ---
         window.loadForumPosts = async function() {
             const container = document.getElementById('forumPosts');
             const loading = document.getElementById('forumLoading');
@@ -1821,51 +1930,34 @@ function handlePracticeEnter(e) {
                     container.innerHTML = '<p style="text-align:center;color:#aaa;padding:30px;font-weight:700;">¡Sé el primero en escribir! 🦙</p>';
                     return;
                 }
-                snapshot.forEach(docSnap => {
-                    const d = docSnap.data();
-                    const id = docSnap.id;
-                    const isLiked = !!likedPosts[id];
-                    const initials = (d.name || '?').charAt(0).toUpperCase();
-                    const post = document.createElement('div');
-                    post.className = 'forum-post';
-                    post.innerHTML = `
-                        <div class="forum-post-header">
-                            <div class="forum-avatar">${initials}</div>
-                            <div>
-                                <div class="forum-author">${d.name || 'Anónimo'}</div>
-                                <div style="font-size:12px;color:#aaa;">${timeAgo(d.createdAt)}</div>
-                            </div>
-                        </div>
-                        <span class="forum-category ${catClass(d.category)}">${catLabel(d.category)}</span>
-                        <div class="forum-text">${d.text}</div>
-                        <div class="forum-likes">
-                            <button type="button" class="btn-like ${isLiked ? 'liked' : ''}" id="like-${id}" onclick="window.toggleLike('${id}', ${d.likes||0})">
-                                ❤️ ${d.likes || 0}
-                            </button>
-                        </div>
-                    `;
-                    container.appendChild(post);
-                });
+                snapshot.forEach(docSnap => renderPost(docSnap, container));
             } catch(e) {
                 loading.style.display = 'none';
-                container.innerHTML = '<p style="text-align:center;color:#c00;padding:20px;">Error al cargar mensajes. Revisá tu conexión.</p>';
+                container.innerHTML = '<p style="text-align:center;color:#c00;padding:20px;">Error al cargar. Revisá tu conexión.</p>';
             }
         };
 
+        // --- PUBLICAR MENSAJE ---
         window.submitForumPost = async function() {
-            const name = document.getElementById('forumName').value.trim();
+            const name = isProfe ? 'Profe' : document.getElementById('forumName').value.trim();
             const text = document.getElementById('forumText').value.trim();
             const category = document.getElementById('forumCategory').value;
-            if (!name) { alert('Escribí tu nombre para publicar 😊'); return; }
+            if (!isProfe && !document.getElementById('forumName').value.trim()) { alert('Escribí tu nombre 😊'); return; }
             if (!text || text.length < 5) { alert('El mensaje es muy corto 😅'); return; }
-            const btn = document.querySelector('#section-forum button');
+            const btn = document.querySelector('#section-forum .forum-input-box button');
             btn.disabled = true; btn.innerText = 'Publicando...';
             try {
                 await addDoc(collection(db, 'forumPosts'), {
-                    name, text, category, likes: 0, createdAt: serverTimestamp()
+                    name, text, category, likes: 0, isProfe, replies: [], createdAt: serverTimestamp()
                 });
                 document.getElementById('forumText').value = '';
+                if (!isProfe) document.getElementById('forumName').value = '';
                 btn.disabled = false; btn.innerText = 'Publicar mensaje 📨';
+                // Notificación email
+                await sendEmailNotification(
+                    isProfe ? '👨‍🏫 Mensaje del Profe' : '💬 Nuevo mensaje',
+                    name, text
+                );
                 await window.loadForumPosts();
             } catch(e) {
                 alert('Error al publicar. Revisá tu conexión.');
@@ -1873,6 +1965,46 @@ function handlePracticeEnter(e) {
             }
         };
 
+        // --- TOGGLE CAJA DE RESPUESTA ---
+        window.toggleReplyBox = function(postId) {
+            const box = document.getElementById('reply-box-' + postId);
+            if (!box) return;
+            const isOpen = box.style.display === 'block';
+            box.style.display = isOpen ? 'none' : 'block';
+            if (!isOpen && isProfe) {
+                const nameInput = document.getElementById('reply-name-' + postId);
+                if (nameInput) nameInput.value = 'Profe';
+            }
+        };
+
+        // --- ENVIAR RESPUESTA ---
+        window.submitReply = async function(postId) {
+            const replyName = isProfe ? 'Profe' : document.getElementById('reply-name-' + postId).value.trim();
+            const replyText = document.getElementById('reply-text-' + postId).value.trim();
+            if (!replyName) { alert('Escribí tu nombre 😊'); return; }
+            if (!replyText || replyText.length < 2) { alert('La respuesta es muy corta 😅'); return; }
+            const btn = document.querySelector(`#reply-box-${postId} button`);
+            btn.disabled = true; btn.innerText = 'Enviando...';
+            try {
+                const postRef = doc(db, 'forumPosts', postId);
+                const postSnap = await getDoc(postRef);
+                const existing = postSnap.data().replies || [];
+                const newReply = { name: replyName, text: replyText, isProfe, time: 'Ahora mismo' };
+                await updateDoc(postRef, { replies: [...existing, newReply] });
+                btn.disabled = false; btn.innerText = 'Responder';
+                // Notificación email
+                await sendEmailNotification(
+                    isProfe ? '👨‍🏫 Respuesta del Profe' : `↩️ Respuesta de ${replyName}`,
+                    replyName, replyText
+                );
+                await window.loadForumPosts();
+            } catch(e) {
+                alert('Error al responder. Revisá tu conexión.');
+                btn.disabled = false; btn.innerText = 'Responder';
+            }
+        };
+
+        // --- LIKE ---
         window.toggleLike = async function(postId, currentLikes) {
             const isLiked = !!likedPosts[postId];
             const btn = document.getElementById('like-' + postId);
@@ -1882,9 +2014,7 @@ function handlePracticeEnter(e) {
             localStorage.setItem('rimay_likedPosts', JSON.stringify(likedPosts));
             btn.classList.toggle('liked', !isLiked);
             btn.innerText = `❤️ ${newLikes}`;
-            try {
-                await updateDoc(doc(db, 'forumPosts', postId), { likes: increment(isLiked ? -1 : 1) });
-            } catch(e) {}
+            try { await updateDoc(doc(db, 'forumPosts', postId), { likes: increment(isLiked ? -1 : 1) }); } catch(e) {}
         };
     </script>
 </body>
