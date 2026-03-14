@@ -55,6 +55,16 @@
 
         .verb-card { background: white; border: 2px solid var(--border); padding: 16px; margin-bottom: 12px; border-radius: 16px; position: relative; }
         .card-pinned { border-color: var(--duo-yellow); background-color: #fffde7; }
+        .unit-block { margin-top: 24px; }
+        .unit-header { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 10px 0; border-bottom: 2px solid var(--border); margin-bottom: 0; user-select: none; color: var(--duo-blue); font-weight: 800; font-size: 16px; text-transform: uppercase; }
+        .unit-header:hover { opacity: 0.9; }
+        .unit-arrow { font-size: 14px; transition: transform 0.2s ease; display: inline-block; }
+        .unit-block.collapsed .unit-arrow { transform: rotate(-90deg); }
+        .unit-header .unit-title { flex: 1; }
+        .unit-cards { overflow: hidden; }
+        .unit-block.collapsed .unit-cards { display: none; }
+        .btn-unit-pin { width: 36px; height: 36px; padding: 0; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; border: 2px solid var(--border); border-bottom: 3px solid var(--border); background: white; color: #ccc; cursor: pointer; flex-shrink: 0; }
+        .btn-unit-pin.active { color: var(--duo-yellow); border-color: var(--duo-yellow); border-bottom-color: #d4a600; background: #fffde7; }
         
         .btn-icon { width: 40px; height: 40px; padding: 0; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; border-bottom: 3px solid; cursor: pointer; }
         .btn-speak { background: var(--duo-blue); border-color: var(--duo-blue-shadow); color: white; }
@@ -65,8 +75,40 @@
         .banner-correct { background: #d4f5dc; color: #1e7a2e; border: 2px solid var(--duo-green); }
         .banner-incorrect { background: #fde8e8; color: #922b21; border: 2px solid var(--duo-red); }
 
-        .path-container { display: flex; flex-direction: column; align-items: center; padding: 40px 0; position: relative; }
-        .path-container::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 10px; background-color: var(--path-gray); transform: translateX(-50%); z-index: 1; border-radius: 10px; }
+        .path-container { display: flex; flex-direction: column; align-items: stretch; padding: 20px 0; gap: 16px; }
+
+        /* Sección colapsable */
+        .path-section { border: 2px solid var(--border); border-radius: 20px; overflow: hidden; background: var(--card-bg); }
+        .path-section-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; cursor: pointer; user-select: none; background: var(--card-bg); border-bottom: 2px solid var(--border); transition: background 0.15s; }
+        .path-section-header:hover { background: #ede4d4; }
+        .path-section-header.collapsed { border-bottom: none; }
+        .path-section-title { font-size: 15px; font-weight: 900; color: var(--duo-blue); text-transform: uppercase; letter-spacing: 0.5px; }
+        .path-section-meta { font-size: 12px; color: #aaa; font-weight: 700; }
+        .path-section-arrow { font-size: 13px; color: var(--duo-blue); transition: transform 0.2s; }
+        .path-section-header.collapsed .path-section-arrow { transform: rotate(-90deg); }
+        .path-section-body { position: relative; }
+        .path-section-body.hidden { display: none !important; }
+
+        /* Línea vertical dentro de sección */
+        .path-inner { display: flex; flex-direction: column; align-items: center; padding: 30px 0 20px; position: relative; }
+        .path-inner::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 10px; background-color: var(--path-gray); transform: translateX(-50%); z-index: 1; border-radius: 10px; }
+
+        /* Panel de gramática */
+        .grammar-toggle { display: flex; align-items: center; gap: 10px; margin: 12px 16px 0; background: #eaf3ff; border: 2px solid #a8cff5; border-radius: 14px; padding: 10px 16px; cursor: pointer; font-weight: 800; font-size: 14px; color: #1a5fa8; user-select: none; transition: background 0.15s; }
+        .grammar-toggle:hover { background: #d6eaff; }
+        .grammar-toggle .gt-arrow { font-size: 12px; transition: transform 0.2s; margin-left: auto; }
+        .grammar-toggle.open .gt-arrow { transform: rotate(90deg); }
+        .grammar-panel { margin: 8px 16px 16px; background: #f7fbff; border: 2px solid #a8cff5; border-radius: 14px; padding: 18px; font-size: 14px; line-height: 1.7; color: var(--text); display: none; }
+        .grammar-panel.open { display: block; }
+        .grammar-panel h3 { color: #1a5fa8; font-size: 15px; margin: 16px 0 6px; border-bottom: 2px solid #d0e8ff; padding-bottom: 4px; }
+        .grammar-panel h3:first-child { margin-top: 0; }
+        .grammar-panel table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
+        .grammar-panel th { background: #1a5fa8; color: white; padding: 7px 10px; text-align: left; }
+        .grammar-panel td { padding: 6px 10px; border-bottom: 1px solid #d0e8ff; }
+        .grammar-panel tr:nth-child(even) td { background: #eaf3ff; }
+        .grammar-panel .example { background: #fff9e6; border-left: 4px solid var(--duo-yellow); padding: 8px 12px; border-radius: 0 10px 10px 0; margin: 8px 0; font-style: italic; }
+        .grammar-panel strong { color: #1a5fa8; }
+
         .unit-node-wrapper { position: relative; z-index: 2; margin-bottom: 40px; display: flex; flex-direction: column; align-items: center; width: 100%; }
         .unit-node-wrapper:nth-child(even) { align-items: flex-end; padding-right: 20%; }
         .unit-node-wrapper:nth-child(odd) { align-items: flex-start; padding-left: 20%; }
@@ -107,6 +149,23 @@
         .btn-srs.easy { background: var(--duo-green); border-bottom: 4px solid var(--duo-green-shadow); }
         .btn-srs:active { transform: translateY(4px); border-bottom-width: 0px; margin-bottom: 4px; }
 
+        /* --- ESTILOS FORO --- */
+        .forum-post { background: white; border: 2px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 14px; box-shadow: 0 3px 0 var(--border); }
+        .forum-post-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .forum-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--duo-blue); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 16px; flex-shrink: 0; }
+        .forum-author { font-weight: 800; font-size: 15px; color: var(--text); }
+        .forum-time { font-size: 12px; color: #aaa; margin-left: auto; }
+        .forum-category { display: inline-block; font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; }
+        .cat-pregunta { background: #dbeafe; color: #1e40af; }
+        .cat-sugerencia { background: #d1fae5; color: #065f46; }
+        .cat-comentario { background: #fef3c7; color: #92400e; }
+        .forum-text { font-size: 15px; line-height: 1.5; color: var(--text); }
+        .forum-likes { display: flex; align-items: center; gap: 6px; margin-top: 10px; }
+        .btn-like { background: none; border: 2px solid var(--border); border-bottom: 2px solid var(--border); border-radius: 20px; padding: 4px 14px; font-size: 13px; font-weight: 800; color: #aaa; cursor: pointer; width: auto; transition: all 0.15s; }
+        .btn-like.liked { border-color: var(--duo-red); color: var(--duo-red); background: #fff0f0; }
+        .forum-input-box { background: var(--card-bg); border: 2px solid var(--border); border-radius: 20px; padding: 18px; margin-bottom: 20px; }
+        .forum-name-row { display: flex; gap: 10px; margin-bottom: 10px; }
+
         /* --- ESTILOS PARA HISTORIAS 📚 --- */
         .story-card { background: white; border: 2px solid var(--border); border-radius: 15px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; cursor: pointer; box-shadow: 0 4px 0 var(--border); transition: 0.2s; }
         .story-card:active { transform: translateY(4px); box-shadow: 0 0 0 var(--border); }
@@ -132,8 +191,9 @@
  <div class="tabs">
         <button type="button" class="tab-btn active" id="tab-dict" onclick="switchTab('dict')">📚 Biblioteca</button>
         <button type="button" class="tab-btn" id="tab-practice" onclick="switchTab('practice')">🎮 Yachakunapaj</button>
-        <button type="button" class="tab-btn" id="tab-stories" onclick="switchTab('stories')">📖 Historias</button> 
+        <button type="button" class="tab-btn" id="tab-stories" onclick="switchTab('stories')">📖 Leerinapaj</button> 
         <button type="button" class="tab-btn" id="tab-awards" onclick="switchTab('awards')">🏆 Ñaupajman</button>
+        <button type="button" class="tab-btn" id="tab-forum" onclick="switchTab('forum')">💬 Comenta</button>
         <button type="button" class="tab-btn" id="tab-guide" onclick="switchTab('guide')">ℹ️ Guía</button>
     </div>
 
@@ -194,7 +254,7 @@
                 <div style="display: flex; gap: 15px; align-items: flex-start;">
                     <span style="font-size: 24px;">📖</span>
                     <div>
-                        <p style="margin: 0; font-weight: 800; color: var(--text);">Historias</p>
+                        <p style="margin: 0; font-weight: 800; color: var(--text);">Leerinapaj</p>
                         <p style="margin: 3px 0 0 0; font-size: 14px; color: #666; line-height: 1.4;">
                             Cuentos interactivos diseñados para practicar lectura, escucha y comprensión en situaciones reales.
                         </p>
@@ -263,6 +323,7 @@
                     <div id="statsList" style="font-size: 15px; color: #666; display: flex; flex-direction: column; gap: 6px;"></div>
                 </div>
             </div>
+            <div id="streakWarningBanner" class="hidden" style="width: 100%; margin-top: 0; margin-bottom: 0; padding: 12px 16px; background: #fff9e6; border: 2px solid var(--duo-yellow); border-radius: 12px; font-size: 14px; font-weight: 700; color: #8b6914; text-align: center; box-sizing: border-box;"></div>
 
             <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
                 <button type="button" class="special" onclick="startSRSReview('all')" style="flex: 1; min-width: 200px; font-size: 16px; padding: 15px;">
@@ -278,7 +339,7 @@
 
             <div id="studentControls" style="background: #f0f0f0; padding: 25px; border-radius: 20px; text-align: center; border: 2px dashed var(--duo-blue); margin-bottom: 20px;">
                 <h3 style="margin-top:0; color: var(--duo-blue); font-weight: 800;">📥 CARGAR ARCHIVOS</h3>
-                <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Sube tus <b>Historias</b> o <b>Lecciones</b> (.json) aquí.</p>
+                <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Sube tus <b>Leerinapaj</b> o <b>Lecciones</b> (.json) aquí.</p>
                 <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importData(event)">
                 <div class="flex-row" style="justify-content: center;">
                     <button type="button" onclick="document.getElementById('importFile').click()" style="background: var(--duo-blue); border-bottom: 4px solid var(--duo-blue-shadow); min-width: 200px;">
@@ -328,7 +389,7 @@
     </div> 
 
     <div id="section-stories" class="hidden">
-        <h2 style="text-align: center; color: var(--duo-blue); margin-bottom: 5px;">Cuentos en Quechua 📖</h2>
+        <h2 style="text-align: center; color: var(--duo-blue); margin-bottom: 5px;">Allinta leerina 📖</h2>
         <p style="text-align: center; color: #afafaf; margin-bottom: 25px;">Lee y mejora tu comprensión</p>
 
         <div id="storiesListContainer">
@@ -359,7 +420,7 @@
         <div class="stats-grid" id="practiceStats" style="display:none;">
             <div class="stat-card"><span class="stat-number color-red" id="lives">❤️ 3</span>Vidas</div>
             <div class="stat-card"><span class="stat-number color-yellow" id="xp">⭐ 0</span>XP</div>
-            <div class="stat-card"><span class="stat-number color-blue" id="streak">🔥 0</span>Racha</div>
+            <div class="stat-card"><span class="stat-number color-blue" id="streak">🔥 0</span>Aciertos</div>
         </div>
 
         <div id="practiceMenu">
@@ -386,7 +447,7 @@
                 <button type="button" class="secondary" onclick="startPractice('favs')">Favoritos ⭐</button>
             </div>
 
-            <h2 style="color:var(--text); text-transform:uppercase;">El Camino</h2>
+            <h2 style="color:var(--text); text-transform:uppercase;">Purina</h2>
             <div class="path-container" id="unitPathContainer"></div>
         </div>
 
@@ -397,6 +458,9 @@
             <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 30px;">
                 <button type="button" class="btn-icon btn-speak" onclick="speakCurrentPractice()" style="width: 50px; height: 50px; font-size: 24px;">🔊</button>
                 <div id="practiceSentence" style="font-size: 24px; font-weight: 800; color: var(--duo-blue);"></div>
+            </div>
+            <div id="practiceImageBox" style="display:none; margin-bottom: 20px;">
+                <img id="practiceImage" src="" alt="" style="width:160px; height:160px; object-fit:cover; border-radius:20px; border:3px solid var(--border); box-shadow: 0 4px 0 var(--border);">
             </div>
 
             <div id="modeWrite" class="hidden">
@@ -435,6 +499,29 @@
         <div id="awardsContainer" style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;"></div>
     </div>
 
+    <div id="section-forum" class="hidden">
+        <h2 style="text-align:center; color:var(--duo-blue); margin-bottom:5px;">💬 Comenta</h2>
+        <p style="text-align:center; color:#afafaf; margin-bottom:20px;">Preguntá, comentá y sugerí mejoras 🦙</p>
+
+        <!-- Formulario nuevo mensaje -->
+        <div class="forum-input-box">
+            <div class="forum-name-row">
+                <input type="text" id="forumName" placeholder="Tu nombre..." style="flex:1; margin-bottom:0;">
+                <select id="forumCategory" style="flex:1; margin-bottom:0;">
+                    <option value="pregunta">❓ Pregunta</option>
+                    <option value="sugerencia">💡 Sugerencia</option>
+                    <option value="comentario">💬 Comentario</option>
+                </select>
+            </div>
+            <textarea id="forumText" placeholder="Escribí tu mensaje acá..." style="font-family:'Nunito',sans-serif; width:100%; box-sizing:border-box; padding:14px; border:2px solid var(--border); border-radius:16px; font-size:15px; resize:none; height:100px; outline:none; margin-bottom:10px;"></textarea>
+            <button type="button" onclick="submitForumPost()">Publicar mensaje 📨</button>
+        </div>
+
+        <!-- Lista de posts -->
+        <div id="forumLoading" style="text-align:center; color:#aaa; padding:20px; font-weight:700;">Cargando mensajes... 🦙</div>
+        <div id="forumPosts"></div>
+    </div>
+
     <div id="llamaPopup" style="position: fixed; bottom: 20px; right: 20px; background: white; border: 4px solid var(--duo-green); border-radius: 20px; padding: 15px 25px; display: flex; align-items: center; gap: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index: 1000; transform: translateY(200%); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
         <div style="width: 70px; height: 70px; border-radius: 50%; background: var(--duo-yellow); display: flex; align-items: center; justify-content: center; border: 3px solid var(--duo-green); overflow: hidden; flex-shrink: 0;">
             <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjI1MCIgZmlsbD0iI2ZmYzgwMCIvPjxwYXRoIGQ9Ik0zNjAgMTYwdjgwYzAgNjAtNDAgMTAwLTEwMCAxMDBzLTEwMC00MC0xMDAtMTAwdjgwYzAtNjAgNDAtMTAwIDEwMC0xMDBzMTAwIDQwIDEwMCAxMDB6IiBmaWxsPSIjZmZmIi8+PHBhdGggZD0iTTI1NiAzNjBjLTYwIDAtMTAwLTQwLTEwMC0xMDBoMjAwYzAgNjAtNDAgMTAwLTEwMCAxMDB6IiBmaWxsPSIjZWVlIi8+PGNpcmNsZSBjeD0iMjAwIiBjeT0iMjAwIiByPSIxNSIgZmlsbD0iIzMzMyIvPjxjaXJjbGUgY3g9IjMxMiIgY3k9IjIwMCIgcj0iMTUiIGZpbGw9IiMzMzMiLz48cGF0aCBkPSJNMjMwIDI4MGMwIDIwIDE1IDM1IDI2IDM1czY2LTE1IDY2LTM1IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZjRiNGIiIHN0cm9rZS13aWR0aD0iOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTE4MCAxMjBsMjAtMzBNMzMyIDEyMGwtMjAtMzAiIHN0cm9rZT0iI2NjYyIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+" alt="Llama" style="width: 80%; height: 80%;">
@@ -446,6 +533,63 @@
     </div>
 
     <script>
+        // --- GRAMÁTICA POR SECCIÓN ---
+        const sectionGrammar = [
+            {
+                // Sección 1
+                title: 'Gramática — Sección 1',
+                html: `
+                    <h3>El verbo "Kay" — Ser</h3>
+                    <table>
+                        <tr><th>Pasado</th><th>Presente</th><th>Futuro</th></tr>
+                        <tr><td>Yo era: <strong>Noqa karqani</strong></td><td>Yo soy: <strong>Noqa kani</strong></td><td>Yo seré: <strong>Noqa kasaj</strong></td></tr>
+                        <tr><td>Tú eras: <strong>Qan karqanki</strong></td><td>Tú eres: <strong>Qan kanki</strong></td><td>Tú serás: <strong>Qan kanki</strong></td></tr>
+                        <tr><td>Él era: <strong>Pay karqa</strong></td><td>Él es: <strong>Payqa</strong></td><td>Él será: <strong>Pay kanqa</strong></td></tr>
+                    </table>
+
+                    <h3>El verbo "Kay" — Estar</h3>
+                    <table>
+                        <tr><th>Pasado</th><th>Presente</th><th>Futuro</th></tr>
+                        <tr><td>Noqa kusisqa kasharqani</td><td>Noqa kusisqa kashani</td><td>Noqa kusisqa kasaj</td></tr>
+                        <tr><td>Qan kasharqanki</td><td>Qan kashanki</td><td>Qan kanki</td></tr>
+                        <tr><td>Pay kasharqa</td><td>Pay kashan</td><td>Pay kanqa</td></tr>
+                    </table>
+
+                    <h3>La Negación — <strong>mana</strong> + sufijo <strong>-chu</strong></h3>
+                    <div class="example">No podré salir a la noche → <strong>Mana</strong> ch'isiman llojsiyta atisaj<strong>chu</strong>.</div>
+
+                    <h3>Los Plurales: <strong>-s</strong> y <strong>-kuna</strong></h3>
+                    <p>Si la palabra termina en <strong>vocal</strong> → sufijo <strong>-s</strong></p>
+                    <div class="example">Makis — manos</div>
+                    <p>Si la palabra termina en <strong>consonante</strong> → sufijo <strong>-kuna</strong></p>
+                    <div class="example">Atojkuna — zorros</div>
+
+                    <h3>Conjunción "O" — sufijo <strong>-chu</strong></h3>
+                    <p>Se agrega <strong>-chu</strong> a cada opción.</p>
+                    <div class="example">Yanachu chayri yurajchu → Negro o blanco.</div>
+
+                    <h3>Sufijo <strong>-man</strong> — a / hacia</h3>
+                    <p>Indica destino o desplazamiento de un lugar a otro.</p>
+                    <div class="example">Ch'isi<strong>man</strong> risaj → Iré a la noche.</div>
+
+                    <h3>Sufijo <strong>-manta</strong> — de</h3>
+                    <p>Indica procedencia: lugar de donde es o viene algo o alguien.</p>
+                    <div class="example">Llajtay<strong>manta</strong> kani → Soy de mi ciudad.</div>
+
+                    <h3>Sufijo <strong>-pi</strong> — en</h3>
+                    <p>Indica ubicación en un lugar.</p>
+                    <div class="example">Plaza<strong>pi</strong> kashani → Estoy en la plaza.</div>
+
+                    <h3>Sufijo <strong>-chu</strong> en pregunta</h3>
+                    <p>Para preguntas de sí/no. Se agrega <strong>-chu</strong> a la palabra que se quiere destacar.</p>
+                    <div class="example">¿Qanrí, rinkichu? → ¿Y tú, irás?</div>
+                    <div class="example">¿Kayqa yanachu? → ¿Esto es negro?</div>
+                    <div class="example">¿Jamunkichu? → ¿Vendrás?</div>
+                `
+            }
+            // Agregar más secciones aquí: { title: '...', html: '...' }
+        ];
+
         // --- BASE DE DATOS INICIAL ---
         const storiesData = [
             {
@@ -489,6 +633,30 @@
         let lastFailedBtnNode = null;
         let srsQueue = [];
         let currentSrsCardIndex = -1;
+        let lastPracticeDate = '';   // Última fecha que practicó (YYYY-MM-DD)
+        let streakDays = 0;          // Racha actual en días
+        let bestStreakDays = 0;      // Mejor racha histórica
+        let pinnedUnits = {};        // Unidades marcadas como favoritas para practicar
+
+        function getTodayString() {
+            const d = new Date();
+            return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+        }
+        function getYesterdayString() {
+            const d = new Date();
+            d.setDate(d.getDate() - 1);
+            return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+        }
+        function updateStreakDays() {
+            const today = getTodayString();
+            if (lastPracticeDate === today) return;
+            const yesterday = getYesterdayString();
+            if (lastPracticeDate === yesterday) streakDays++;
+            else streakDays = 1;
+            lastPracticeDate = today;
+            if (streakDays > bestStreakDays) bestStreakDays = streakDays;
+            save(true);
+        }
 
         // --- INICIALIZACIÓN DE DATOS GUARDADOS ---
        try {
@@ -522,6 +690,12 @@
             const savedProgress = localStorage.getItem('rimay_Progress'); if (savedProgress) unitProgress = JSON.parse(savedProgress);
             const savedPerfect = localStorage.getItem('rimay_Perfect'); if (savedPerfect) perfectUnits = JSON.parse(savedPerfect);
             const savedStories2 = localStorage.getItem('rimay_CompletedStories'); if (savedStories2) completedStories = JSON.parse(savedStories2);
+            lastPracticeDate = localStorage.getItem('rimay_LastPracticeDate') || '';
+            const savedStreak = localStorage.getItem('rimay_StreakDays'); if (savedStreak) streakDays = parseInt(savedStreak);
+            const savedBest = localStorage.getItem('rimay_BestStreak'); if (savedBest) bestStreakDays = parseInt(savedBest);
+            const savedPinnedUnits = localStorage.getItem('rimay_PinnedUnits'); if (savedPinnedUnits) pinnedUnits = JSON.parse(savedPinnedUnits);
+            const today = getTodayString(), yesterday = getYesterdayString();
+            if (lastPracticeDate && lastPracticeDate !== today && lastPracticeDate !== yesterday) streakDays = 0;
         } catch (error) {
             console.error("Error al cargar los datos guardados:", error);
         }
@@ -698,6 +872,10 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             localStorage.setItem('rimay_Attempts', JSON.stringify({total: totalAttempts, correct: correctAttempts}));
             localStorage.setItem('rimay_Time', studyTimeMs);
             localStorage.setItem('rimay_CompletedStories', JSON.stringify(completedStories));
+            localStorage.setItem('rimay_LastPracticeDate', lastPracticeDate);
+            localStorage.setItem('rimay_StreakDays', streakDays);
+            localStorage.setItem('rimay_BestStreak', bestStreakDays);
+            localStorage.setItem('rimay_PinnedUnits', JSON.stringify(pinnedUnits));
             if (updateChart) renderStatsChart();
         }
 
@@ -720,7 +898,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                                 });
                                 localStorage.setItem('rimay_Stories', JSON.stringify(storiesData));
                                 renderStoriesList();
-                                alert("¡Historias cargadas con éxito! 📖");
+                                alert("¡Leerinapaj cargadas con éxito! 📖");
                             }
                         } 
                         // Es un archivo de Vocabulario
@@ -758,8 +936,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
         function switchTab(t) { 
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); 
             document.getElementById('tab-'+t).classList.add('active'); 
-            // Añadimos 'section-guide' al array de abajo:
-            ['section-dict','section-practice','section-stories','section-awards', 'section-guide'].forEach(id => {
+            ['section-dict','section-practice','section-stories','section-awards','section-guide','section-forum'].forEach(id => {
                 const el = document.getElementById(id);
                 if(el) el.classList.add('hidden');
             }); 
@@ -768,6 +945,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             if(t==='practice') renderPath(); 
             if(t==='awards') renderAwards();
             if(t==='stories') renderStoriesList();
+            if(t==='forum') loadForumPosts();
         }
 
         // --- LÓGICA DE HISTORIAS ---
@@ -775,21 +953,84 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             const container = document.getElementById('storiesListContainer');
             if (!container) return;
             container.innerHTML = '';
-            storiesData.forEach(s => {
-                const card = document.createElement('div');
-                card.className = 'story-card';
-                card.onclick = () => startStory(s.id);
-                const isDone = completedStories[s.id];
-                card.innerHTML = `
-                    <div class="story-icon">${s.icon || '📖'}</div>
-                    <div class="story-info" style="flex:1;">
-                        <h3>${s.title} ${isDone ? '<span style="color:var(--duo-yellow); font-size:16px;">🏅</span>' : ''}</h3>
-                        <p>${s.subtitle || ''} • ${s.level || 'Básico'}</p>
+
+            const STORIES_PER_SECTION = 10;
+            const totalSections = Math.ceil(storiesData.length / STORIES_PER_SECTION);
+
+            for (let s = 0; s < totalSections; s++) {
+                // La sección N solo aparece si todas las historias de la sección N-1 están completadas
+                if (s > 0) {
+                    const prevSectionStories = storiesData.slice((s - 1) * STORIES_PER_SECTION, s * STORIES_PER_SECTION);
+                    const prevComplete = prevSectionStories.every(st => completedStories[st.id]);
+                    if (!prevComplete) break;
+                }
+
+                const sectionStories = storiesData.slice(s * STORIES_PER_SECTION, (s + 1) * STORIES_PER_SECTION);
+                const isFirstSection = s === 0;
+                const completedInSection = sectionStories.filter(st => completedStories[st.id]).length;
+                const metaText = `${completedInSection} / ${sectionStories.length} completadas`;
+
+                // Wrapper de sección (reutilizamos estilos de Purina)
+                const section = document.createElement('div');
+                section.className = 'path-section';
+                section.style.marginBottom = '16px';
+
+                const header = document.createElement('div');
+                header.className = 'path-section-header' + (isFirstSection ? '' : ' collapsed');
+                header.innerHTML = `
+                    <div>
+                        <div class="path-section-title">Sección ${s + 1}</div>
+                        <div class="path-section-meta">${metaText}</div>
                     </div>
-                    ${isDone ? '<div style="color:var(--duo-green); font-weight:800; font-size:13px;">✓ Completada</div>' : ''}
+                    <span class="path-section-arrow">▼</span>
                 `;
-                container.appendChild(card);
-            });
+
+                const body = document.createElement('div');
+                body.className = 'path-section-body' + (isFirstSection ? '' : ' hidden');
+                body.style.padding = '10px';
+
+                header.onclick = () => {
+                    header.classList.toggle('collapsed');
+                    body.classList.toggle('hidden');
+                };
+
+                sectionStories.forEach((st, localIdx) => {
+                    const globalIdx = s * STORIES_PER_SECTION + localIdx;
+                    const isDone = completedStories[st.id];
+                    const isLocked = globalIdx > 0 && !completedStories[storiesData[globalIdx - 1].id];
+
+                    const card = document.createElement('div');
+                    card.className = 'story-card';
+
+                    if (isLocked) {
+                        card.style.opacity = '0.5';
+                        card.style.cursor = 'not-allowed';
+                        card.innerHTML = `
+                            <div class="story-icon" style="filter:grayscale(1);">🔒</div>
+                            <div class="story-info" style="flex:1;">
+                                <h3 style="color:#aaa;">${st.title}</h3>
+                                <p style="color:#ccc;">${st.subtitle || ''} • ${st.level || 'Básico'}</p>
+                            </div>
+                            <div style="color:#bbb; font-weight:800; font-size:13px;">Bloqueada</div>
+                        `;
+                    } else {
+                        card.onclick = () => startStory(st.id);
+                        card.innerHTML = `
+                            <div class="story-icon">${st.icon || '📖'}</div>
+                            <div class="story-info" style="flex:1;">
+                                <h3>${st.title} ${isDone ? '<span style="color:var(--duo-yellow); font-size:16px;">🏅</span>' : ''}</h3>
+                                <p>${st.subtitle || ''} • ${st.level || 'Básico'}</p>
+                            </div>
+                            ${isDone ? '<div style="color:var(--duo-green); font-weight:800; font-size:13px;">✓ Completada</div>' : ''}
+                        `;
+                    }
+                    body.appendChild(card);
+                });
+
+                section.appendChild(header);
+                section.appendChild(body);
+                container.appendChild(section);
+            }
         }
 
         function startStory(id) {
@@ -810,6 +1051,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
         totalXP += xpEarned;
         
         if (isFirstTime) completedStories[currentStory.id] = true;
+        updateStreakDays();
         save(true);
 
         // Mostrar pantalla de celebración
@@ -834,7 +1076,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
         `;
         document.getElementById('storyProgressBar').style.width = '100%';
         const btnNext = document.getElementById('btnStoryNext');
-        btnNext.innerText = '🏠 Volver a Historias';
+        btnNext.innerText = '🏠 Volver a Leerinapaj';
         btnNext.onclick = () => { exitStory(); renderStoriesList(); };
         return;
     }
@@ -916,6 +1158,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
         // y se conectan sin problemas con la nueva estructura).
 
         function togglePin(index) { dictionary[index].pinned = !dictionary[index].pinned; save(); renderCards(); }
+        function toggleUnitPin(unitName) { pinnedUnits[unitName] = !pinnedUnits[unitName]; save(); renderCards(); }
 
         function updateSRSCount() {
             const now = Date.now();
@@ -988,8 +1231,65 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
         }
 
         function exitSRSReview() {
+            updateStreakDays();
             document.getElementById('srsReviewView').classList.add('hidden'); document.getElementById('libraryView').classList.remove('hidden');
             updateSRSCount(); renderCards();
+        }
+
+        // --- CACHÉ Y BÚSQUEDA DE IMÁGENES VIA WIKIMEDIA COMMONS + WIKIPEDIA ---
+        const wikiImageCache = {};
+
+        async function loadWikiImage(searchTerm, targetId) {
+            if (!searchTerm) return;
+            const key = searchTerm.toLowerCase();
+
+            const applyImage = (src) => {
+                const el = document.getElementById(targetId);
+                if (!el) return;
+                if (src) { el.src = src; el.style.display = ''; }
+                else el.style.display = 'none';
+            };
+
+            if (key in wikiImageCache) { applyImage(wikiImageCache[key]); return; }
+
+            try {
+                // 1️⃣ Wikipedia en español — artículo con imagen destacada (más confiable)
+                const wikiUrl = `https://es.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(searchTerm)}&prop=pageimages&format=json&pithumbsize=300&origin=*`;
+                const wikiRes = await fetch(wikiUrl);
+                const wikiData = await wikiRes.json();
+                const pages = Object.values((wikiData.query || {}).pages || {});
+                const page = pages[0];
+                if (page && page.thumbnail && page.thumbnail.source) {
+                    wikiImageCache[key] = page.thumbnail.source;
+                    applyImage(wikiImageCache[key]);
+                    return;
+                }
+            } catch(e) {}
+
+            try {
+                // 2️⃣ Wikimedia Commons — búsqueda abierta
+                const commonsUrl = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(searchTerm)}&gsrnamespace=6&gsrlimit=10&prop=imageinfo&iiprop=url&iiurlwidth=300&format=json&origin=*`;
+                const commonsRes = await fetch(commonsUrl);
+                const commonsData = await commonsRes.json();
+                const commonsPages = Object.values((commonsData.query || {}).pages || {});
+                for (const p of commonsPages) {
+                    const info = p.imageinfo && p.imageinfo[0];
+                    if (!info) continue;
+                    const thumb = info.thumburl || info.url || '';
+                    const lower = thumb.toLowerCase();
+                    // Aceptar jpg, png, jpeg, webp — rechazar solo svg y pdf
+                    if (lower.includes('.svg') || lower.includes('.pdf') || lower.includes('.ogg') || lower.includes('.ogv') || lower.includes('.webm')) continue;
+                    if (thumb) {
+                        wikiImageCache[key] = thumb;
+                        applyImage(thumb);
+                        return;
+                    }
+                }
+            } catch(e) {}
+
+            // Sin resultados
+            wikiImageCache[key] = null;
+            applyImage(null);
         }
 
         function renderCards() {
@@ -1005,16 +1305,36 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             
             const groups = {};
             filteredList.forEach(item => { const u = item.unit || "Sin Unidad"; if (!groups[u]) groups[u] = []; groups[u].push(item); });
-            Object.keys(groups).sort((a, b) => a.localeCompare(b, undefined, {numeric: true})).forEach(unit => {
-                const header = document.createElement('h3');
-                header.style.cssText = "color: var(--duo-blue); border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-top: 30px; margin-bottom: 10px; text-transform: uppercase; text-align: left; font-size: 16px;";
-                header.innerText = `📦 ${unit}`; container.appendChild(header);
+            const sortedUnits = Object.keys(groups).sort((a, b) => a.localeCompare(b, undefined, {numeric: true}));
+            sortedUnits.forEach(unit => {
+                const unitBlock = document.createElement('div');
+                unitBlock.className = 'unit-block collapsed';
+                unitBlock.setAttribute('data-unit', unit);
+                const header = document.createElement('div');
+                header.className = 'unit-header';
+                header.innerHTML = `<span class="unit-arrow">▼</span><span class="unit-title">📦 ${unit}</span>`;
+                const pinBtn = document.createElement('button');
+                pinBtn.type = 'button';
+                pinBtn.className = 'btn-unit-pin ' + (pinnedUnits[unit] ? 'active' : '');
+                pinBtn.innerHTML = '⭐';
+                pinBtn.title = pinnedUnits[unit] ? 'Quitar unidad de Favoritos' : 'Marcar unidad para practicar (Favoritos)';
+                pinBtn.onclick = function(e) { e.stopPropagation(); toggleUnitPin(unit); };
+                header.appendChild(pinBtn);
+                header.onclick = function() { unitBlock.classList.toggle('collapsed'); };
+                unitBlock.appendChild(header);
+                const cardsWrap = document.createElement('div');
+                cardsWrap.className = 'unit-cards';
                 groups[unit].sort((a, b) => (b.pinned === a.pinned) ? 0 : b.pinned ? 1 : -1).forEach(item => {
                     const globalIndex = dictionary.indexOf(item); const card = document.createElement('div');
                     card.className = "verb-card " + (item.pinned ? 'card-pinned' : '');
-                    card.innerHTML = `<div style="display:flex; gap:15px; align-items:center;"><button type="button" class="btn-icon btn-speak" onclick="speak('${item.verb.replace(/'/g, "\\'")}')">🔊</button><div style="flex-grow:1;"><div style="font-size:18px; font-weight:800;">${item.verb}</div><div style="font-weight:600; font-size:15px; color: var(--duo-blue);">${item.translation}</div></div><button type="button" class="btn-icon btn-pin ${item.pinned ? 'active' : ''}" onclick="togglePin(${globalIndex})">⭐</button></div>`;
-                    container.appendChild(card);
+                    const imgId = 'img-card-' + globalIndex;
+                    const searchTerm = item.imageSearch || (item.translation || '').split('/')[0].split(',')[0].trim();
+                    card.innerHTML = `<div style="display:flex; gap:15px; align-items:center;"><img id="${imgId}" src="" alt="${searchTerm}" style="width:70px; height:70px; object-fit:cover; border-radius:12px; border:2px solid var(--border); flex-shrink:0; background:#f0f0f0;" onerror="this.style.display='none'"><button type="button" class="btn-icon btn-speak" onclick="speak('${item.verb.replace(/'/g, "\\'")}')">🔊</button><div style="flex-grow:1;"><div style="font-size:18px; font-weight:800;">${item.verb}</div><div style="font-weight:600; font-size:15px; color: var(--duo-blue);">${item.translation}</div></div><button type="button" class="btn-icon btn-pin ${item.pinned ? 'active' : ''}" onclick="togglePin(${globalIndex})">⭐</button></div>`;
+                    cardsWrap.appendChild(card);
+                    loadWikiImage(searchTerm, imgId);
                 });
+                unitBlock.appendChild(cardsWrap);
+                container.appendChild(unitBlock);
             });
             renderStatsChart(); updateSRSCount();
         }
@@ -1034,7 +1354,19 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             dictionary.forEach(card => { if (!card.srs || card.srs.reps === 0) nuevas++; else if (card.srs.interval >= 21) dominadas++; else aprendizaje++; });
             
             const statsList = document.getElementById('statsList');
-            if (statsList) statsList.innerHTML = `<span>🌱 Nivel: <b>${rank}</b></span><span>🎯 Precisión: <b>${accuracy}%</b></span><span>⏳ Tiempo: <b>${minutes} min</b></span><span>🏆 Trofeos: <b>${trofeos}</b></span><span>⭐ Favoritas: <b>${pinned} / ${total || 1}</b></span><div style="margin-top: 10px; padding-top: 10px; border-top: 2px dashed var(--border); display: flex; flex-direction: column; gap: 6px;"><span style="color: #999;">🤍 Nuevas: <b>${nuevas}</b></span><span style="color: #d4a000;">💛 En Aprendizaje: <b>${aprendizaje}</b></span><span style="color: var(--duo-green);">💚 Dominadas: <b>${dominadas}</b></span></div>`;
+            if (statsList) statsList.innerHTML = `<span>🌱 Nivel: <b>${rank}</b></span><span>⭐ Experiencia: <b>${totalXP} XP</b></span><span>🔥 Días seguidos: <b>${streakDays} día${streakDays !== 1 ? 's' : ''}</b></span><span>🏅 Mejor seguidilla: <b>${bestStreakDays} días</b></span><span>🎯 Precisión: <b>${accuracy}%</b></span><span>⏳ Tiempo: <b>${minutes} min</b></span><span>🏆 Trofeos: <b>${trofeos}</b></span><span>⭐ Favoritas: <b>${pinned} / ${total || 1}</b></span><div style="margin-top: 10px; padding-top: 10px; border-top: 2px dashed var(--border); display: flex; flex-direction: column; gap: 6px;"><span style="color: #999;">🤍 Nuevas: <b>${nuevas}</b></span><span style="color: #d4a000;">💛 En Aprendizaje: <b>${aprendizaje}</b></span><span style="color: var(--duo-green);">💚 Dominadas: <b>${dominadas}</b></span></div>`;
+            
+            const streakBanner = document.getElementById('streakWarningBanner');
+            if (streakBanner) {
+                const today = getTodayString();
+                const yesterday = getYesterdayString();
+                if (streakDays > 0 && lastPracticeDate === yesterday) {
+                    streakBanner.classList.remove('hidden');
+                    streakBanner.innerHTML = '⚠️ ¡Practicá hoy para mantener tu seguidilla de <b>' + streakDays + ' día' + (streakDays !== 1 ? 's' : '') + '</b>!';
+                } else {
+                    streakBanner.classList.add('hidden');
+                }
+            }
             
             const canvas = document.getElementById('statsChart');
             if (!canvas) return;
@@ -1058,21 +1390,113 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             if (daysOverdue >= 30) return { status: 'broken' }; else if (daysOverdue >= 14) return { status: 'warning' }; else if (daysOverdue >= 7) return { status: 'nocrown' }; else return { status: 'perfect' };
         }
 
+        function isUnitUnlocked(units, index) {
+            if (index === 0) return true;
+            const prevUnit = units[index - 1];
+            return !!(unitProgress[prevUnit]);
+        }
+
+        function isSectionUnlocked(units, sectionIndex, unitsPerSection) {
+            // La primera sección siempre visible
+            if (sectionIndex === 0) return true;
+            // La sección N se muestra solo si todas las unidades de la sección N-1 están completadas
+            const prevSectionUnits = units.slice((sectionIndex - 1) * unitsPerSection, sectionIndex * unitsPerSection);
+            return prevSectionUnits.every(u => unitProgress[u]);
+        }
+
         function renderPath() {
             const container = document.getElementById('unitPathContainer'); container.innerHTML = '';
             const units = getUniqueUnits();
             if (units.length === 0) { container.innerHTML = '<p style="z-index:2; background:white; padding:10px; border-radius:10px;">Carga unidades para ver el camino.</p>'; return; }
-            units.forEach((u, i) => {
-                const health = getUnitHealth(u); const defaultIcons = ['🌟','🚀','🔥','🧠','🎯']; let icon = defaultIcons[i % defaultIcons.length];
-                let nodeClass = '', nodeStyle = '', crownHTML = '', extraText = '';
-                if (health.status === 'perfect') { nodeClass = 'mastered'; icon = '👑'; crownHTML = '<div class="unit-crown">👑</div>'; } 
-                else if (health.status === 'nocrown') { nodeClass = 'mastered'; icon = '👑'; } 
-                else if (health.status === 'warning') { nodeClass = 'mastered'; icon = '⚠️'; nodeStyle = 'background-color: #ff9600; box-shadow: 0 8px 0 #cc7800; border-color: white;'; extraText = '<div style="color: #ff9600; font-weight: 900; font-size: 13px; margin-top: 8px; text-transform: uppercase;">⚠️ Repasota ruway</div>'; } 
-                else if (health.status === 'broken') { nodeClass = 'mastered'; icon = '💔'; nodeStyle = 'filter: grayscale(100%) opacity(0.6);'; }
-                const node = document.createElement('div'); node.className = 'unit-node-wrapper';
-                node.innerHTML = `<div class="unit-node ${nodeClass}" style="${nodeStyle}" onclick="startPractice('${u.replace(/'/g, "\\'")}')">${icon}${crownHTML}</div><div class="unit-title">${u}</div>${extraText}`;
-                container.appendChild(node);
-            });
+
+            const UNITS_PER_SECTION = 11;
+            const totalSections = Math.ceil(units.length / UNITS_PER_SECTION);
+
+            for (let s = 0; s < totalSections; s++) {
+                if (!isSectionUnlocked(units, s, UNITS_PER_SECTION)) break;
+
+                const sectionUnits = units.slice(s * UNITS_PER_SECTION, (s + 1) * UNITS_PER_SECTION);
+                const sectionIndex = s + 1;
+                const isFirstSection = s === 0;
+
+                const completedInSection = sectionUnits.filter(u => unitProgress[u]).length;
+                const metaText = `${completedInSection} / ${sectionUnits.length} completadas`;
+
+                const section = document.createElement('div');
+                section.className = 'path-section';
+
+                const header = document.createElement('div');
+                header.className = 'path-section-header' + (isFirstSection ? '' : ' collapsed');
+                header.innerHTML = `
+                    <div>
+                        <div class="path-section-title">Sección ${sectionIndex}</div>
+                        <div class="path-section-meta">${metaText}</div>
+                    </div>
+                    <span class="path-section-arrow">▼</span>
+                `;
+                const body = document.createElement('div');
+                body.className = 'path-section-body' + (isFirstSection ? '' : ' hidden');
+                header.onclick = () => {
+                    header.classList.toggle('collapsed');
+                    body.classList.toggle('hidden');
+                };
+
+                // Panel de gramática si existe para esta sección
+                const grammar = sectionGrammar[s];
+                if (grammar) {
+                    const toggleId = `grammar-toggle-${s}`;
+                    const panelId = `grammar-panel-${s}`;
+                    const grammarToggle = document.createElement('div');
+                    grammarToggle.className = 'grammar-toggle';
+                    grammarToggle.id = toggleId;
+                    grammarToggle.innerHTML = `📖 Ver gramática de la Sección ${sectionIndex} <span class="gt-arrow">▶</span>`;
+                    grammarToggle.onclick = () => {
+                        const panel = document.getElementById(panelId);
+                        const tog = document.getElementById(toggleId);
+                        const isOpen = panel.classList.contains('open');
+                        panel.classList.toggle('open', !isOpen);
+                        tog.classList.toggle('open', !isOpen);
+                        tog.querySelector('.gt-arrow').style.transform = isOpen ? '' : 'rotate(90deg)';
+                    };
+                    const grammarPanel = document.createElement('div');
+                    grammarPanel.className = 'grammar-panel';
+                    grammarPanel.id = panelId;
+                    grammarPanel.innerHTML = grammar.html;
+                    body.appendChild(grammarToggle);
+                    body.appendChild(grammarPanel);
+                }
+
+                const inner = document.createElement('div');
+                inner.className = 'path-inner';
+
+                sectionUnits.forEach((u, localIdx) => {
+                    const globalIdx = s * UNITS_PER_SECTION + localIdx;
+                    const health = getUnitHealth(u);
+                    const defaultIcons = ['🌟','🚀','🔥','🧠','🎯'];
+                    let icon = defaultIcons[globalIdx % defaultIcons.length];
+                    let nodeClass = '', nodeStyle = '', crownHTML = '', extraText = '';
+                    const unlocked = isUnitUnlocked(units, globalIdx);
+
+                    const node = document.createElement('div');
+                    node.className = 'unit-node-wrapper';
+
+                    if (!unlocked) {
+                        node.innerHTML = `<div class="unit-node" style="background-color:var(--path-gray);box-shadow:0 8px 0 #b0a090;cursor:not-allowed;opacity:0.7;" title="Completá la unidad anterior para desbloquear">🔒</div><div class="unit-title" style="color:#aaa;">${u}</div>`;
+                    } else {
+                        if (health.status === 'perfect') { nodeClass = 'mastered'; icon = '👑'; crownHTML = '<div class="unit-crown">👑</div>'; }
+                        else if (health.status === 'nocrown') { nodeClass = 'mastered'; icon = '👑'; }
+                        else if (health.status === 'warning') { nodeClass = 'mastered'; icon = '⚠️'; nodeStyle = 'background-color:#ff9600;box-shadow:0 8px 0 #cc7800;border-color:white;'; extraText = '<div style="color:#ff9600;font-weight:900;font-size:13px;margin-top:8px;text-transform:uppercase;">⚠️ Repasota ruway</div>'; }
+                        else if (health.status === 'broken') { nodeClass = 'mastered'; icon = '💔'; nodeStyle = 'filter:grayscale(100%) opacity(0.6);'; }
+                        node.innerHTML = `<div class="unit-node ${nodeClass}" style="${nodeStyle}" onclick="startPractice('${u.replace(/'/g, "\\'")}')">${icon}${crownHTML}</div><div class="unit-title">${u}</div>${extraText}`;
+                    }
+                    inner.appendChild(node);
+                });
+
+                body.appendChild(inner);
+                section.appendChild(header);
+                section.appendChild(body);
+                container.appendChild(section);
+            }
         }
 
         function renderAwards() {
@@ -1095,9 +1519,9 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                 container.appendChild(card);
             });
 
-            // --- Insignias de Historias ---
+            // --- Insignias de Leerinapaj ---
             if (storiesData.length > 0) {
-                const titleStories = document.createElement('h3'); titleStories.style = "width: 100%; text-align: center; color: var(--duo-blue); margin-top: 30px; margin-bottom: 15px; font-weight: 800;"; titleStories.innerText = "📖 Insignias de Historias"; container.appendChild(titleStories);
+                const titleStories = document.createElement('h3'); titleStories.style = "width: 100%; text-align: center; color: var(--duo-blue); margin-top: 30px; margin-bottom: 15px; font-weight: 800;"; titleStories.innerText = "📖 Insignias de Leerinapaj"; container.appendChild(titleStories);
                 storiesData.forEach(s => {
                     const isDone = completedStories[s.id];
                     const card = document.createElement('div'); card.className = `trophy-card ${isDone ? 'unlocked' : 'locked'}`;
@@ -1128,7 +1552,7 @@ function handlePracticeEnter(e) {
 
         function startPractice(filter) {
             currentUnit = (filter !== 'all' && filter !== 'favs') ? filter : null;
-            let pool = filter === 'all' ? [...dictionary] : filter === 'favs' ? dictionary.filter(d => d.pinned) : dictionary.filter(d => d.unit === filter);
+            let pool = filter === 'all' ? [...dictionary] : filter === 'favs' ? dictionary.filter(d => d.pinned || (d.unit && pinnedUnits[d.unit])) : dictionary.filter(d => d.unit === filter);
             if (pool.length === 0) { alert("No hay suficientes palabras para practicar."); return; }
             practiceStartTime = Date.now();
             let mezcladas = pool.sort(() => 0.5 - Math.random());
@@ -1142,6 +1566,7 @@ function handlePracticeEnter(e) {
 
         function endPractice(completed) {
             if (practiceStartTime > 0) { studyTimeMs += (Date.now() - practiceStartTime); practiceStartTime = 0; }
+            updateStreakDays();
             save(true); 
             document.getElementById('practiceMenu').style.display = 'block'; document.getElementById('practiceBox').style.display = 'none';
             document.getElementById('progressContainer').style.display = 'none'; document.getElementById('practiceStats').style.display = 'none';
@@ -1176,6 +1601,20 @@ function handlePracticeEnter(e) {
             question.ask = dir === 'q2e' ? question.verb : question.translation;
             question.answer = dir === 'q2e' ? question.translation : question.verb;
             document.getElementById('practiceSentence').innerText = question.ask;
+            const imgBox = document.getElementById('practiceImageBox');
+            const img = document.getElementById('practiceImage');
+            if (dir === 'q2e') {
+                const searchTerm = question.imageSearch || (question.translation || '').split('/')[0].split(',')[0].trim();
+                img.src = '';
+                img.style.display = 'block';
+                imgBox.style.display = 'block';
+                const tmpId = 'practice-img-tmp';
+                img.id = tmpId;
+                loadWikiImage(searchTerm, tmpId).then(() => { img.id = 'practiceImage'; });
+            } else {
+                imgBox.style.display = 'none';
+                img.src = '';
+            }
         }
 
         function showPracticeMode(mode, dir) {
@@ -1326,6 +1765,127 @@ function handlePracticeEnter(e) {
         renderCards(); renderPath(); renderAwards();
         if (hasAudioSupport) setTimeout(populateVoices, 100);
 
+    </script>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, increment, orderBy, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyArv7WzklDiQjpiHhckVsrEpc4A_lnwXGE",
+            authDomain: "yachakuna-92adf.firebaseapp.com",
+            projectId: "yachakuna-92adf",
+            storageBucket: "yachakuna-92adf.firebasestorage.app",
+            messagingSenderId: "32308171025",
+            appId: "1:32308171025:web:e1d2797a85e284553dbcb0"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Guardar liked posts en localStorage
+        const likedPosts = JSON.parse(localStorage.getItem('rimay_likedPosts') || '{}');
+
+        function timeAgo(ts) {
+            if (!ts) return '';
+            const now = Date.now();
+            const diff = Math.floor((now - ts.toMillis()) / 1000);
+            if (diff < 60) return 'Ahora mismo';
+            if (diff < 3600) return `Hace ${Math.floor(diff/60)} min`;
+            if (diff < 86400) return `Hace ${Math.floor(diff/3600)} h`;
+            return `Hace ${Math.floor(diff/86400)} día${Math.floor(diff/86400)!==1?'s':''}`;
+        }
+
+        function catClass(cat) {
+            if (cat === 'pregunta') return 'cat-pregunta';
+            if (cat === 'sugerencia') return 'cat-sugerencia';
+            return 'cat-comentario';
+        }
+        function catLabel(cat) {
+            if (cat === 'pregunta') return '❓ Pregunta';
+            if (cat === 'sugerencia') return '💡 Sugerencia';
+            return '💬 Comentario';
+        }
+
+        window.loadForumPosts = async function() {
+            const container = document.getElementById('forumPosts');
+            const loading = document.getElementById('forumLoading');
+            container.innerHTML = '';
+            loading.style.display = 'block';
+            try {
+                const q = query(collection(db, 'forumPosts'), orderBy('createdAt', 'desc'));
+                const snapshot = await getDocs(q);
+                loading.style.display = 'none';
+                if (snapshot.empty) {
+                    container.innerHTML = '<p style="text-align:center;color:#aaa;padding:30px;font-weight:700;">¡Sé el primero en escribir! 🦙</p>';
+                    return;
+                }
+                snapshot.forEach(docSnap => {
+                    const d = docSnap.data();
+                    const id = docSnap.id;
+                    const isLiked = !!likedPosts[id];
+                    const initials = (d.name || '?').charAt(0).toUpperCase();
+                    const post = document.createElement('div');
+                    post.className = 'forum-post';
+                    post.innerHTML = `
+                        <div class="forum-post-header">
+                            <div class="forum-avatar">${initials}</div>
+                            <div>
+                                <div class="forum-author">${d.name || 'Anónimo'}</div>
+                                <div style="font-size:12px;color:#aaa;">${timeAgo(d.createdAt)}</div>
+                            </div>
+                        </div>
+                        <span class="forum-category ${catClass(d.category)}">${catLabel(d.category)}</span>
+                        <div class="forum-text">${d.text}</div>
+                        <div class="forum-likes">
+                            <button type="button" class="btn-like ${isLiked ? 'liked' : ''}" id="like-${id}" onclick="window.toggleLike('${id}', ${d.likes||0})">
+                                ❤️ ${d.likes || 0}
+                            </button>
+                        </div>
+                    `;
+                    container.appendChild(post);
+                });
+            } catch(e) {
+                loading.style.display = 'none';
+                container.innerHTML = '<p style="text-align:center;color:#c00;padding:20px;">Error al cargar mensajes. Revisá tu conexión.</p>';
+            }
+        };
+
+        window.submitForumPost = async function() {
+            const name = document.getElementById('forumName').value.trim();
+            const text = document.getElementById('forumText').value.trim();
+            const category = document.getElementById('forumCategory').value;
+            if (!name) { alert('Escribí tu nombre para publicar 😊'); return; }
+            if (!text || text.length < 5) { alert('El mensaje es muy corto 😅'); return; }
+            const btn = document.querySelector('#section-forum button');
+            btn.disabled = true; btn.innerText = 'Publicando...';
+            try {
+                await addDoc(collection(db, 'forumPosts'), {
+                    name, text, category, likes: 0, createdAt: serverTimestamp()
+                });
+                document.getElementById('forumText').value = '';
+                btn.disabled = false; btn.innerText = 'Publicar mensaje 📨';
+                await window.loadForumPosts();
+            } catch(e) {
+                alert('Error al publicar. Revisá tu conexión.');
+                btn.disabled = false; btn.innerText = 'Publicar mensaje 📨';
+            }
+        };
+
+        window.toggleLike = async function(postId, currentLikes) {
+            const isLiked = !!likedPosts[postId];
+            const btn = document.getElementById('like-' + postId);
+            if (!btn) return;
+            const newLikes = isLiked ? currentLikes - 1 : currentLikes + 1;
+            likedPosts[postId] = !isLiked;
+            localStorage.setItem('rimay_likedPosts', JSON.stringify(likedPosts));
+            btn.classList.toggle('liked', !isLiked);
+            btn.innerText = `❤️ ${newLikes}`;
+            try {
+                await updateDoc(doc(db, 'forumPosts', postId), { likes: increment(isLiked ? -1 : 1) });
+            } catch(e) {}
+        };
     </script>
 </body>
 </html>
