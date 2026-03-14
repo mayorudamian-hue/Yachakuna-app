@@ -1,0 +1,333 @@
+[
+  {
+    "verb": "Noqa",
+    "translation": "Yo",
+    "unit": "1 Pronombres personales",
+    "tags": [
+      "Pronombre"
+    ],
+    "sentences": [
+      {
+        "text": "Noqa kani",
+        "trans": "Yo soy"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Qan",
+    "translation": "Tú/vos",
+    "unit": "1 Pronombres personales",
+    "tags": [
+      "Pronombre"
+    ],
+    "sentences": [
+      {
+        "text": "Qan kanki",
+        "trans": "Tú eres"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Pay",
+    "translation": "Él/ella",
+    "unit": "1 Pronombres personales",
+    "tags": [
+      "Pronombre"
+    ],
+    "sentences": [
+      {
+        "text": "Payqa Jehová",
+        "trans": "Él es Jehová"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Noqayku",
+    "translation": "Nosotros (exclusivo)",
+    "unit": "1 Pronombres personales",
+    "tags": [
+      "Pronombre"
+    ],
+    "sentences": [
+      {
+        "text": "Noqayku kayku",
+        "trans": "Sólo nosotros somos"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Noqanchej",
+    "translation": "Nosotros (inclusivo)",
+    "unit": "1 Pronombres personales",
+    "tags": [
+      "Pronombre"
+    ],
+    "sentences": [
+      {
+        "text": "Noqanchej kanchej",
+        "trans": "Nosotros somos"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Qankuna",
+    "translation": "Ustedes",
+    "unit": "1 Pronombres personales",
+    "tags": [
+      "Pronombre"
+    ],
+    "sentences": [
+      {
+        "text": "Qankuna kankichej",
+        "trans": "Ustedes son"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Paykuna",
+    "translation": "Ellos/ellas",
+    "unit": "1 Pronombres personales",
+    "tags": [
+      "Pronombre"
+    ],
+    "sentences": [
+      {
+        "text": "Paykuna kanku",
+        "trans": "Ellos son"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Imaynalla",
+    "translation": "Hola",
+    "unit": "2 Saludos",
+    "tags": [
+      "Frase"
+    ],
+    "sentences": [
+      {
+        "text": "Imaynalla doña",
+        "trans": "Hola doña"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Tinkunakama",
+    "translation": "Nos vemos",
+    "unit": "2 Saludos",
+    "tags": [
+      "Frase"
+    ],
+    "sentences": [
+      {
+        "text": "Tinkunakama don Juan",
+        "trans": "Nos vemos don Juan"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Kusisqa",
+    "translation": "Feliz / Alegre",
+    "unit": "4. Sentimientos y Estados",
+    "tags": [
+      "Adjetivo"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Llakisqa",
+    "translation": "Triste",
+    "unit": "4. Sentimientos y Estados",
+    "tags": [
+      "Adjetivo"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Onqosqa",
+    "translation": "Enfermo",
+    "unit": "4. Sentimientos y Estados",
+    "tags": [
+      "Adjetivo"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Sayk'usqa",
+    "translation": "Cansado",
+    "unit": "4. Sentimientos y Estados",
+    "tags": [
+      "Adjetivo"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Phiñasqa",
+    "translation": "Enojado / Molesto",
+    "unit": "4. Sentimientos y Estados",
+    "tags": [
+      "Adjetivo"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Yarqhasqa",
+    "translation": "Hambriento",
+    "unit": "4. Sentimientos y Estados",
+    "tags": [
+      "Adjetivo"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Inti",
+    "translation": "Sol",
+    "unit": "5. Naturaleza y Clima",
+    "tags": [
+      "Sustantivo"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Para",
+    "translation": "Lluvia",
+    "unit": "5. Naturaleza y Clima",
+    "tags": [
+      "Sustantivo"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Chiri",
+    "translation": "Frío",
+    "unit": "5. Naturaleza y Clima",
+    "tags": [
+      "Clima"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Rupha",
+    "translation": "Calor / Quema",
+    "unit": "5. Naturaleza y Clima",
+    "tags": [
+      "Clima"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Urqo",
+    "translation": "Cerro / Montaña",
+    "unit": "5. Naturaleza y Clima",
+    "tags": [
+      "Naturaleza"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Mayu",
+    "translation": "Río",
+    "unit": "5. Naturaleza y Clima",
+    "tags": [
+      "Naturaleza"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Phuyu",
+    "translation": "Nube",
+    "unit": "5. Naturaleza y Clima",
+    "tags": [
+      "Naturaleza"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Riy",
+    "translation": "Ir",
+    "unit": "9. Sufijos -man y -manta",
+    "tags": [
+      "Vocabulario",
+      "Verbos"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Chakipi",
+    "translation": "A pie (En pie)",
+    "unit": "10. Medios de transporte (-pi)",
+    "tags": [
+      "Vocabulario",
+      "Transporte"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Autopi",
+    "translation": "En auto",
+    "unit": "10. Medios de transporte (-pi)",
+    "tags": [
+      "Vocabulario",
+      "Transporte"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Colectivopi",
+    "translation": "En colectivo",
+    "unit": "10. Medios de transporte (-pi)",
+    "tags": [
+      "Vocabulario",
+      "Transporte"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Avionpi",
+    "translation": "En avión",
+    "unit": "10. Medios de transporte (-pi)",
+    "tags": [
+      "Vocabulario",
+      "Transporte"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Trenpi",
+    "translation": "En tren",
+    "unit": "10. Medios de transporte (-pi)",
+    "tags": [
+      "Vocabulario",
+      "Transporte"
+    ],
+    "sentences": [],
+    "pinned": false
+  }
+]

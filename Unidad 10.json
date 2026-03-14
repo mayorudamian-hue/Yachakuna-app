@@ -1,0 +1,106 @@
+[
+  {
+    "verb": "¿Imapí llajtaman rinki?",
+    "translation": "¿En qué vas a la ciudad?",
+    "unit": "10. Medios de transporte (-pi)",
+    "tags": ["Gramática", "Transporte", "Verbo Riy"],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Chakipi rini.",
+    "translation": "Voy a pie.",
+    "unit": "10. Medios de transporte (-pi)",
+    "tags": ["Gramática", "Transporte", "Verbo Riy"],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "¿Autopichu mercadoman rishanki?",
+    "translation": "¿Estás yendo en auto al mercado?",
+    "unit": "10. Medios de transporte (-pi)",
+    "tags": ["Gramática", "Transporte", "Preguntas"],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Mana, colectivopi rishani.",
+    "translation": "No, estoy yendo en colectivo.",
+    "unit": "10. Medios de transporte (-pi)",
+    "tags": ["Gramática", "Transporte", "Verbo Riy"],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Payqa avionpi jamun.",
+    "translation": "Él/Ella viene en avión.",
+    "unit": "10. Medios de transporte (-pi)",
+    "tags": ["Gramática", "Transporte", "Verbo Jamuy"],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Trenpi risaj.",
+    "translation": "Iré en tren.",
+    "unit": "10. Medios de transporte (-pi)",
+    "tags": ["Gramática", "Transporte", "Tiempo Futuro"],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Bicicletapi sapa p'unchay rini.",
+    "translation": "Voy en bicicleta todos los días.",
+    "unit": "10. Medios de transporte (-pi)",
+    "tags": ["Gramática", "Transporte", "Rutina"],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "¿Imapí?",
+    "translation": "¿En qué?",
+    "unit": "10. Medios de transporte (-pi)",
+    "tags": ["Vocabulario", "Preguntas", "Sufijos"],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Chakipi",
+    "translation": "A pie (En pie)",
+    "unit": "10. Medios de transporte (-pi)",
+    "tags": ["Vocabulario", "Transporte"],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Autopi",
+    "translation": "En auto",
+    "unit": "10. Medios de transporte (-pi)",
+    "tags": ["Vocabulario", "Transporte"],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Colectivopi",
+    "translation": "En colectivo",
+    "unit": "10. Medios de transporte (-pi)",
+    "tags": ["Vocabulario", "Transporte"],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Avionpi",
+    "translation": "En avión",
+    "unit": "10. Medios de transporte (-pi)",
+    "tags": ["Vocabulario", "Transporte"],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Trenpi",
+    "translation": "En tren",
+    "unit": "10. Medios de transporte (-pi)",
+    "tags": ["Vocabulario", "Transporte"],
+    "sentences": [],
+    "pinned": false
+  }
+]
