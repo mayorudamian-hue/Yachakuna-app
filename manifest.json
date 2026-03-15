@@ -2,7 +2,7 @@
   "name": "Yachakuna",
   "short_name": "Yachakuna",
   "description": "Aprendé Quechua boliviano de forma divertida e interactiva.",
-  "start_url": "./índice.html",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#fdf8f2",
