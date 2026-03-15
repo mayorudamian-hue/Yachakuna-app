@@ -394,8 +394,10 @@
                             <option value="Verbo">🔤 Verbo</option>
                             <option value="Sustantivo">📌 Sustantivo</option>
                             <option value="Adjetivo">🎨 Adjetivo</option>
+                            <option value="Adverbio">📍 Adverbio</option>
                             <option value="Pronombre">🙋 Pronombre</option>
                             <option value="Frase">💬 Frase</option>
+                            <option value="Pregunta">❓ Pregunta</option>
                             <option value="Sufijo">🔩 Sufijo</option>
                             <option value="Número">🔢 Número</option>
                         </select>
@@ -434,8 +436,10 @@
                     <button type="button" class="cat-chip" onclick="setCatFilter('Verbo')">🔤 Verbos</button>
                     <button type="button" class="cat-chip" onclick="setCatFilter('Sustantivo')">📌 Sustantivos</button>
                     <button type="button" class="cat-chip" onclick="setCatFilter('Adjetivo')">🎨 Adjetivos</button>
+                    <button type="button" class="cat-chip" onclick="setCatFilter('Adverbio')">📍 Adverbios</button>
                     <button type="button" class="cat-chip" onclick="setCatFilter('Pronombre')">🙋 Pronombres</button>
                     <button type="button" class="cat-chip" onclick="setCatFilter('Frase')">💬 Frases</button>
+                    <button type="button" class="cat-chip" onclick="setCatFilter('Pregunta')">❓ Preguntas</button>
                     <button type="button" class="cat-chip" onclick="setCatFilter('Sufijo')">🔩 Sufijos</button>
                     <button type="button" class="cat-chip" onclick="setCatFilter('Número')">🔢 Números</button>
                 </div>
@@ -643,8 +647,10 @@
                 <option value="Verbo">🔤 Verbo</option>
                 <option value="Sustantivo">📌 Sustantivo</option>
                 <option value="Adjetivo">🎨 Adjetivo</option>
+                <option value="Adverbio">📍 Adverbio</option>
                 <option value="Pronombre">🙋 Pronombre</option>
                 <option value="Frase">💬 Frase</option>
+                <option value="Pregunta">❓ Pregunta</option>
                 <option value="Sufijo">🔩 Sufijo</option>
                 <option value="Número">🔢 Número</option>
             </select>
@@ -1441,11 +1447,10 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
         }
 
         // --- CATEGORÍAS ---
-        const CATEGORIAS = ['Verbo', 'Sustantivo', 'Adjetivo', 'Pronombre', 'Frase', 'Sufijo', 'Número'];
+        const CATEGORIAS = ['Verbo', 'Sustantivo', 'Adjetivo', 'Adverbio', 'Pronombre', 'Frase', 'Pregunta', 'Sufijo', 'Número'];
         let activeCatFilter = '';
 
         function autoCategoria(item) {
-            // Si ya tiene una categoría válida, la respeta
             if (item.tags && item.tags.length > 0) {
                 for (const t of item.tags) {
                     const match = CATEGORIAS.find(c => t.toLowerCase().includes(c.toLowerCase()));
@@ -1456,8 +1461,10 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             const t = (item.translation || '').toLowerCase();
             const u = (item.unit || '').toLowerCase();
             if (u.includes('número') || u.includes('numero')) return 'Número';
-            if (v.startsWith('-') || t.includes('sufijo') || t.includes('suffix')) return 'Sufijo';
+            if (v.startsWith('-') || t.includes('sufijo')) return 'Sufijo';
             if (['noqa','qan','pay','noqayku','noqanchej','qankuna','paykuna'].includes(v.split(' ')[0])) return 'Pronombre';
+            if (v.startsWith('¿') || t.startsWith('¿') || (v.endsWith('?') && v.split(' ').length <= 4)) return 'Pregunta';
+            if (['chaypi','chaymantataj','kunan','sapa','mana','ari','jina'].includes(v.split(' ')[0])) return 'Adverbio';
             if (v.includes('?') || v.includes('¿') || t.includes('?') || v.split(' ').length >= 3) return 'Frase';
             if (t.endsWith('ar') || t.endsWith('er') || t.endsWith('ir') || t.endsWith('arse')) return 'Verbo';
             if (['feliz','triste','cansado','enfermo','enojado','hambriento','alegre','grande','lindo','hermoso'].some(w => t.includes(w))) return 'Adjetivo';
