@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- © 2025 Damián Mayoru - Yachakuna App
-         Licencia CC BY-NC 4.0 - No comercial
-         https://creativecommons.org/licenses/by-nc/4.0/ -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yachakuna (Estudiante)</title>
@@ -386,9 +383,12 @@
                     <h3 style="margin-top:0; color: var(--duo-blue); font-weight: 800;">📥 CARGAR ARCHIVOS</h3>
                     <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Cargá <b>unidades</b> o <b>historias</b> (.json) manualmente.</p>
                     <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importData(event)">
-                    <div class="flex-row" style="justify-content: center;">
-                        <button type="button" onclick="document.getElementById('importFile').click()" style="background: var(--duo-blue); border-bottom: 4px solid var(--duo-blue-shadow); min-width: 200px;">
-                            SELECCIONAR ARCHIVO
+                    <div class="flex-row" style="justify-content: center; gap:10px;">
+                        <button type="button" onclick="document.getElementById('importFile').click()" style="background: var(--duo-blue); border-bottom: 4px solid var(--duo-blue-shadow); min-width: 160px;">
+                            📂 Cargar JSON
+                        </button>
+                        <button type="button" onclick="exportVocabJSON()" style="background: var(--duo-green); border-bottom: 4px solid var(--duo-green-shadow); min-width: 160px;">
+                            💾 Exportar JSON
                         </button>
                     </div>
                 </div>
@@ -588,6 +588,23 @@
         <div id="forumPosts"></div>
     </div>
 
+
+    <!-- Modal de edición de palabras (solo Profe) -->
+    <div id="editModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:3000; align-items:center; justify-content:center; padding:20px; box-sizing:border-box;">
+        <div style="background:white; border-radius:20px; padding:24px; width:100%; max-width:480px; border:2px solid var(--border);">
+            <h3 style="margin-top:0; color:var(--duo-blue); font-weight:800;">✏️ Editar tarjeta</h3>
+            <label style="font-size:12px; font-weight:800; color:#aaa; text-transform:uppercase;">Quechua</label>
+            <input type="text" id="editVerb" style="width:100%; margin-bottom:12px; box-sizing:border-box;">
+            <label style="font-size:12px; font-weight:800; color:#aaa; text-transform:uppercase;">Español</label>
+            <input type="text" id="editTranslation" style="width:100%; margin-bottom:12px; box-sizing:border-box;">
+            <label style="font-size:12px; font-weight:800; color:#aaa; text-transform:uppercase;">Unidad</label>
+            <input type="text" id="editUnit" style="width:100%; margin-bottom:20px; box-sizing:border-box;">
+            <div style="display:flex; gap:10px;">
+                <button type="button" onclick="saveEditWord()" style="flex:1;">💾 Guardar</button>
+                <button type="button" onclick="closeEditModal()" class="secondary" style="flex:1;">Cancelar</button>
+            </div>
+        </div>
+    </div>
 
     <div id="llamaPopup" style="position: fixed; bottom: 20px; right: 20px; background: white; border: 4px solid var(--duo-green); border-radius: 20px; padding: 15px 25px; display: flex; align-items: center; gap: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index: 1000; transform: translateY(200%); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
         <div style="width: 70px; height: 70px; border-radius: 50%; background: var(--duo-yellow); display: flex; align-items: center; justify-content: center; border: 3px solid var(--duo-green); overflow: hidden; flex-shrink: 0;">
@@ -1031,7 +1048,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                 if (s > 0) {
                     const prevSectionStories = storiesData.slice((s - 1) * STORIES_PER_SECTION, s * STORIES_PER_SECTION);
                     const prevComplete = prevSectionStories.every(st => completedStories[st.id]);
-                    if (!prevComplete) break;
+                    if (!prevComplete && !isProfeMode) break;
                 }
 
                 const sectionStories = storiesData.slice(s * STORIES_PER_SECTION, (s + 1) * STORIES_PER_SECTION);
@@ -1066,7 +1083,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                 sectionStories.forEach((st, localIdx) => {
                     const globalIdx = s * STORIES_PER_SECTION + localIdx;
                     const isDone = completedStories[st.id];
-                    const isLocked = globalIdx > 0 && !completedStories[storiesData[globalIdx - 1].id];
+                    const isLocked = !isProfeMode && globalIdx > 0 && !completedStories[storiesData[globalIdx - 1].id];
 
                     const card = document.createElement('div');
                     card.className = 'story-card';
@@ -1374,6 +1391,48 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             return '📝';
         }
 
+        // --- MODO PROFE ---
+        let isProfeMode = sessionStorage.getItem('yachakuna_profe') === '1';
+
+        function deleteWord(index) {
+            if (!confirm(`¿Borrar "${dictionary[index].verb}"?`)) return;
+            dictionary.splice(index, 1);
+            save(true);
+            renderCards();
+        }
+
+        function editWord(index) {
+            const item = dictionary[index];
+            document.getElementById('editVerb').value = item.verb || '';
+            document.getElementById('editTranslation').value = item.translation || '';
+            document.getElementById('editUnit').value = item.unit || '';
+            document.getElementById('editModal').setAttribute('data-index', index);
+            document.getElementById('editModal').style.display = 'flex';
+        }
+
+        function saveEditWord() {
+            const index = parseInt(document.getElementById('editModal').getAttribute('data-index'));
+            dictionary[index].verb = document.getElementById('editVerb').value.trim();
+            dictionary[index].translation = document.getElementById('editTranslation').value.trim();
+            dictionary[index].unit = document.getElementById('editUnit').value.trim();
+            save(true);
+            renderCards();
+            closeEditModal();
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        function exportVocabJSON() {
+            const clean = dictionary.map(({ srs, pinned, ask, answer, ...rest }) => rest);
+            const blob = new Blob([JSON.stringify(clean, null, 2)], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'vocabulario_exportado.json';
+            a.click();
+        }
+
         function renderCards() {
             const container = document.getElementById('entriesContainer');
             if (!container) return;
@@ -1410,7 +1469,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                     const globalIndex = dictionary.indexOf(item); const card = document.createElement('div');
                     card.className = "verb-card " + (item.pinned ? 'card-pinned' : '');
                     const emoji = getEmoji(item);
-                    card.innerHTML = `<div style="display:flex; gap:15px; align-items:center;"><div style="width:56px; height:56px; font-size:36px; display:flex; align-items:center; justify-content:center; background:var(--card-bg); border-radius:12px; border:2px solid var(--border); flex-shrink:0;">${emoji}</div><button type="button" class="btn-icon btn-speak" onclick="speak('${item.verb.replace(/'/g, "\\'")}')">🔊</button><div style="flex-grow:1;"><div style="font-size:18px; font-weight:800;">${item.verb}</div><div style="font-weight:600; font-size:15px; color: var(--duo-blue);">${item.translation}</div></div><button type="button" class="btn-icon btn-pin ${item.pinned ? 'active' : ''}" onclick="togglePin(${globalIndex})">⭐</button></div>`;
+                    card.innerHTML = `<div style="display:flex; gap:15px; align-items:center;"><div style="width:56px; height:56px; font-size:36px; display:flex; align-items:center; justify-content:center; background:var(--card-bg); border-radius:12px; border:2px solid var(--border); flex-shrink:0;">${emoji}</div><button type="button" class="btn-icon btn-speak" onclick="speak('${item.verb.replace(/'/g, "\\'")}')">🔊</button><div style="flex-grow:1;"><div style="font-size:18px; font-weight:800;">${item.verb}</div><div style="font-weight:600; font-size:15px; color: var(--duo-blue);">${item.translation}</div></div><button type="button" class="btn-icon btn-pin ${item.pinned ? 'active' : ''}" onclick="togglePin(${globalIndex})">⭐</button>${isProfeMode ? `<button type="button" class="btn-icon" onclick="editWord(${globalIndex})" style="background:#eaf3ff;border:2px solid #a8cff5;border-bottom:3px solid #a8cff5;color:#1a5fa8;" title="Editar">✏️</button><button type="button" class="btn-icon" onclick="deleteWord(${globalIndex})" style="background:#fde8e8;border:2px solid var(--duo-red);border-bottom:3px solid var(--duo-red-shadow);color:var(--duo-red);" title="Eliminar">🗑️</button>` : ''}</div>`;
                     cardsWrap.appendChild(card);
                 });
                 unitBlock.appendChild(cardsWrap);
@@ -1580,15 +1639,15 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
         }
 
         function isUnitUnlocked(units, index) {
+            if (isProfeMode) return true;
             if (index === 0) return true;
             const prevUnit = units[index - 1];
             return !!(unitProgress[prevUnit]);
         }
 
         function isSectionUnlocked(units, sectionIndex, unitsPerSection) {
-            // La primera sección siempre visible
+            if (isProfeMode) return true;
             if (sectionIndex === 0) return true;
-            // La sección N se muestra solo si todas las unidades de la sección N-1 están completadas
             const prevSectionUnits = units.slice((sectionIndex - 1) * unitsPerSection, sectionIndex * unitsPerSection);
             return prevSectionUnits.every(u => unitProgress[u]);
         }
@@ -2026,9 +2085,13 @@ function handlePracticeEnter(e) {
         function unlockUpload() {
             const pwd = document.getElementById('profeUploadPwd').value;
             if (pwd === 'Ruwaj') {
+                isProfeMode = true;
                 document.getElementById('profeUploadLocked').style.display = 'none';
                 document.getElementById('profeUploadPanel').style.display = 'block';
                 sessionStorage.setItem('yachakuna_profe', '1');
+                renderCards();
+                renderPath();
+                renderStoriesList();
             } else {
                 document.getElementById('profeUploadPwd').style.borderColor = 'var(--duo-red)';
                 setTimeout(() => document.getElementById('profeUploadPwd').style.borderColor = '', 1500);
