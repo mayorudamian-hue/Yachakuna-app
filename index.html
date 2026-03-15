@@ -373,14 +373,21 @@
                 </div>
             </div>
 
-            <div id="studentControls" style="background: #f0f0f0; padding: 25px; border-radius: 20px; text-align: center; border: 2px dashed var(--duo-blue); margin-bottom: 20px;">
-                <h3 style="margin-top:0; color: var(--duo-blue); font-weight: 800;">📥 CARGAR ARCHIVOS</h3>
-                <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Sube tus <b>Leerinapaj</b> o <b>Lecciones</b> (.json) aquí.</p>
-                <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importData(event)">
-                <div class="flex-row" style="justify-content: center;">
-                    <button type="button" onclick="document.getElementById('importFile').click()" style="background: var(--duo-blue); border-bottom: 4px solid var(--duo-blue-shadow); min-width: 200px;">
-                        SELECCIONAR ARCHIVO
-                    </button>
+            <div id="studentControls" style="background: #f0f0f0; padding: 20px; border-radius: 20px; text-align: center; border: 2px dashed var(--border); margin-bottom: 20px;">
+                <div id="profeUploadLocked" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center;">
+                    <span style="font-size:13px; font-weight:800; color:#aaa;">👨‍🏫 Zona del Profe</span>
+                    <input type="password" id="profeUploadPwd" placeholder="Contraseña..." style="flex:1; min-width:120px; margin-bottom:0; padding:10px 14px; font-size:14px; max-width:180px;">
+                    <button type="button" onclick="unlockUpload()" style="width:auto; padding:10px 16px; font-size:14px;">Entrar</button>
+                </div>
+                <div id="profeUploadPanel" style="display:none; margin-top:15px;">
+                    <h3 style="margin-top:0; color: var(--duo-blue); font-weight: 800;">📥 CARGAR ARCHIVOS</h3>
+                    <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Cargá <b>unidades</b> o <b>historias</b> (.json) manualmente.</p>
+                    <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importData(event)">
+                    <div class="flex-row" style="justify-content: center;">
+                        <button type="button" onclick="document.getElementById('importFile').click()" style="background: var(--duo-blue); border-bottom: 4px solid var(--duo-blue-shadow); min-width: 200px;">
+                            SELECCIONAR ARCHIVO
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -2007,6 +2014,27 @@ function handlePracticeEnter(e) {
                 if (updatedStories) localStorage.setItem('rimay_Stories', JSON.stringify(storiesData));
             }
             if (updatedVocab || updatedStories) { save(true); renderCards(); renderPath(); renderAwards(); }
+        }
+
+        // --- DESBLOQUEO CARGA DE ARCHIVOS (PROFE) ---
+        function unlockUpload() {
+            const pwd = document.getElementById('profeUploadPwd').value;
+            if (pwd === 'Ruwaj') {
+                document.getElementById('profeUploadLocked').style.display = 'none';
+                document.getElementById('profeUploadPanel').style.display = 'block';
+                sessionStorage.setItem('yachakuna_profe', '1');
+            } else {
+                document.getElementById('profeUploadPwd').style.borderColor = 'var(--duo-red)';
+                setTimeout(() => document.getElementById('profeUploadPwd').style.borderColor = '', 1500);
+            }
+        }
+        if (sessionStorage.getItem('yachakuna_profe') === '1') {
+            document.addEventListener('DOMContentLoaded', () => {
+                const locked = document.getElementById('profeUploadLocked');
+                const panel = document.getElementById('profeUploadPanel');
+                if (locked) locked.style.display = 'none';
+                if (panel) panel.style.display = 'block';
+            });
         }
 
         // --- ARRANQUE DE LA APP ---
