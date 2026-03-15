@@ -380,6 +380,19 @@
                     <button type="button" onclick="unlockUpload()" style="width:auto; padding:10px 16px; font-size:14px;">Entrar</button>
                 </div>
                 <div id="profeUploadPanel" style="display:none; margin-top:15px;">
+                    <h3 style="margin-top:0; color:var(--duo-blue); font-weight:800;">➕ AGREGAR PALABRA</h3>
+                    <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;">
+                        <input type="text" id="newWordVerb" placeholder="Quechua (ej: Ripun)" style="margin-bottom:0;">
+                        <input type="text" id="newWordTranslation" placeholder="Español (ej: Se va / parte)" style="margin-bottom:0;">
+                        <select id="newWordUnit" style="margin-bottom:0;">
+                            <option value="">Elegir unidad...</option>
+                        </select>
+                        <input type="text" id="newWordUnitCustom" placeholder="...o escribí una unidad nueva" style="margin-bottom:0; font-size:14px;">
+                    </div>
+                    <button type="button" onclick="addNewWord()" style="background:var(--duo-green); border-bottom:4px solid var(--duo-green-shadow); margin-bottom:20px;">
+                        ➕ Agregar palabra
+                    </button>
+
                     <h3 style="margin-top:0; color: var(--duo-blue); font-weight: 800;">📥 CARGAR ARCHIVOS</h3>
                     <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Cargá <b>unidades</b> o <b>historias</b> (.json) manualmente.</p>
                     <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importData(event)">
@@ -2082,6 +2095,59 @@ function handlePracticeEnter(e) {
         }
 
         // --- DESBLOQUEO CARGA DE ARCHIVOS (PROFE) ---
+        function populateNewWordUnitSelect() {
+            const select = document.getElementById('newWordUnit');
+            if (!select) return;
+            const units = getUniqueUnits();
+            select.innerHTML = '<option value="">Elegir unidad existente...</option>';
+            units.forEach(u => {
+                const opt = document.createElement('option');
+                opt.value = u; opt.textContent = u;
+                select.appendChild(opt);
+            });
+        }
+
+        function addNewWord() {
+            const verb = document.getElementById('newWordVerb').value.trim();
+            const translation = document.getElementById('newWordTranslation').value.trim();
+            const unitSelect = document.getElementById('newWordUnit').value.trim();
+            const unitCustom = document.getElementById('newWordUnitCustom').value.trim();
+            const unit = unitCustom || unitSelect;
+
+            if (!verb) { alert('Escribí la palabra en quechua.'); return; }
+            if (!translation) { alert('Escribí la traducción al español.'); return; }
+            if (!unit) { alert('Elegí o escribí una unidad.'); return; }
+
+            // Verificar duplicado
+            const exists = dictionary.find(d => d.verb.toLowerCase().trim() === verb.toLowerCase().trim());
+            if (exists) {
+                if (!confirm(`"${verb}" ya existe en la unidad "${exists.unit}". ¿Agregarlo igual?`)) return;
+            }
+
+            const newItem = {
+                verb, translation, unit,
+                tags: [], sentences: [], pinned: false,
+                srs: { ef: 2.5, interval: 0, reps: 0, due: Date.now() }
+            };
+            dictionary.push(newItem);
+            save(true);
+            renderCards();
+            populateNewWordUnitSelect();
+
+            // Limpiar campos
+            document.getElementById('newWordVerb').value = '';
+            document.getElementById('newWordTranslation').value = '';
+            document.getElementById('newWordUnit').value = '';
+            document.getElementById('newWordUnitCustom').value = '';
+
+            // Mostrar confirmación inline
+            const btn = document.querySelector('#profeUploadPanel button');
+            const original = btn.innerHTML;
+            btn.innerHTML = '✅ ¡Agregada!';
+            btn.style.background = 'var(--duo-green)';
+            setTimeout(() => { btn.innerHTML = original; }, 2000);
+        }
+
         function unlockUpload() {
             const pwd = document.getElementById('profeUploadPwd').value;
             if (pwd === 'Ruwaj') {
@@ -2092,6 +2158,7 @@ function handlePracticeEnter(e) {
                 renderCards();
                 renderPath();
                 renderStoriesList();
+                populateNewWordUnitSelect();
             } else {
                 document.getElementById('profeUploadPwd').style.borderColor = 'var(--duo-red)';
                 setTimeout(() => document.getElementById('profeUploadPwd').style.borderColor = '', 1500);
