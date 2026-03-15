@@ -1980,12 +1980,19 @@ function handlePracticeEnter(e) {
 
         async function syncFromGitHub() {
             let updatedVocab = false, updatedStories = false;
-            const vocabFiles = await fetchGitHubJSON('json/vocabulario');
-            if (vocabFiles && Array.isArray(vocabFiles)) {
-                for (const file of vocabFiles) {
-                    if (!file.name.endsWith('.json')) continue;
-                    const data = await loadJSONFromGitHub(file.download_url);
-                    if (!Array.isArray(data) || !data.length || !data[0].verb) continue;
+
+            // Buscar todos los JSON en la raíz del repositorio
+            const rootFiles = await fetchGitHubJSON('');
+            if (!rootFiles || !Array.isArray(rootFiles)) return;
+
+            const jsonFiles = rootFiles.filter(f => f.name.endsWith('.json') && f.name !== 'manifest.json');
+
+            for (const file of jsonFiles) {
+                const data = await loadJSONFromGitHub(file.download_url);
+                if (!Array.isArray(data) || data.length === 0) continue;
+
+                // ¿Es vocabulario?
+                if (data[0].verb && data[0].translation) {
                     data.forEach(newItem => {
                         if (!newItem.verb || !newItem.translation) return;
                         const index = dictionary.findIndex(item => item.verb.toLowerCase().trim() === newItem.verb.toLowerCase().trim());
@@ -1998,21 +2005,17 @@ function handlePracticeEnter(e) {
                         }
                     });
                 }
-            }
-            const storyFiles = await fetchGitHubJSON('json/historias');
-            if (storyFiles && Array.isArray(storyFiles)) {
-                for (const file of storyFiles) {
-                    if (!file.name.endsWith('.json')) continue;
-                    const data = await loadJSONFromGitHub(file.download_url);
-                    if (!Array.isArray(data) || !data.length || !data[0].scenes) continue;
+                // ¿Es historias?
+                else if (data[0].scenes) {
                     data.forEach(newStory => {
                         const index = storiesData.findIndex(s => s.id === newStory.id);
                         if (index !== -1) storiesData[index] = newStory;
                         else { storiesData.push(newStory); updatedStories = true; }
                     });
                 }
-                if (updatedStories) localStorage.setItem('rimay_Stories', JSON.stringify(storiesData));
             }
+
+            if (updatedStories) localStorage.setItem('rimay_Stories', JSON.stringify(storiesData));
             if (updatedVocab || updatedStories) { save(true); renderCards(); renderPath(); renderAwards(); }
         }
 
