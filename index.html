@@ -193,6 +193,14 @@
         @keyframes popIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
     </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5THP7LLX20"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-5THP7LLX20');
+    </script>
 </head>
 <body>
 
@@ -210,116 +218,111 @@
  <div id="section-guide" class="hidden">
         <h2 style="text-align: center; color: var(--duo-blue); margin-bottom: 20px;">¿Cómo usar Yachakuna? 🦙</h2>
 
+        <!-- AUDIO -->
         <div class="container" style="border-left: 5px solid var(--duo-blue); margin-bottom: 15px;">
             <h3 style="color: var(--duo-blue); margin-top: 0;">📢 Audio y Pronunciación</h3>
             <p style="font-size: 14px; line-height: 1.5; margin-bottom: 10px;">
                 La app usa el motor de voz de tu dispositivo. Para la mejor experiencia en Quechua, instalá la voz <b>"Español (Perú)"</b>:
             </p>
             <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
-                <div style="background: #f0f0f0; border-radius: 10px; padding: 10px 14px;">
-                    <b>🪟 Windows 11/10:</b> Configuración → Hora e idioma → Voz → Agregar voces → buscar <i>"Español (Perú)"</i>
-                </div>
-                <div style="background: #f0f0f0; border-radius: 10px; padding: 10px 14px;">
-                    <b>🤖 Android:</b> Ajustes → Administración general → Idioma → Texto a voz → Instalar datos de voz → <i>Español (Perú)</i>
-                </div>
-                <div style="background: #f0f0f0; border-radius: 10px; padding: 10px 14px;">
-                    <b>🍎 iOS/Mac:</b> Ajustes → Accesibilidad → Contenido hablado → Voces → Español → <i>Mónica (Perú)</i>
-                </div>
-                <div style="background: #f0f0f0; border-radius: 10px; padding: 10px 14px;">
-                    <b>🐧 Linux:</b> Instalá <code>espeak-ng</code> con el paquete de datos <code>espeak-ng-data</code> y activá el español.
-                </div>
+                <div style="background: #f0f0f0; border-radius: 10px; padding: 10px 14px;"><b>🪟 Windows 11/10:</b> Configuración → Hora e idioma → Voz → Agregar voces → buscar <i>"Español (Perú)"</i></div>
+                <div style="background: #f0f0f0; border-radius: 10px; padding: 10px 14px;"><b>🤖 Android:</b> Ajustes → Administración general → Idioma → Texto a voz → Instalar datos de voz → <i>Español (Perú)</i></div>
+                <div style="background: #f0f0f0; border-radius: 10px; padding: 10px 14px;"><b>🍎 iOS/Mac:</b> Ajustes → Accesibilidad → Contenido hablado → Voces → Español → <i>Mónica (Perú)</i></div>
+                <div style="background: #f0f0f0; border-radius: 10px; padding: 10px 14px;"><b>🐧 Linux:</b> Instalá <code>espeak-ng</code> con el paquete <code>espeak-ng-data</code> y activá el español.</div>
             </div>
-            <p style="font-size: 12px; color: #afafaf; margin-top: 10px; margin-bottom: 0;">
-                💡 Si no tenés es-PE, la app usará automáticamente la mejor voz española disponible.
-            </p>
+            <p style="font-size: 12px; color: #afafaf; margin-top: 10px; margin-bottom: 0;">💡 Si no tenés es-PE, la app usará automáticamente la mejor voz española disponible.</p>
         </div>
 
-<div class="container" style="margin-top: 20px; border-top: 4px solid var(--duo-blue);">
-            <h3 style="color: var(--duo-blue); margin-top: 10px; display: flex; align-items: center; gap: 10px;">
-                🌟 Tus Herramientas
-            </h3>
-            
-            <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;">
-                
+        <!-- HERRAMIENTAS -->
+        <div class="container" style="border-left: 5px solid var(--duo-green); margin-bottom: 15px;">
+            <h3 style="color: var(--duo-green); margin-top: 0;">🌟 Tus Herramientas</h3>
+            <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+
                 <div style="display: flex; gap: 15px; align-items: flex-start;">
-                    <span style="font-size: 24px;">📚</span>
+                    <span style="font-size: 26px;">📚</span>
                     <div>
-                        <p style="margin: 0; font-weight: 800; color: var(--text);">Biblioteca</p>
-                        <p style="margin: 3px 0 0 0; font-size: 14px; color: #666; line-height: 1.4;">
-                            Tu diccionario personal con <b>Repaso Espaciado (SRS)</b>. El sistema te avisará cuándo repasar para que no olvides nada.
-                        </p>
+                        <p style="margin: 0; font-weight: 800;">Biblioteca</p>
+                        <p style="margin: 4px 0 0; font-size: 14px; color: #666; line-height: 1.5;">Tu diccionario personal con <b>Repaso Espaciado (SRS)</b>. Cargá tus lecciones en formato .json desde el botón "Cargar Archivos". Cada tarjeta muestra un emoji para ayudarte a recordar. Marcá con ⭐ las palabras que te cuesten trabajo.</p>
                     </div>
                 </div>
 
                 <div style="display: flex; gap: 15px; align-items: flex-start;">
-                    <span style="font-size: 24px;">🎮</span>
+                    <span style="font-size: 26px;">🎮</span>
                     <div>
-                        <p style="margin: 0; font-weight: 800; color: var(--text);">Yachakunapaj (Práctica)</p>
-                        <p style="margin: 3px 0 0 0; font-size: 14px; color: #666; line-height: 1.4;">
-                            Juega para ganar XP. Puedes elegir el modo aleatorio (todas las opciones), el modo teclado, opción múltiple, o incluso ordenar oraciones según tu nivel.
-                        </p>
+                        <p style="margin: 0; font-weight: 800;">Yachakunapaj — Purina</p>
+                        <p style="margin: 4px 0 0; font-size: 14px; color: #666; line-height: 1.5;">El camino de aprendizaje. Está dividido en <b>Secciones</b> que se desbloquean de a una: completás la Sección 1 y aparece la Sección 2. Dentro de cada sección, las unidades también se desbloquean en orden. Cada sección tiene un botón <b>📖 Ver gramática</b> con la explicación del contenido.</p>
+                        <p style="margin: 6px 0 0; font-size: 14px; color: #666; line-height: 1.5;">Para practicar elegís la sección del menú desplegable y el modo: <b>4 opciones</b>, <b>teclado</b>, <b>completar</b> u <b>ordenar palabras</b>. También podés practicar solo tus <b>⭐ Favoritos</b>.</p>
                     </div>
                 </div>
 
                 <div style="display: flex; gap: 15px; align-items: flex-start;">
-                    <span style="font-size: 24px;">📖</span>
+                    <span style="font-size: 26px;">📖</span>
                     <div>
-                        <p style="margin: 0; font-weight: 800; color: var(--text);">Leerinapaj</p>
-                        <p style="margin: 3px 0 0 0; font-size: 14px; color: #666; line-height: 1.4;">
-                            Cuentos interactivos diseñados para practicar lectura, escucha y comprensión en situaciones reales.
-                        </p>
+                        <p style="margin: 0; font-weight: 800;">Leerinapaj — Allinta leerina</p>
+                        <p style="margin: 4px 0 0; font-size: 14px; color: #666; line-height: 1.5;">Cuentos interactivos en quechua. También organizados en secciones de 10 lecturas que se desbloquean al completar la anterior. Tocá cada burbuja para ver la traducción al español. Al terminar cada historia ganás XP y desbloqueás una insignia.</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 15px; align-items: flex-start;">
+                    <span style="font-size: 26px;">🏆</span>
+                    <div>
+                        <p style="margin: 0; font-weight: 800;">Ñaupajman — Salón de la Fama</p>
+                        <p style="margin: 4px 0 0; font-size: 14px; color: #666; line-height: 1.5;">Tus logros, trofeos por unidad e insignias de historias. Para ganar el trofeo de una unidad tenés que completarla <b>sin perder ninguna vida</b>.</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 15px; align-items: flex-start;">
+                    <span style="font-size: 26px;">💬</span>
+                    <div>
+                        <p style="margin: 0; font-weight: 800;">Comenta</p>
+                        <p style="margin: 4px 0 0; font-size: 14px; color: #666; line-height: 1.5;">El foro de la comunidad. Podés publicar <b>❓ Preguntas</b>, <b>💡 Sugerencias</b> o <b>💬 Comentarios</b>. El profe puede responderte directamente con un badge especial. También podés darle ❤️ like a los mensajes que te ayudaron.</p>
                     </div>
                 </div>
 
             </div>
         </div>
 
-    <div class="container" style="border-top: 4px solid var(--duo-green);">
-            <h3 style="color: var(--duo-green); margin-top: 10px; display: flex; align-items: center; gap: 10px;">
-                💡 Reglas de Oro
-            </h3>
-            <ul style="line-height: 1.6; color: var(--text); padding-left: 20px;">
-                <li style="margin-bottom: 10px;">
-                    <b>No dejes que se oxide:</b> Si dejas de practicar una unidad, su salud bajará de <b>Dorada</b> 👑 a <b>Aviso</b> ⚠️ y finalmente a <b>Rota</b> 💔.
-                </li>
-                <li style="margin-bottom: 10px;">
-                    <b>Repaso Diario:</b> El cerebro olvida rápido. Entra cada día para limpiar tus tarjetas pendientes en la Biblioteca.
-                </li>
-                <li style="margin-bottom: 10px;">
-                    <b style="color: #e67e22;">Usa tus ⭐ Favoritos:</b> Marca las palabras que te cuesten trabajo con la estrella en la Biblioteca. Luego, ve a la pestaña de práctica y dale al botón <b>"Favoritos"</b> para machacarlas hasta que las domines.
-                </li>
+        <!-- SALUD DE UNIDADES -->
+        <div class="container" style="border-left: 5px solid var(--duo-yellow); margin-bottom: 15px;">
+            <h3 style="color: #d4a600; margin-top: 0;">🗺️ Salud de las Unidades</h3>
+            <p style="font-size: 14px; color: #666; line-height: 1.6; margin: 0;">Cada unidad en el Purina tiene un estado que cambia según cuánto repasás:</p>
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px; font-size: 14px;">
+                <div style="display:flex; gap:10px; align-items:center;"><span style="font-size:22px;">🎯</span><div><b>En progreso</b> — la estás aprendiendo, seguí practicando.</div></div>
+                <div style="display:flex; gap:10px; align-items:center;"><span style="font-size:22px;">👑</span><div><b>Dominada</b> — completaste todas las tarjetas y están al día.</div></div>
+                <div style="display:flex; gap:10px; align-items:center;"><span style="font-size:22px;">⚠️</span><div><b>Repasota ruway</b> — hace más de 14 días que no repasás. ¡Urgente!</div></div>
+                <div style="display:flex; gap:10px; align-items:center;"><span style="font-size:22px;">💔</span><div><b>Rota</b> — más de 30 días sin repasar. El trofeo se bloquea hasta que la restaurés.</div></div>
+            </div>
+        </div>
+
+        <!-- REGLAS DE ORO -->
+        <div class="container" style="border-left: 5px solid var(--duo-red); margin-bottom: 15px;">
+            <h3 style="color: var(--duo-red); margin-top: 0;">💡 Reglas de Oro</h3>
+            <ul style="line-height: 1.7; color: var(--text); padding-left: 20px; font-size: 14px; margin: 0;">
+                <li><b>Repasá todos los días</b> — aunque sean 5 minutos. La racha de días seguidos se muestra en tu perfil.</li>
+                <li><b>No dejes que se oxide</b> — si una unidad llega a 💔 rota, perdés el trofeo hasta restaurarla.</li>
+                <li><b>Usá los Favoritos ⭐</b> — marcá las palabras difíciles y practicálas con el botón "Favoritos".</li>
+                <li><b>Leé las historias</b> — tocá las burbujas para ver la traducción, pero intentá entender antes de mirarla.</li>
+                <li><b>Preguntá en Comenta</b> — si algo no te queda claro, publicá una pregunta. El profe responde.</li>
             </ul>
         </div>
 
-        <div class="container" style="background: #fffdf0; border: 2px solid var(--duo-yellow);">
-            <h3 style="color: #d4a600; border-bottom: 2px solid #f0e0a0; padding-bottom: 10px; text-align: center;">🏆 SISTEMA DE LOGROS Y RANGOS</h3>
-            
-            <p style="font-weight: 800; color: var(--text); margin-bottom: 5px;">🎖️ Rangos por XP:</p>
-            <p style="font-size: 13px; color: #666; margin-top: 0;">Ganas 10 XP por cada sesión terminada.</p>
-            <ul style="line-height: 1.4; color: var(--text); font-size: 14px; list-style: none; padding-left: 0;">
-                <li>🌱 <b>Qallarej (Principiante):</b> 0-99 XP</li>
-                <li>🌿 <b>Purej (Caminante):</b> 100-199 XP</li>
-                <li>🔥 <b>Yachakoj (Estudiante):</b> 200-399 XP</li>
-                <li>⭐ <b>Yachachej (Maestro):</b> 400-799 XP</li>
+        <!-- RANGOS -->
+        <div class="container" style="background: #fffdf0; border: 2px solid var(--duo-yellow); margin-bottom: 15px;">
+            <h3 style="color: #d4a600; margin-top: 0; text-align: center;">🎖️ Rangos por XP</h3>
+            <p style="font-size: 13px; color: #666; margin-top: 0; text-align:center;">Ganás <b>10 XP</b> por sesión completada y <b>15 XP</b> la primera vez que terminás una historia.</p>
+            <ul style="line-height: 1.8; color: var(--text); font-size: 14px; list-style: none; padding-left: 0; margin: 0;">
+                <li>🌱 <b>Qallarej (Principiante):</b> 0–99 XP</li>
+                <li>🌿 <b>Purej (Caminante):</b> 100–199 XP</li>
+                <li>🔥 <b>Yachakoj (Estudiante):</b> 200–399 XP</li>
+                <li>⭐ <b>Yachachej (Maestro):</b> 400–799 XP</li>
                 <li>👑 <b>Yachayniyoj (Sabio):</b> +800 XP</li>
             </ul>
-
-            <hr style="border: 0; border-top: 1px solid #f0e0a0; margin: 15px 0;">
-
-            <p style="font-weight: 800; color: var(--text); margin-bottom: 5px;">🏆 Trofeos de Unidad:</p>
-            <p style="font-size: 14px; line-height: 1.5; color: var(--text);">
-                Para ganar el trofeo de una unidad, debes completarla <b>sin perder ninguna vida (3 corazones intactos)</b>.
-            </p>
-
-            <div style="background: #ffeeee; padding: 10px; border-radius: 12px; border: 1px dashed #ff4b4b; margin-top: 10px;">
-                <p style="color: #922b21; font-size: 13px; margin: 0; font-weight: 800;">
-                    ⚠️ ¡ADVERTENCIA DE PÉRDIDA!
-                </p>
-                <p style="color: #922b21; font-size: 13px; margin: 5px 0 0 0;">
-                    Los trofeos y coronas <b>no son permanentes</b>. Si no repasas las tarjetas de esa unidad en la Biblioteca y dejas que la unidad se "rompa" (💔), el trofeo se bloqueará de nuevo hasta que restaures su salud practicando.
-                </p>
+            <div style="background: #ffeeee; padding: 10px 14px; border-radius: 12px; border: 1px dashed #ff4b4b; margin-top: 12px;">
+                <p style="color: #922b21; font-size: 13px; margin: 0; font-weight: 800;">⚠️ Los trofeos no son permanentes</p>
+                <p style="color: #922b21; font-size: 13px; margin: 6px 0 0;">Si dejás que una unidad se rompa (💔) sin repasar, el trofeo se bloquea de nuevo. Restaurá su salud desde la Biblioteca para recuperarlo.</p>
             </div>
         </div>
+
     </div>
 
     <div id="section-dict">
@@ -347,14 +350,21 @@
                 </div>
             </div>
 
-            <div id="studentControls" style="background: #f0f0f0; padding: 25px; border-radius: 20px; text-align: center; border: 2px dashed var(--duo-blue); margin-bottom: 20px;">
-                <h3 style="margin-top:0; color: var(--duo-blue); font-weight: 800;">📥 CARGAR ARCHIVOS</h3>
-                <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Sube tus <b>Leerinapaj</b> o <b>Lecciones</b> (.json) aquí.</p>
-                <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importData(event)">
-                <div class="flex-row" style="justify-content: center;">
-                    <button type="button" onclick="document.getElementById('importFile').click()" style="background: var(--duo-blue); border-bottom: 4px solid var(--duo-blue-shadow); min-width: 200px;">
-                        SELECCIONAR ARCHIVO
-                    </button>
+            <div id="studentControls" style="background: #f0f0f0; padding: 20px; border-radius: 20px; text-align: center; border: 2px dashed var(--border); margin-bottom: 20px;">
+                <div id="profeUploadLocked" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center;">
+                    <span style="font-size:13px; font-weight:800; color:#aaa;">👨‍🏫 Zona del Profe</span>
+                    <input type="password" id="profeUploadPwd" placeholder="Contraseña..." style="flex:1; min-width:120px; margin-bottom:0; padding:10px 14px; font-size:14px; max-width:180px;">
+                    <button type="button" onclick="unlockUpload()" style="width:auto; padding:10px 16px; font-size:14px;">Entrar</button>
+                </div>
+                <div id="profeUploadPanel" style="display:none; margin-top:15px;">
+                    <h3 style="margin-top:0; color: var(--duo-blue); font-weight: 800;">📥 CARGAR ARCHIVOS</h3>
+                    <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Cargá <b>unidades</b> o <b>historias</b> (.json) manualmente.</p>
+                    <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importData(event)">
+                    <div class="flex-row" style="justify-content: center;">
+                        <button type="button" onclick="document.getElementById('importFile').click()" style="background: var(--duo-blue); border-bottom: 4px solid var(--duo-blue-shadow); min-width: 200px;">
+                            SELECCIONAR ARCHIVO
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -452,8 +462,13 @@
                 </div>
             </div>
 
-            <div style="display:flex; gap:10px; margin-bottom: 20px;">
-                <button type="button" class="special" onclick="startPractice('all')">Repaso General 🧠</button>
+            <div style="display:flex; flex-direction:column; gap:10px; margin-bottom: 20px;">
+                <div style="display:flex; gap:10px;">
+                    <select id="sectionSelect" style="flex:1; margin-bottom:0;">
+                        <option value="">Cargando secciones...</option>
+                    </select>
+                    <button type="button" class="special" onclick="startPracticeSection()" style="width:auto; padding:14px 20px;">Practicar 🧠</button>
+                </div>
                 <button type="button" class="secondary" onclick="startPractice('favs')">Favoritos ⭐</button>
             </div>
 
@@ -470,7 +485,7 @@
                 <div id="practiceSentence" style="font-size: 24px; font-weight: 800; color: var(--duo-blue);"></div>
             </div>
             <div id="practiceImageBox" style="display:none; margin-bottom: 20px;">
-                <img id="practiceImage" src="" alt="" style="width:160px; height:160px; object-fit:cover; border-radius:20px; border:3px solid var(--border); box-shadow: 0 4px 0 var(--border);">
+                <div id="practiceImage" style="font-size:100px; line-height:1; text-align:center;"></div>
             </div>
 
             <div id="modeWrite" class="hidden">
@@ -708,6 +723,8 @@
             const savedProgress = localStorage.getItem('rimay_Progress'); if (savedProgress) unitProgress = JSON.parse(savedProgress);
             const savedPerfect = localStorage.getItem('rimay_Perfect'); if (savedPerfect) perfectUnits = JSON.parse(savedPerfect);
             const savedStories2 = localStorage.getItem('rimay_CompletedStories'); if (savedStories2) completedStories = JSON.parse(savedStories2);
+            const savedAttempts = localStorage.getItem('rimay_Attempts'); if (savedAttempts) { const a = JSON.parse(savedAttempts); totalAttempts = a.total || 0; correctAttempts = a.correct || 0; }
+            const savedTime = localStorage.getItem('rimay_Time'); if (savedTime) studyTimeMs = parseInt(savedTime) || 0;
             lastPracticeDate = localStorage.getItem('rimay_LastPracticeDate') || '';
             const savedStreak = localStorage.getItem('rimay_StreakDays'); if (savedStreak) streakDays = parseInt(savedStreak);
             const savedBest = localStorage.getItem('rimay_BestStreak'); if (savedBest) bestStreakDays = parseInt(savedBest);
@@ -954,12 +971,12 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
         function switchTab(t) { 
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); 
             document.getElementById('tab-'+t).classList.add('active'); 
-            ['section-dict','section-practice','section-stories','section-awards','section-guide','section-forum'].forEach(id => {
+            ['section-dict','section-practice','section-stories','section-awards','section-guide','section-forum','section-chat'].forEach(id => {
                 const el = document.getElementById(id);
                 if(el) el.classList.add('hidden');
             }); 
             document.getElementById('section-'+t).classList.remove('hidden'); 
-            
+            if (typeof gtag !== 'undefined') gtag('event', 'section_view', { section: t });
             if(t==='practice') renderPath(); 
             if(t==='awards') renderAwards();
             if(t==='stories') renderStoriesList();
@@ -1069,6 +1086,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
         totalXP += xpEarned;
         
         if (isFirstTime) completedStories[currentStory.id] = true;
+        if (typeof gtag !== 'undefined') gtag('event', 'story_complete', { story: currentStory.id, first_time: isFirstTime });
         updateStreakDays();
         save(true);
 
@@ -1254,60 +1272,73 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             updateSRSCount(); renderCards();
         }
 
-        // --- CACHÉ Y BÚSQUEDA DE IMÁGENES VIA WIKIMEDIA COMMONS + WIKIPEDIA ---
-        const wikiImageCache = {};
+        // --- SISTEMA DE EMOJIS AUTOMÁTICO ---
+        const emojiMap = {
+            // Sentimientos
+            'feliz': '😊', 'alegre': '😄', 'triste': '😢', 'enfermo': '🤒', 'cansado': '😴',
+            'enojado': '😠', 'molesto': '😤', 'hambriento': '🍽️', 'contento': '😁',
+            'asustado': '😨', 'sorprendido': '😲', 'aburrido': '😑', 'nervioso': '😰',
+            // Naturaleza y clima
+            'sol': '☀️', 'lluvia': '🌧️', 'frío': '❄️', 'calor': '🔥', 'nube': '☁️',
+            'nieve': '❄️', 'viento': '💨', 'cerro': '⛰️', 'montaña': '🏔️', 'río': '🏞️',
+            'mar': '🌊', 'lago': '🪷', 'árbol': '🌳', 'flor': '🌸', 'hierba': '🌿',
+            'tierra': '🌍', 'fuego': '🔥', 'agua': '💧', 'piedra': '🪨', 'luna': '🌙',
+            'estrella': '⭐', 'cielo': '🌌', 'desierto': '🏜️',
+            // Animales
+            'perro': '🐕', 'gato': '🐈', 'llama': '🦙', 'alpaca': '🦙', 'zorro': '🦊',
+            'cóndor': '🦅', 'pájaro': '🐦', 'pez': '🐟', 'vaca': '🐄', 'caballo': '🐴',
+            'oveja': '🐑', 'cerdo': '🐷', 'gallina': '🐔', 'serpiente': '🐍', 'rana': '🐸',
+            // Personas y familia
+            'madre': '👩', 'padre': '👨', 'hijo': '👦', 'hija': '👧', 'hermano': '👦',
+            'hermana': '👧', 'abuelo': '👴', 'abuela': '👵', 'hombre': '👨', 'mujer': '👩',
+            'niño': '👦', 'niña': '👧', 'persona': '🧑', 'gente': '👥',
+            // Cuerpo
+            'mano': '✋', 'pie': '🦶', 'ojo': '👁️', 'boca': '👄', 'nariz': '👃',
+            'oreja': '👂', 'cabeza': '🗣️', 'corazón': '❤️', 'brazo': '💪',
+            // Comida y bebida
+            'comida': '🍽️', 'agua': '💧', 'pan': '🍞', 'carne': '🥩', 'maíz': '🌽',
+            'papa': '🥔', 'fruta': '🍎', 'leche': '🥛', 'sal': '🧂',
+            // Lugares
+            'casa': '🏠', 'ciudad': '🏙️', 'pueblo': '🏘️', 'mercado': '🏪', 'iglesia': '⛪',
+            'campo': '🌾', 'plaza': '🏛️', 'camino': '🛤️', 'puerta': '🚪',
+            // Transporte
+            'auto': '🚗', 'bus': '🚌', 'bicicleta': '🚲', 'barco': '⛵', 'avión': '✈️',
+            'tren': '🚂', 'moto': '🏍️', 'taxi': '🚕', 'camión': '🚚',
+            // Objetos cotidianos
+            'libro': '📚', 'mesa': '🪑', 'silla': '🪑', 'ropa': '👕', 'zapato': '👟',
+            'dinero': '💰', 'teléfono': '📱', 'reloj': '⏰', 'llave': '🔑',
+            // Pronombres y conceptos
+            'yo': '🙋', 'tú': '👉', 'él': '👨', 'ella': '👩', 'nosotros': '👥',
+            'sí': '✅', 'no': '❌', 'grande': '⬆️', 'pequeño': '⬇️', 'bueno': '👍',
+            'malo': '👎', 'nuevo': '✨', 'viejo': '📜', 'rápido': '⚡', 'lento': '🐢',
+            // Colores
+            'rojo': '🔴', 'azul': '🔵', 'verde': '🟢', 'amarillo': '🟡', 'negro': '⚫',
+            'blanco': '⚪', 'naranja': '🟠',
+            // Verbos comunes
+            'caminar': '🚶', 'correr': '🏃', 'comer': '🍽️', 'beber': '🥤', 'dormir': '😴',
+            'trabajar': '💼', 'estudiar': '📖', 'hablar': '💬', 'escuchar': '👂',
+            'ver': '👁️', 'ir': '➡️', 'venir': '⬅️', 'dar': '🤲', 'tomar': '✋',
+        };
 
-        async function loadWikiImage(searchTerm, targetId) {
-            if (!searchTerm) return;
-            const key = searchTerm.toLowerCase();
-
-            const applyImage = (src) => {
-                const el = document.getElementById(targetId);
-                if (!el) return;
-                if (src) { el.src = src; el.style.display = ''; }
-                else el.style.display = 'none';
-            };
-
-            if (key in wikiImageCache) { applyImage(wikiImageCache[key]); return; }
-
-            try {
-                // 1️⃣ Wikipedia en español — artículo con imagen destacada (más confiable)
-                const wikiUrl = `https://es.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(searchTerm)}&prop=pageimages&format=json&pithumbsize=300&origin=*`;
-                const wikiRes = await fetch(wikiUrl);
-                const wikiData = await wikiRes.json();
-                const pages = Object.values((wikiData.query || {}).pages || {});
-                const page = pages[0];
-                if (page && page.thumbnail && page.thumbnail.source) {
-                    wikiImageCache[key] = page.thumbnail.source;
-                    applyImage(wikiImageCache[key]);
-                    return;
-                }
-            } catch(e) {}
-
-            try {
-                // 2️⃣ Wikimedia Commons — búsqueda abierta
-                const commonsUrl = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(searchTerm)}&gsrnamespace=6&gsrlimit=10&prop=imageinfo&iiprop=url&iiurlwidth=300&format=json&origin=*`;
-                const commonsRes = await fetch(commonsUrl);
-                const commonsData = await commonsRes.json();
-                const commonsPages = Object.values((commonsData.query || {}).pages || {});
-                for (const p of commonsPages) {
-                    const info = p.imageinfo && p.imageinfo[0];
-                    if (!info) continue;
-                    const thumb = info.thumburl || info.url || '';
-                    const lower = thumb.toLowerCase();
-                    // Aceptar jpg, png, jpeg, webp — rechazar solo svg y pdf
-                    if (lower.includes('.svg') || lower.includes('.pdf') || lower.includes('.ogg') || lower.includes('.ogv') || lower.includes('.webm')) continue;
-                    if (thumb) {
-                        wikiImageCache[key] = thumb;
-                        applyImage(thumb);
-                        return;
-                    }
-                }
-            } catch(e) {}
-
-            // Sin resultados
-            wikiImageCache[key] = null;
-            applyImage(null);
+        function getEmoji(item) {
+            // 1. Campo emoji en el JSON (prioridad máxima)
+            if (item.emoji) return item.emoji;
+            // 2. Buscar por traducción en el mapa
+            const words = (item.translation || '').toLowerCase()
+                .split(/[\/,\s]+/)
+                .map(w => w.trim().replace(/[().]/g, ''));
+            for (const w of words) {
+                if (emojiMap[w]) return emojiMap[w];
+            }
+            // 3. Fallback por tag
+            if (item.tags) {
+                const tag = (item.tags[0] || '').toLowerCase();
+                if (tag.includes('verbo')) return '🔤';
+                if (tag.includes('sustantivo')) return '📌';
+                if (tag.includes('adjetivo')) return '🎨';
+                if (tag.includes('número')) return '🔢';
+            }
+            return '📝';
         }
 
         function renderCards() {
@@ -1345,11 +1376,9 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                 groups[unit].sort((a, b) => (b.pinned === a.pinned) ? 0 : b.pinned ? 1 : -1).forEach(item => {
                     const globalIndex = dictionary.indexOf(item); const card = document.createElement('div');
                     card.className = "verb-card " + (item.pinned ? 'card-pinned' : '');
-                    const imgId = 'img-card-' + globalIndex;
-                    const searchTerm = item.imageSearch || (item.translation || '').split('/')[0].split(',')[0].trim();
-                    card.innerHTML = `<div style="display:flex; gap:15px; align-items:center;"><img id="${imgId}" src="" alt="${searchTerm}" style="width:70px; height:70px; object-fit:cover; border-radius:12px; border:2px solid var(--border); flex-shrink:0; background:#f0f0f0;" onerror="this.style.display='none'"><button type="button" class="btn-icon btn-speak" onclick="speak('${item.verb.replace(/'/g, "\\'")}')">🔊</button><div style="flex-grow:1;"><div style="font-size:18px; font-weight:800;">${item.verb}</div><div style="font-weight:600; font-size:15px; color: var(--duo-blue);">${item.translation}</div></div><button type="button" class="btn-icon btn-pin ${item.pinned ? 'active' : ''}" onclick="togglePin(${globalIndex})">⭐</button></div>`;
+                    const emoji = getEmoji(item);
+                    card.innerHTML = `<div style="display:flex; gap:15px; align-items:center;"><div style="width:56px; height:56px; font-size:36px; display:flex; align-items:center; justify-content:center; background:var(--card-bg); border-radius:12px; border:2px solid var(--border); flex-shrink:0;">${emoji}</div><button type="button" class="btn-icon btn-speak" onclick="speak('${item.verb.replace(/'/g, "\\'")}')">🔊</button><div style="flex-grow:1;"><div style="font-size:18px; font-weight:800;">${item.verb}</div><div style="font-weight:600; font-size:15px; color: var(--duo-blue);">${item.translation}</div></div><button type="button" class="btn-icon btn-pin ${item.pinned ? 'active' : ''}" onclick="togglePin(${globalIndex})">⭐</button></div>`;
                     cardsWrap.appendChild(card);
-                    loadWikiImage(searchTerm, imgId);
                 });
                 unitBlock.appendChild(cardsWrap);
                 container.appendChild(unitBlock);
@@ -1408,6 +1437,56 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             if (daysOverdue >= 30) return { status: 'broken' }; else if (daysOverdue >= 14) return { status: 'warning' }; else if (daysOverdue >= 7) return { status: 'nocrown' }; else return { status: 'perfect' };
         }
 
+        function populateSectionSelect() {
+            const select = document.getElementById('sectionSelect');
+            if (!select) return;
+            const units = getUniqueUnits();
+            const UNITS_PER_SECTION = 11;
+            select.innerHTML = '';
+            let hasOptions = false;
+            const totalSections = Math.ceil(units.length / UNITS_PER_SECTION);
+            for (let s = 0; s < totalSections; s++) {
+                // Solo secciones desbloqueadas
+                if (!isSectionUnlocked(units, s, UNITS_PER_SECTION)) break;
+                const sectionUnits = units.slice(s * UNITS_PER_SECTION, (s + 1) * UNITS_PER_SECTION);
+                const completed = sectionUnits.filter(u => unitProgress[u]).length;
+                const opt = document.createElement('option');
+                opt.value = s;
+                opt.textContent = `Sección ${s + 1}  (${completed}/${sectionUnits.length} completadas)`;
+                select.appendChild(opt);
+                hasOptions = true;
+            }
+            if (!hasOptions) {
+                const opt = document.createElement('option');
+                opt.value = '';
+                opt.textContent = 'No hay unidades cargadas';
+                select.appendChild(opt);
+            }
+        }
+
+        function startPracticeSection() {
+            const select = document.getElementById('sectionSelect');
+            const s = parseInt(select.value);
+            if (isNaN(s)) { alert('Elegí una sección primero.'); return; }
+            const units = getUniqueUnits();
+            const UNITS_PER_SECTION = 11;
+            const sectionUnits = units.slice(s * UNITS_PER_SECTION, (s + 1) * UNITS_PER_SECTION);
+            const pool = dictionary.filter(d => sectionUnits.includes(d.unit));
+            if (pool.length === 0) { alert('No hay palabras en esta sección.'); return; }
+            practiceStartTime = Date.now();
+            practiceQueue = pool.sort(() => 0.5 - Math.random());
+            currentUnit = null;
+            currentPracticeIndex = 0; lives = 3;
+            document.getElementById('practiceMenu').style.display = 'none';
+            document.getElementById('practiceBox').style.display = 'block';
+            document.getElementById('progressContainer').style.display = 'block';
+            document.getElementById('practiceStats').style.display = 'grid';
+            document.getElementById('lives').innerHTML = `❤️ ${lives}`;
+            document.getElementById('streak').innerHTML = `🔥 ${currentStreak}`;
+            document.getElementById('practiceProgress').style.width = '0%';
+            nextPractice();
+        }
+
         function isUnitUnlocked(units, index) {
             if (index === 0) return true;
             const prevUnit = units[index - 1];
@@ -1425,6 +1504,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
         function renderPath() {
             const container = document.getElementById('unitPathContainer'); container.innerHTML = '';
             const units = getUniqueUnits();
+            populateSectionSelect();
             if (units.length === 0) { container.innerHTML = '<p style="z-index:2; background:white; padding:10px; border-radius:10px;">Carga unidades para ver el camino.</p>'; return; }
 
             const UNITS_PER_SECTION = 11;
@@ -1572,6 +1652,7 @@ function handlePracticeEnter(e) {
             currentUnit = (filter !== 'all' && filter !== 'favs') ? filter : null;
             let pool = filter === 'all' ? [...dictionary] : filter === 'favs' ? dictionary.filter(d => d.pinned || (d.unit && pinnedUnits[d.unit])) : dictionary.filter(d => d.unit === filter);
             if (pool.length === 0) { alert("No hay suficientes palabras para practicar."); return; }
+            if (typeof gtag !== 'undefined') gtag('event', 'practice_start', { filter });
             practiceStartTime = Date.now();
             let mezcladas = pool.sort(() => 0.5 - Math.random());
             practiceQueue = filter === 'all' ? mezcladas.slice(0, 10) : mezcladas; 
@@ -1584,6 +1665,7 @@ function handlePracticeEnter(e) {
 
         function endPractice(completed) {
             if (practiceStartTime > 0) { studyTimeMs += (Date.now() - practiceStartTime); practiceStartTime = 0; }
+            if (typeof gtag !== 'undefined') gtag('event', 'practice_end', { completed });
             updateStreakDays();
             save(true); 
             document.getElementById('practiceMenu').style.display = 'block'; document.getElementById('practiceBox').style.display = 'none';
@@ -1620,18 +1702,14 @@ function handlePracticeEnter(e) {
             question.answer = dir === 'q2e' ? question.translation : question.verb;
             document.getElementById('practiceSentence').innerText = question.ask;
             const imgBox = document.getElementById('practiceImageBox');
-            const img = document.getElementById('practiceImage');
+            const imgEl = document.getElementById('practiceImage');
             if (dir === 'q2e') {
-                const searchTerm = question.imageSearch || (question.translation || '').split('/')[0].split(',')[0].trim();
-                img.src = '';
-                img.style.display = 'block';
+                const emoji = getEmoji(question);
+                imgEl.innerText = emoji;
                 imgBox.style.display = 'block';
-                const tmpId = 'practice-img-tmp';
-                img.id = tmpId;
-                loadWikiImage(searchTerm, tmpId).then(() => { img.id = 'practiceImage'; });
             } else {
                 imgBox.style.display = 'none';
-                img.src = '';
+                imgEl.innerText = '';
             }
         }
 
@@ -1738,9 +1816,17 @@ function handlePracticeEnter(e) {
 
         function checkPracticeWritten() {
             let input = ""; let ans = "";
-            if (!document.getElementById('modeFill').classList.contains('hidden')) { input = document.getElementById('fillInput').value; ans = currentFillAnswer; }
-            else if (!document.getElementById('modeOrder').classList.contains('hidden')) { input = Array.from(document.getElementById('orderDropZone').children).map(el => el.innerText).join(' '); ans = currentQuestion.answer; }
-            else { input = document.getElementById('practiceInput').value; ans = currentQuestion.answer; }
+            if (!document.getElementById('modeFill').classList.contains('hidden')) { 
+                input = document.getElementById('fillInput').value; 
+                ans = currentFillAnswer; 
+            } else if (!document.getElementById('modeOrder').classList.contains('hidden')) { 
+                input = Array.from(document.getElementById('orderDropZone').children).map(el => el.innerText).join(' ');
+                // En modo orden, comparar sin puntuación porque las fichas no la tienen
+                ans = currentQuestion.answer.replace(/[.,?!¿¡]/g, '').replace(/\s+/g, ' ').trim();
+            } else { 
+                input = document.getElementById('practiceInput').value; 
+                ans = currentQuestion.answer; 
+            }
             checkPractice(checkFlexibleMatch(input, ans), ans);
         }
 
@@ -1779,9 +1865,112 @@ function handlePracticeEnter(e) {
 
         function speakCurrentPractice() { if (currentQuestion) speak(document.getElementById('practiceSentence').innerText); }
 
+        // --- AUTO-ACTUALIZACIÓN DESDE GITHUB ---
+        const GITHUB_USER = 'mayorudamian-hue';
+        const GITHUB_REPO = 'Yachakuna-app';
+        const GITHUB_BRANCH = 'main';
+        const GITHUB_API = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents`;
+
+        async function fetchGitHubJSON(path) {
+            try {
+                const res = await fetch(`${GITHUB_API}/${path}?ref=${GITHUB_BRANCH}`, {
+                    headers: { 'Accept': 'application/vnd.github.v3+json' }
+                });
+                if (!res.ok) return null;
+                return await res.json();
+            } catch(e) { return null; }
+        }
+
+        async function loadJSONFromGitHub(downloadUrl) {
+            try {
+                const res = await fetch(downloadUrl);
+                if (!res.ok) return null;
+                return await res.json();
+            } catch(e) { return null; }
+        }
+
+        async function syncFromGitHub() {
+            let updatedVocab = false;
+            let updatedStories = false;
+
+            // --- Sincronizar vocabulario ---
+            const vocabFiles = await fetchGitHubJSON('json/vocabulario');
+            if (vocabFiles && Array.isArray(vocabFiles)) {
+                for (const file of vocabFiles) {
+                    if (!file.name.endsWith('.json')) continue;
+                    const data = await loadJSONFromGitHub(file.download_url);
+                    if (!Array.isArray(data) || data.length === 0) continue;
+                    if (!data[0].verb || !data[0].translation) continue;
+                    data.forEach(newItem => {
+                        if (!newItem.verb || !newItem.translation) return;
+                        const index = dictionary.findIndex(item =>
+                            item.verb.toLowerCase().trim() === newItem.verb.toLowerCase().trim()
+                        );
+                        if (index !== -1) {
+                            const pinned = dictionary[index].pinned;
+                            const srs = dictionary[index].srs;
+                            dictionary[index] = { ...dictionary[index], ...newItem, pinned, srs };
+                        } else {
+                            if (!newItem.srs) newItem.srs = { ef: 2.5, interval: 0, reps: 0, due: Date.now() };
+                            dictionary.push(newItem);
+                            updatedVocab = true;
+                        }
+                    });
+                }
+            }
+
+            // --- Sincronizar historias ---
+            const storyFiles = await fetchGitHubJSON('json/historias');
+            if (storyFiles && Array.isArray(storyFiles)) {
+                for (const file of storyFiles) {
+                    if (!file.name.endsWith('.json')) continue;
+                    const data = await loadJSONFromGitHub(file.download_url);
+                    if (!Array.isArray(data) || data.length === 0) continue;
+                    if (!data[0].scenes) continue;
+                    data.forEach(newStory => {
+                        const index = storiesData.findIndex(s => s.id === newStory.id);
+                        if (index !== -1) storiesData[index] = newStory;
+                        else { storiesData.push(newStory); updatedStories = true; }
+                    });
+                }
+                if (updatedStories) localStorage.setItem('rimay_Stories', JSON.stringify(storiesData));
+            }
+
+            if (updatedVocab || updatedStories) {
+                save(true);
+                renderCards();
+                renderPath();
+                renderAwards();
+            }
+        }
+
+        // --- DESBLOQUEO CARGA DE ARCHIVOS (PROFE) ---
+        function unlockUpload() {
+            const pwd = document.getElementById('profeUploadPwd').value;
+            if (pwd === 'Ruwaj') {
+                document.getElementById('profeUploadLocked').style.display = 'none';
+                document.getElementById('profeUploadPanel').style.display = 'block';
+                sessionStorage.setItem('yachakuna_profe', '1');
+            } else {
+                document.getElementById('profeUploadPwd').style.borderColor = 'var(--duo-red)';
+                setTimeout(() => document.getElementById('profeUploadPwd').style.borderColor = '', 1500);
+            }
+        }
+        // Si ya estaba logueado como profe, mostrar panel directo
+        if (sessionStorage.getItem('yachakuna_profe') === '1') {
+            document.addEventListener('DOMContentLoaded', () => {
+                const locked = document.getElementById('profeUploadLocked');
+                const panel = document.getElementById('profeUploadPanel');
+                if (locked) locked.style.display = 'none';
+                if (panel) panel.style.display = 'block';
+            });
+        }
+
         // --- ARRANQUE DE LA APP ---
         renderCards(); renderPath(); renderAwards();
         if (hasAudioSupport) setTimeout(populateVoices, 100);
+        // Sincronizar con GitHub en segundo plano (silencioso)
+        setTimeout(syncFromGitHub, 1500);
 
     </script>
 
@@ -1791,7 +1980,7 @@ function handlePracticeEnter(e) {
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, increment, orderBy, query, serverTimestamp, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, increment, arrayUnion, orderBy, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyArv7WzklDiQjpiHhckVsrEpc4A_lnwXGE",
@@ -1897,6 +2086,7 @@ function handlePracticeEnter(e) {
                         <span class="forum-author">${d.name || 'Anónimo'}${isProfePost ? '<span class="profe-badge">👨‍🏫 Profe</span>' : ''}</span>
                         <div style="font-size:12px;color:#aaa;">${timeAgo(d.createdAt)}</div>
                     </div>
+                    ${isProfe ? `<button type="button" onclick="window.deletePost('${id}')" style="width:auto; padding:4px 12px; font-size:12px; background:none; border:2px solid var(--duo-red); border-bottom:2px solid var(--duo-red); color:var(--duo-red); border-radius:20px; margin-left:auto; cursor:pointer;">🗑️ Borrar</button>` : ''}
                 </div>
                 <span class="forum-category ${catClass(d.category)}">${catLabel(d.category)}</span>
                 <div class="forum-text">${d.text}</div>
@@ -1948,7 +2138,7 @@ function handlePracticeEnter(e) {
             btn.disabled = true; btn.innerText = 'Publicando...';
             try {
                 await addDoc(collection(db, 'forumPosts'), {
-                    name, text, category, likes: 0, isProfe, replies: [], createdAt: serverTimestamp()
+                    name, text, category, likes: 0, isProfe: !!isProfe, replies: [], createdAt: serverTimestamp()
                 });
                 document.getElementById('forumText').value = '';
                 if (!isProfe) document.getElementById('forumName').value = '';
@@ -1979,19 +2169,29 @@ function handlePracticeEnter(e) {
 
         // --- ENVIAR RESPUESTA ---
         window.submitReply = async function(postId) {
-            const replyName = isProfe ? 'Profe' : document.getElementById('reply-name-' + postId).value.trim();
-            const replyText = document.getElementById('reply-text-' + postId).value.trim();
+            const nameEl = document.getElementById('reply-name-' + postId);
+            const textEl = document.getElementById('reply-text-' + postId);
+            const box = document.getElementById('reply-box-' + postId);
+            if (!nameEl || !textEl) { alert('Error: no se encontró el formulario.'); return; }
+            const replyName = isProfe ? 'Profe' : nameEl.value.trim();
+            const replyText = textEl.value.trim();
             if (!replyName) { alert('Escribí tu nombre 😊'); return; }
             if (!replyText || replyText.length < 2) { alert('La respuesta es muy corta 😅'); return; }
-            const btn = document.querySelector(`#reply-box-${postId} button`);
-            btn.disabled = true; btn.innerText = 'Enviando...';
+            // Buscar el botón dentro de la caja de respuesta
+            const btn = box ? box.querySelector('button') : null;
+            if (btn) { btn.disabled = true; btn.innerText = 'Enviando...'; }
             try {
-                const postRef = doc(db, 'forumPosts', postId);
-                const postSnap = await getDoc(postRef);
-                const existing = postSnap.data().replies || [];
-                const newReply = { name: replyName, text: replyText, isProfe, time: 'Ahora mismo' };
-                await updateDoc(postRef, { replies: [...existing, newReply] });
-                btn.disabled = false; btn.innerText = 'Responder';
+                const newReply = { 
+                    name: replyName, 
+                    text: replyText, 
+                    isProfe: !!isProfe, 
+                    time: new Date().toLocaleString('es-AR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' })
+                };
+                await updateDoc(doc(db, 'forumPosts', postId), { 
+                    replies: arrayUnion(newReply) 
+                });
+                textEl.value = '';
+                if (btn) { btn.disabled = false; btn.innerText = 'Responder'; }
                 // Notificación email
                 await sendEmailNotification(
                     isProfe ? '👨‍🏫 Respuesta del Profe' : `↩️ Respuesta de ${replyName}`,
@@ -1999,8 +2199,22 @@ function handlePracticeEnter(e) {
                 );
                 await window.loadForumPosts();
             } catch(e) {
-                alert('Error al responder. Revisá tu conexión.');
-                btn.disabled = false; btn.innerText = 'Responder';
+                console.error('Error al responder:', e);
+                alert('Error al responder: ' + e.message);
+                if (btn) { btn.disabled = false; btn.innerText = 'Responder'; }
+            }
+        };
+
+        // --- BORRAR MENSAJE (solo Profe) ---
+        window.deletePost = async function(postId) {
+            if (!isProfe) return;
+            if (!confirm('¿Borrar este mensaje y todas sus respuestas?')) return;
+            try {
+                await deleteDoc(doc(db, 'forumPosts', postId));
+                const postEl = document.getElementById('post-' + postId);
+                if (postEl) postEl.remove();
+            } catch(e) {
+                alert('Error al borrar: ' + e.message);
             }
         };
 
