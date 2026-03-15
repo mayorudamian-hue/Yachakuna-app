@@ -1,0 +1,1017 @@
+[
+  {
+    "verb": "Ripun",
+    "translation": "Se va / parte",
+    "unit": "12. Intej cuenton",
+    "tags": [
+      "Verbo",
+      "Narrativa"
+    ],
+    "sentences": [
+      {
+        "text": "Inti wasiymanta ripun.",
+        "trans": "Inti se va de su casa."
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Chayan",
+    "translation": "Llega",
+    "unit": "12. Intej cuenton",
+    "tags": [
+      "Verbo",
+      "Narrativa"
+    ],
+    "sentences": [
+      {
+        "text": "Inti llajtaman chayan.",
+        "trans": "Inti llega a la ciudad."
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Kutimun",
+    "translation": "Vuelve / regresa",
+    "unit": "12. Intej cuenton",
+    "tags": [
+      "Verbo",
+      "Narrativa"
+    ],
+    "sentences": [
+      {
+        "text": "Inti wasiyman kutimun.",
+        "trans": "Inti vuelve a su casa."
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Rejsikun",
+    "translation": "Se conocen",
+    "unit": "12. Intej cuenton",
+    "tags": [
+      "Verbo",
+      "Narrativa"
+    ],
+    "sentences": [
+      {
+        "text": "Paykunaqa rejsikunku.",
+        "trans": "Ellos se conocen."
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Parlanku",
+    "translation": "Hablan / conversan",
+    "unit": "12. Intej cuenton",
+    "tags": [
+      "Verbo",
+      "Narrativa"
+    ],
+    "sentences": [
+      {
+        "text": "Paykunaqa sapa p'unchay parlanku.",
+        "trans": "Ellos hablan todos los días."
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Yachakun",
+    "translation": "Aprende",
+    "unit": "12. Intej cuenton",
+    "tags": [
+      "Verbo",
+      "Narrativa"
+    ],
+    "sentences": [
+      {
+        "text": "Inti quechua yachakun.",
+        "trans": "Inti aprende quechua."
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Wayna",
+    "translation": "Joven (hombre)",
+    "unit": "12. Intej cuenton",
+    "tags": [
+      "Sustantivo",
+      "Personas"
+    ],
+    "sentences": [
+      {
+        "text": "Payqa uj tapurikoj wayna.",
+        "trans": "Él es un joven que pregunta."
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Warmi",
+    "translation": "Mujer / chica",
+    "unit": "12. Intej cuenton",
+    "tags": [
+      "Sustantivo",
+      "Personas"
+    ],
+    "sentences": [
+      {
+        "text": "Iskay warmis jamunku.",
+        "trans": "Dos chicas vienen."
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Ñan",
+    "translation": "Camino",
+    "unit": "12. Intej cuenton",
+    "tags": [
+      "Sustantivo",
+      "Lugar"
+    ],
+    "sentences": [
+      {
+        "text": "Ñanpi doña Rosa kashan.",
+        "trans": "En el camino está doña Rosa."
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Llajta",
+    "translation": "Ciudad / pueblo",
+    "unit": "12. Intej cuenton",
+    "tags": [
+      "Sustantivo",
+      "Lugar"
+    ],
+    "sentences": [
+      {
+        "text": "Jatun llajta, icharí.",
+        "trans": "Es un pueblo grande, ¿verdad?"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Jatun",
+    "translation": "Grande",
+    "unit": "12. Intej cuenton",
+    "tags": [
+      "Adjetivo"
+    ],
+    "sentences": [
+      {
+        "text": "Jatun llajta.",
+        "trans": "Es un pueblo grande."
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Sumaj",
+    "translation": "Lindo / hermoso / ¡qué bueno!",
+    "unit": "12. Intej cuenton",
+    "tags": [
+      "Adjetivo",
+      "Exclamación"
+    ],
+    "sentences": [
+      {
+        "text": "Chajraqa sumaj!",
+        "trans": "¡La chacra es hermosa!"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Chaypi",
+    "translation": "Allí / en ese lugar",
+    "unit": "12. Intej cuenton",
+    "tags": [
+      "Adverbio",
+      "Lugar"
+    ],
+    "sentences": [
+      {
+        "text": "Chaypi don Marcos kashan.",
+        "trans": "Allí está don Marcos."
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Chaymantataj",
+    "translation": "Después de eso / luego",
+    "unit": "12. Intej cuenton",
+    "tags": [
+      "Conector",
+      "Narrativa"
+    ],
+    "sentences": [
+      {
+        "text": "Chaymantataj, iskay warmis jamunku.",
+        "trans": "Luego, dos chicas llegaron."
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Tapurikoj",
+    "translation": "El que pregunta / preguntando",
+    "unit": "12. Intej cuenton",
+    "tags": [
+      "Participio",
+      "Gramática"
+    ],
+    "sentences": [
+      {
+        "text": "Inti tapurikoj wayna.",
+        "trans": "Inti, el joven que pregunta."
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Tukukuypi",
+    "translation": "Al final / al terminar",
+    "unit": "12. Intej cuenton",
+    "tags": [
+      "Frase",
+      "Narrativa"
+    ],
+    "sentences": [
+      {
+        "text": "Tukukuypi, Inti kusisqa kashan.",
+        "trans": "Al final, Inti está feliz."
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Waj runas",
+    "translation": "Otras personas",
+    "unit": "12. Intej cuenton",
+    "tags": [
+      "Frase",
+      "Personas"
+    ],
+    "sentences": [
+      {
+        "text": "Waj runasta rejsiyta munani.",
+        "trans": "Quiero conocer a otras personas."
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Icharí",
+    "translation": "¿Verdad? / ¿No es así?",
+    "unit": "12. Intej cuenton",
+    "tags": [
+      "Frase",
+      "Conversación"
+    ],
+    "sentences": [
+      {
+        "text": "Jatun llajta, icharí.",
+        "trans": "Es un pueblo grande, ¿verdad?"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Uj",
+    "translation": "1 - Uno",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [
+      {
+        "text": "Uj alqo kashan",
+        "trans": "Hay un perro"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Iskay",
+    "translation": "2 - Dos",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [
+      {
+        "text": "Iskay wasis",
+        "trans": "Dos casas"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Kinsa",
+    "translation": "3 - Tres",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [
+      {
+        "text": "Kimsa punkus",
+        "trans": "Tres puertas"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Tawa",
+    "translation": "4 - Cuatro",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [
+      {
+        "text": "Tawa rumis",
+        "trans": "Cuatro piedras"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Pichqa",
+    "translation": "5 - Cinco",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [
+      {
+        "text": "Pichqa makis",
+        "trans": "Cinco manos"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Sojta",
+    "translation": "6 - Seis",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [
+      {
+        "text": "Sojta chajras",
+        "trans": "Seis chacras"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Qanchis",
+    "translation": "7 - Siete",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [
+      {
+        "text": "Qanchis p'unchaykuna",
+        "trans": "Siete días"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Pusaj",
+    "translation": "8 - Ocho",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [
+      {
+        "text": "Pusaj runas",
+        "trans": "Ocho personas"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Isqon",
+    "translation": "9 - Nueve",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [
+      {
+        "text": "Isqon orqos",
+        "trans": "Nueve cerros"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Chunka",
+    "translation": "10 - Diez",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [
+      {
+        "text": "Chunka llajtas",
+        "trans": "Diez pueblos"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Chunka ujniyoj",
+    "translation": "11 - Once",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Chunka iskayniyoj",
+    "translation": "12 - Doce",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Chunka kinsayoj",
+    "translation": "13 - Trece",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Chunka tawayoj",
+    "translation": "14 - Catorce",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Chunka pichqayoj",
+    "translation": "15 - Quince",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Chunka sojtayoj",
+    "translation": "16 - Dieciséis",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Chunka qanchisniyoj",
+    "translation": "17 - Diecisiete",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Chunka pusajniyoj",
+    "translation": "18 - Dieciocho",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Chunka isqonniyoj",
+    "translation": "19 - Diecinueve",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Iskay chunka",
+    "translation": "20 - Veinte",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [
+      {
+        "text": "Iskay chunka runa kashanku",
+        "trans": "Hay veinte personas"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Iskay chunka ujniyoj",
+    "translation": "21 - Veintiuno",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Iskay chunka iskayniyoj",
+    "translation": "22 - Veintidós",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Iskay chunka kinsayoj",
+    "translation": "23 - Veintitrés",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Iskay chunka tawayoj",
+    "translation": "24 - Veinticuatro",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Iskay chunka pichqayoj",
+    "translation": "25 - Veinticinco",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Iskay chunka sojtayoj",
+    "translation": "26 - Veintiséis",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Iskay chunka qanchisniyoj",
+    "translation": "27 - Veintisiete",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Iskay chunka pusajniyoj",
+    "translation": "28 - Veintiocho",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Iskay chunka isqonniyoj",
+    "translation": "29 - Veintinueve",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Kinsa chunka",
+    "translation": "30 - Treinta",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [
+      {
+        "text": "Kinsa chunka p'unchaykuna",
+        "trans": "Treinta días"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Kinsa chunka ujniyoj",
+    "translation": "31 - Treinta y uno",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Kinsa chunka iskayniyoj",
+    "translation": "32 - Treinta y dos",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Kinsa chunka kinsayoj",
+    "translation": "33 - Treinta y tres",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Kinsa chunka tawayoj",
+    "translation": "34 - Treinta y cuatro",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Kinsa chunka pichqayoj",
+    "translation": "35 - Treinta y cinco",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Kinsa chunka sojtayoj",
+    "translation": "36 - Treinta y seis",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Kinsa chunka qanchisniyoj",
+    "translation": "37 - Treinta y siete",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Kinsa chunka pusajniyoj",
+    "translation": "38 - Treinta y ocho",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Kinsa chunka isqonniyoj",
+    "translation": "39 - Treinta y nueve",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Tawa chunka",
+    "translation": "40 - Cuarenta",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Tawa chunka ujniyoj",
+    "translation": "41 - Cuarenta y uno",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Tawa chunka iskayniyoj",
+    "translation": "42 - Cuarenta y dos",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Tawa chunka kinsayoj",
+    "translation": "43 - Cuarenta y tres",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Tawa chunka tawayoj",
+    "translation": "44 - Cuarenta y cuatro",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Tawa chunka pichqayoj",
+    "translation": "45 - Cuarenta y cinco",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Tawa chunka sojtayoj",
+    "translation": "46 - Cuarenta y seis",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Tawa chunka qanchisniyoj",
+    "translation": "47 - Cuarenta y siete",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Tawa chunka pusajniyoj",
+    "translation": "48 - Cuarenta y ocho",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Tawa chunka isqonniyoj",
+    "translation": "49 - Cuarenta y nueve",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Pichqa chunka",
+    "translation": "50 - Cincuenta",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Pachaj",
+    "translation": "100 - Cien",
+    "unit": "13. Los Números",
+    "tags": [
+      "Número"
+    ],
+    "sentences": [
+      {
+        "text": "Pachaj runas kashanku",
+        "trans": "Hay cien personas"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "¿Mashkha watasniyoj kanki?",
+    "translation": "¿Cuántos años tenés?",
+    "unit": "14. La edad (-yoj)",
+    "tags": [
+      "Frase",
+      "Edad",
+      "Pregunta"
+    ],
+    "sentences": [
+      {
+        "text": "¿Mashkha watasniyoj kanki, Damián?",
+        "trans": "¿Cuántos años tenés, Damián?"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Noqa iskay chunka kinsayoj watasniyoj kani.",
+    "translation": "Yo tengo 23 años.",
+    "unit": "14. La edad (-yoj)",
+    "tags": [
+      "Frase",
+      "Edad",
+      "Respuesta"
+    ],
+    "sentences": [
+      {
+        "text": "Noqa iskay chunka kinsayoj watasniyoj kani.",
+        "trans": "Yo tengo 23 años."
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "¿Mashkha watasniyoj kankichej?",
+    "translation": "¿Cuántos años tienen ustedes?",
+    "unit": "14. La edad (-yoj)",
+    "tags": [
+      "Frase",
+      "Edad",
+      "Pregunta",
+      "Plural"
+    ],
+    "sentences": [
+      {
+        "text": "¿Mashkha watasniyoj kankichej, waynas?",
+        "trans": "¿Cuántos años tienen ustedes, jóvenes?"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Payqa kimsa chunka watasniyoj.",
+    "translation": "Él/ella tiene 30 años.",
+    "unit": "14. La edad (-yoj)",
+    "tags": [
+      "Frase",
+      "Edad",
+      "Tercera persona"
+    ],
+    "sentences": [
+      {
+        "text": "Payqa kimsa chunka watasniyoj.",
+        "trans": "Él tiene 30 años."
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "¿Mashkha watasniyoj pay?",
+    "translation": "¿Cuántos años tiene él/ella?",
+    "unit": "14. La edad (-yoj)",
+    "tags": [
+      "Frase",
+      "Edad",
+      "Pregunta"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Mashkha",
+    "translation": "Cuánto / Cuántos",
+    "unit": "14. La edad (-yoj)",
+    "tags": [
+      "Vocabulario",
+      "Pregunta"
+    ],
+    "sentences": [
+      {
+        "text": "¿Mashkha watasniyoj kanki?",
+        "trans": "¿Cuántos años tenés?"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Wata",
+    "translation": "Año",
+    "unit": "14. La edad (-yoj)",
+    "tags": [
+      "Vocabulario",
+      "Tiempo"
+    ],
+    "sentences": [
+      {
+        "text": "Iskay chunka wata",
+        "trans": "Veinte años"
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "-yoj",
+    "translation": "Sufijo que indica posesión / tener",
+    "unit": "14. La edad (-yoj)",
+    "tags": [
+      "Gramática",
+      "Sufijo"
+    ],
+    "sentences": [
+      {
+        "text": "Kimsa chunka watasniyoj kani.",
+        "trans": "Tengo 30 años."
+      }
+    ],
+    "pinned": false
+  },
+  {
+    "verb": "Noqa chunka pichqayoj watasniyoj kani.",
+    "translation": "Yo tengo 15 años.",
+    "unit": "14. La edad (-yoj)",
+    "tags": [
+      "Frase",
+      "Edad",
+      "Números"
+    ],
+    "sentences": [],
+    "pinned": false
+  },
+  {
+    "verb": "Paykunaqa pichqa chunka watasniyoj kanku.",
+    "translation": "Ellos/ellas tienen 50 años.",
+    "unit": "14. La edad (-yoj)",
+    "tags": [
+      "Frase",
+      "Edad",
+      "Plural"
+    ],
+    "sentences": [],
+    "pinned": false
+  }
+]
