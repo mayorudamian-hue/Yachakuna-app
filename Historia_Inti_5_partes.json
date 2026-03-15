@@ -8,8 +8,8 @@
     "scenes": [
       {
         "type": "text",
-        "q": "Uj p'unchay, Inti wasiymanta llojsin.",
-        "e": "Un día, Inti sale de su casa."
+        "q": "Uj p'unchay, Inti wasiymanta ripun.",
+        "e": "Un día, Inti se va de su casa."
       },
       {
         "type": "text",
@@ -18,7 +18,7 @@
       },
       {
         "type": "text",
-        "q": "Chakipi rin. Urqos, mayus, phuyus... ¡sumaj!",
+        "q": "Chakipi rin. Orqos, mayus, phuyus... ¡sumaj!",
         "e": "Va a pie. Cerros, ríos, nubes... ¡qué lindo!"
       },
       {
@@ -33,12 +33,12 @@
       },
       {
         "type": "text",
-        "q": "Intij wasín urqo patapi kashan.",
-        "e": "La casa de Inti está en la falda del cerro."
+        "q": "Intej wasin orqo patapi kashan.",
+        "e": "La casa de Inti está arriba del cerro."
       },
       {
         "type": "text",
-        "q": "Payqa wayna. Tapurikoj wayna.",
+        "q": "Payqa wayna. Uj tapurikoj wayna.",
         "e": "Él es un joven. Un joven que hace preguntas."
       },
       {
@@ -88,7 +88,7 @@
       },
       {
         "type": "text",
-        "q": "Inti: — Urqo llajtamanta kani. ¿Qanrí?",
+        "q": "Inti: — Orqo llajtamanta kani. ¿Qanrí?",
         "e": "Inti: — Soy del pueblo del cerro. ¿Y usted?"
       },
       {
@@ -98,7 +98,7 @@
       },
       {
         "type": "text",
-        "q": "Inti: — Llajtaman rishani. Runa masiykunata rejsiyta munani.",
+        "q": "Inti: — Llajtaman rishani. Waj runasta rejsiyta munani.",
         "e": "Inti: — Estoy yendo a la ciudad. Quiero conocer a otras personas."
       },
       {
@@ -113,7 +113,7 @@
         "options": [
           "Mayu llajtamanta (Del pueblo del río)",
           "Kay llajtamanta (De este pueblo)",
-          "Urqo llajtamanta (Del pueblo del cerro)"
+          "Orqo llajtamanta (Del pueblo del cerro)"
         ],
         "correct": 2
       }
@@ -138,22 +138,22 @@
       },
       {
         "type": "text",
-        "q": "Inti: — Allin p'unchay, tata! ¿Imaynalla kashanki?",
-        "e": "Inti: — ¡Buenos días, señor! ¿Cómo está?"
+        "q": "Inti: — Allin p'unchay, don! ¿Imaynalla kashanki?",
+        "e": "Inti: — ¡Buenos días, don! ¿Cómo está?"
       },
       {
         "type": "text",
-        "q": "Marcos: — Sayk'usqa kashani... ¿Pitaj qan, wayna?",
+        "q": "Marcos: — Sayk'usqa kashani... ¿Pitaj qan kanki, wayna?",
         "e": "Marcos: — Estoy cansado... ¿Quién sos, joven?"
       },
       {
         "type": "text",
-        "q": "Inti: — Noqa Inti sutikuni. ¿Qanrí, tata?",
-        "e": "Inti: — Yo me llamo Inti. ¿Y usted, señor?"
+        "q": "Inti: — Noqa Inti sutikuni. ¿Qanrí, don?",
+        "e": "Inti: — Yo me llamo Inti. ¿Y usted, don?"
       },
       {
         "type": "text",
-        "q": "Marcos: — Sutiy Marcos. Kusikuni rejsisuspa. ¿Imapí llajtaman jamorankij?",
+        "q": "Marcos: — Sutiy Marcos. Kusikuni rejsisuspa. ¿Imapí llajtaman jamunki?",
         "e": "Marcos: — Mi nombre es Marcos. Encantado. ¿En qué viniste a la ciudad?"
       },
       {
@@ -163,12 +163,12 @@
       },
       {
         "type": "text",
-        "q": "Marcos: — ¿Wasichu chajrachu astawan gustasunki?",
+        "q": "Marcos: — ¿Wasichu chayri chajrachu astawan gustasunki?",
         "e": "Marcos: — ¿Te gusta más la casa o la chacra?"
       },
       {
         "type": "text",
-        "q": "Inti: — Chajra gustasunki! Urqopi chajra sumaj.",
+        "q": "Inti: — Chajra mayta gustawan! Orqopi chajraqa sumaj.",
         "e": "Inti: — ¡Me gusta la chacra! La chacra en el cerro es hermosa."
       },
       {
@@ -193,7 +193,7 @@
     "scenes": [
       {
         "type": "text",
-        "q": "Chaymantataj, iskay warmakuna ñanpi jamunku. Paykunaqa kusisqa kanku.",
+        "q": "Chaymantataj, iskay warmista ñanpi jamunku. Paykunaqa kusisqa kanku.",
         "e": "Después, dos chicas llegan por el camino. Ellas están felices."
       },
       {
@@ -218,7 +218,7 @@
       },
       {
         "type": "text",
-        "q": "Inti: — Noqa urqo llajtamanta kani. ¿Imapí kankichej jamurankichej?",
+        "q": "Inti: — Noqa orqo llajtamanta kani. ¿Imapí qankuna jamunkichej?",
         "e": "Inti: — Yo soy del pueblo del cerro. ¿En qué vinieron?"
       },
       {
@@ -228,22 +228,22 @@
       },
       {
         "type": "text",
-        "q": "Inti: — Noqa chakipi jamuni. ¿Mayman kankichej rishanki?",
+        "q": "Inti: — Noqa chakipi jamuni. ¿Mayman qankuna rishankichej?",
         "e": "Inti: — Yo vine a pie. ¿Adónde están yendo ustedes?"
       },
       {
         "type": "text",
-        "q": "Ana: — Noqayku qhechua cursoman rishayku. ¿Qanchu?",
-        "e": "Ana: — Nosotras vamos al curso de quechua. ¿Y vos?"
+        "q": "Ana: — Noqayku qhechua cursoman rishayku. Qanrí, ¿jamunkichu?",
+        "e": "Ana: — Nosotras vamos al curso de quechua. Y vos, ¿venís?"
       },
       {
         "type": "text",
-        "q": "Inti: — Noqapis! Qhechua yachakuyta munani. Sapa p'unchay risaj.",
+        "q": "Inti: — ¡Noqapis! Quechua yachakuyta munani. Sapa p'unchay risaj.",
         "e": "Inti: — ¡Yo también! Quiero aprender quechua. Iré todos los días."
       },
       {
         "type": "question",
-        "title": "¿Imapí jamunku Ana Carmen-wan?",
+        "title": "¿Imapí jamunku Ana Carmenwan?",
         "text": "¿En qué vinieron Ana y Carmen?",
         "options": [
           "Chakipi (A pie)",
@@ -263,7 +263,7 @@
     "scenes": [
       {
         "type": "text",
-        "q": "Kimsa runas sapa p'unchay qhechua yachakunku. Kusisqa kanku.",
+        "q": "Kinsa runas sapa p'unchay quechua yachakunku. Kusisqa kanku.",
         "e": "Los tres aprenden quechua todos los días. Están felices."
       },
       {
@@ -273,18 +273,18 @@
       },
       {
         "type": "text",
-        "q": "Chayqa sumaj p'unchay karqa. Runa masiykunata rejsin.",
-        "e": "Fue un día hermoso. Conoció a personas nuevas."
+        "q": "Chayqa sumaj p'unchay karqa. Waj runasta rejserqa.",
+        "e": "Fue un día hermoso. Conoció a otras personas."
       },
       {
         "type": "text",
-        "q": "Paykunaqa sapa p'unchay rimanku. Qhechua rimanku.",
-        "e": "Ellos hablan todos los días. Hablan en quechua."
+        "q": "Paykunaqa sapa p'unchay parlanku. Quechuata parlanku.",
+        "e": "Ellos hablan todos los días. Hablan quechua."
       },
       {
         "type": "text",
-        "q": "Inti wasiyman kutimun. Sayk'usqa, ichari, mana — kusisqa!",
-        "e": "Inti vuelve a su casa. ¿Cansado, acaso? ¡No — feliz!"
+        "q": "Inti wasiyman kutimun. ¡Sayk'usqa, pero kusisqa!",
+        "e": "Inti vuelve a su casa. ¿Cansado, pero feliz!"
       },
       {
         "type": "question",
@@ -293,7 +293,7 @@
         "options": [
           "Llakisqa (Triste)",
           "Sayk'usqa (Cansado)",
-          "Kusisqa (Feliz)"
+          "Phiñasqa (Enojado)"
         ],
         "correct": 2
       }
