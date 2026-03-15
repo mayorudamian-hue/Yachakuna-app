@@ -198,6 +198,11 @@
         #storyFooter { padding: 20px; background: white; border-top: 2px solid var(--border); }
         @keyframes popIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* --- CHIPS DE CATEGORÍA --- */
+        .cat-chip { background: white; color: #aaa; border: 2px solid var(--border); border-bottom: 3px solid var(--border); border-radius: 20px; padding: 5px 12px; font-size: 12px; font-weight: 800; cursor: pointer; width: auto; transition: all 0.15s; text-transform: none; }
+        .cat-chip.active { background: #fdecea; color: var(--duo-blue); border-color: var(--duo-blue); border-bottom-color: var(--duo-blue-shadow); }
+        .cat-chip:active { transform: translateY(2px); border-bottom-width: 1px; }
+
     </style>
 </head>
 <body>
@@ -384,8 +389,18 @@
                     <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;">
                         <input type="text" id="newWordVerb" placeholder="Quechua (ej: Ripun)" style="margin-bottom:0;">
                         <input type="text" id="newWordTranslation" placeholder="Español (ej: Se va / parte)" style="margin-bottom:0;">
+                        <select id="newWordCategoria" style="margin-bottom:0;">
+                            <option value="">Categoría (opcional — auto si no elegís)</option>
+                            <option value="Verbo">🔤 Verbo</option>
+                            <option value="Sustantivo">📌 Sustantivo</option>
+                            <option value="Adjetivo">🎨 Adjetivo</option>
+                            <option value="Pronombre">🙋 Pronombre</option>
+                            <option value="Frase">💬 Frase</option>
+                            <option value="Sufijo">🔩 Sufijo</option>
+                            <option value="Número">🔢 Número</option>
+                        </select>
                         <select id="newWordUnit" style="margin-bottom:0;">
-                            <option value="">Elegir unidad...</option>
+                            <option value="">Elegir unidad existente...</option>
                         </select>
                         <input type="text" id="newWordUnitCustom" placeholder="...o escribí una unidad nueva" style="margin-bottom:0; font-size:14px;">
                     </div>
@@ -413,7 +428,17 @@
                     <option value="">Cargando voces...</option>
                 </select>
                 <div id="voiceQualityBadge" style="font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 8px; display: inline-block; margin-bottom: 10px;"></div>
-                <input type="text" id="searchInput" placeholder="🔍 Buscar palabras..." onkeyup="renderCards()" style="margin-bottom: 0;">
+                <input type="text" id="searchInput" placeholder="🔍 Buscar palabras..." onkeyup="renderCards()" style="margin-bottom: 10px;">
+                <div id="categoryFilters" style="display:flex; flex-wrap:wrap; gap:6px;">
+                    <button type="button" class="cat-chip active" onclick="setCatFilter('')">Todos</button>
+                    <button type="button" class="cat-chip" onclick="setCatFilter('Verbo')">🔤 Verbos</button>
+                    <button type="button" class="cat-chip" onclick="setCatFilter('Sustantivo')">📌 Sustantivos</button>
+                    <button type="button" class="cat-chip" onclick="setCatFilter('Adjetivo')">🎨 Adjetivos</button>
+                    <button type="button" class="cat-chip" onclick="setCatFilter('Pronombre')">🙋 Pronombres</button>
+                    <button type="button" class="cat-chip" onclick="setCatFilter('Frase')">💬 Frases</button>
+                    <button type="button" class="cat-chip" onclick="setCatFilter('Sufijo')">🔩 Sufijos</button>
+                    <button type="button" class="cat-chip" onclick="setCatFilter('Número')">🔢 Números</button>
+                </div>
             </div>
 
             <div id="entriesContainer"></div>
@@ -611,7 +636,18 @@
             <label style="font-size:12px; font-weight:800; color:#aaa; text-transform:uppercase;">Español</label>
             <input type="text" id="editTranslation" style="width:100%; margin-bottom:12px; box-sizing:border-box;">
             <label style="font-size:12px; font-weight:800; color:#aaa; text-transform:uppercase;">Unidad</label>
-            <input type="text" id="editUnit" style="width:100%; margin-bottom:20px; box-sizing:border-box;">
+            <input type="text" id="editUnit" style="width:100%; margin-bottom:12px; box-sizing:border-box;">
+            <label style="font-size:12px; font-weight:800; color:#aaa; text-transform:uppercase;">Categoría</label>
+            <select id="editCategoria" style="width:100%; margin-bottom:20px; box-sizing:border-box;">
+                <option value="">— Auto —</option>
+                <option value="Verbo">🔤 Verbo</option>
+                <option value="Sustantivo">📌 Sustantivo</option>
+                <option value="Adjetivo">🎨 Adjetivo</option>
+                <option value="Pronombre">🙋 Pronombre</option>
+                <option value="Frase">💬 Frase</option>
+                <option value="Sufijo">🔩 Sufijo</option>
+                <option value="Número">🔢 Número</option>
+            </select>
             <div style="display:flex; gap:10px;">
                 <button type="button" onclick="saveEditWord()" style="flex:1;">💾 Guardar</button>
                 <button type="button" onclick="closeEditModal()" class="secondary" style="flex:1;">Cancelar</button>
@@ -1404,6 +1440,42 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             return '📝';
         }
 
+        // --- CATEGORÍAS ---
+        const CATEGORIAS = ['Verbo', 'Sustantivo', 'Adjetivo', 'Pronombre', 'Frase', 'Sufijo', 'Número'];
+        let activeCatFilter = '';
+
+        function autoCategoria(item) {
+            // Si ya tiene una categoría válida, la respeta
+            if (item.tags && item.tags.length > 0) {
+                for (const t of item.tags) {
+                    const match = CATEGORIAS.find(c => t.toLowerCase().includes(c.toLowerCase()));
+                    if (match) return match;
+                }
+            }
+            const v = (item.verb || '').toLowerCase();
+            const t = (item.translation || '').toLowerCase();
+            const u = (item.unit || '').toLowerCase();
+            if (u.includes('número') || u.includes('numero')) return 'Número';
+            if (v.startsWith('-') || t.includes('sufijo') || t.includes('suffix')) return 'Sufijo';
+            if (['noqa','qan','pay','noqayku','noqanchej','qankuna','paykuna'].includes(v.split(' ')[0])) return 'Pronombre';
+            if (v.includes('?') || v.includes('¿') || t.includes('?') || v.split(' ').length >= 3) return 'Frase';
+            if (t.endsWith('ar') || t.endsWith('er') || t.endsWith('ir') || t.endsWith('arse')) return 'Verbo';
+            if (['feliz','triste','cansado','enfermo','enojado','hambriento','alegre','grande','lindo','hermoso'].some(w => t.includes(w))) return 'Adjetivo';
+            return 'Sustantivo';
+        }
+
+        function getCategoria(item) {
+            return item.categoria || autoCategoria(item);
+        }
+
+        function setCatFilter(cat) {
+            activeCatFilter = cat;
+            document.querySelectorAll('.cat-chip').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.includes(cat === '' ? 'Todos' : cat));
+            });
+            renderCards();
+        }
+
         // --- MODO PROFE ---
         let isProfeMode = sessionStorage.getItem('yachakuna_profe') === '1';
 
@@ -1419,6 +1491,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             document.getElementById('editVerb').value = item.verb || '';
             document.getElementById('editTranslation').value = item.translation || '';
             document.getElementById('editUnit').value = item.unit || '';
+            document.getElementById('editCategoria').value = item.categoria || '';
             document.getElementById('editModal').setAttribute('data-index', index);
             document.getElementById('editModal').style.display = 'flex';
         }
@@ -1428,6 +1501,9 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             dictionary[index].verb = document.getElementById('editVerb').value.trim();
             dictionary[index].translation = document.getElementById('editTranslation').value.trim();
             dictionary[index].unit = document.getElementById('editUnit').value.trim();
+            const cat = document.getElementById('editCategoria').value;
+            if (cat) dictionary[index].categoria = cat;
+            else delete dictionary[index].categoria;
             save(true);
             renderCards();
             closeEditModal();
@@ -1453,7 +1529,9 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             container.innerHTML = '';
             let filteredList = dictionary.filter(item => {
                 const v = item.verb || ""; const t = item.translation || ""; const u = item.unit || "";
-                return !q || v.toLowerCase().includes(q) || t.toLowerCase().includes(q) || u.toLowerCase().includes(q);
+                const textMatch = !q || v.toLowerCase().includes(q) || t.toLowerCase().includes(q) || u.toLowerCase().includes(q);
+                const catMatch = !activeCatFilter || getCategoria(item) === activeCatFilter;
+                return textMatch && catMatch;
             });
             if (filteredList.length === 0) { container.innerHTML = '<p style="text-align:center; color:#afafaf; padding: 20px;">No hay palabras.</p>'; updateSRSCount(); return; }
             
@@ -1482,7 +1560,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                     const globalIndex = dictionary.indexOf(item); const card = document.createElement('div');
                     card.className = "verb-card " + (item.pinned ? 'card-pinned' : '');
                     const emoji = getEmoji(item);
-                    card.innerHTML = `<div style="display:flex; gap:15px; align-items:center;"><div style="width:56px; height:56px; font-size:36px; display:flex; align-items:center; justify-content:center; background:var(--card-bg); border-radius:12px; border:2px solid var(--border); flex-shrink:0;">${emoji}</div><button type="button" class="btn-icon btn-speak" onclick="speak('${item.verb.replace(/'/g, "\\'")}')">🔊</button><div style="flex-grow:1;"><div style="font-size:18px; font-weight:800;">${item.verb}</div><div style="font-weight:600; font-size:15px; color: var(--duo-blue);">${item.translation}</div></div><button type="button" class="btn-icon btn-pin ${item.pinned ? 'active' : ''}" onclick="togglePin(${globalIndex})">⭐</button>${isProfeMode ? `<button type="button" class="btn-icon" onclick="editWord(${globalIndex})" style="background:#eaf3ff;border:2px solid #a8cff5;border-bottom:3px solid #a8cff5;color:#1a5fa8;" title="Editar">✏️</button><button type="button" class="btn-icon" onclick="deleteWord(${globalIndex})" style="background:#fde8e8;border:2px solid var(--duo-red);border-bottom:3px solid var(--duo-red-shadow);color:var(--duo-red);" title="Eliminar">🗑️</button>` : ''}</div>`;
+                    card.innerHTML = `<div style="display:flex; gap:15px; align-items:center;"><div style="width:56px; height:56px; font-size:36px; display:flex; align-items:center; justify-content:center; background:var(--card-bg); border-radius:12px; border:2px solid var(--border); flex-shrink:0;">${emoji}</div><button type="button" class="btn-icon btn-speak" onclick="speak('${item.verb.replace(/'/g, "\\'")}')">🔊</button><div style="flex-grow:1;"><div style="font-size:18px; font-weight:800;">${item.verb}</div><div style="font-weight:600; font-size:15px; color: var(--duo-blue);">${item.translation}</div><div style="margin-top:4px;"><span style="font-size:11px; font-weight:800; padding:2px 8px; border-radius:10px; background:#f0f0f0; color:#888;">${getCategoria(item)}</span></div></div><button type="button" class="btn-icon btn-pin ${item.pinned ? 'active' : ''}" onclick="togglePin(${globalIndex})">⭐</button>${isProfeMode ? `<button type="button" class="btn-icon" onclick="editWord(${globalIndex})" style="background:#eaf3ff;border:2px solid #a8cff5;border-bottom:3px solid #a8cff5;color:#1a5fa8;" title="Editar">✏️</button><button type="button" class="btn-icon" onclick="deleteWord(${globalIndex})" style="background:#fde8e8;border:2px solid var(--duo-red);border-bottom:3px solid var(--duo-red-shadow);color:var(--duo-red);" title="Eliminar">🗑️</button>` : ''}</div>`;
                     cardsWrap.appendChild(card);
                 });
                 unitBlock.appendChild(cardsWrap);
@@ -2129,6 +2207,8 @@ function handlePracticeEnter(e) {
                 tags: [], sentences: [], pinned: false,
                 srs: { ef: 2.5, interval: 0, reps: 0, due: Date.now() }
             };
+            const cat = document.getElementById('newWordCategoria').value;
+            if (cat) newItem.categoria = cat;
             dictionary.push(newItem);
             save(true);
             renderCards();
@@ -2139,6 +2219,7 @@ function handlePracticeEnter(e) {
             document.getElementById('newWordTranslation').value = '';
             document.getElementById('newWordUnit').value = '';
             document.getElementById('newWordUnitCustom').value = '';
+            document.getElementById('newWordCategoria').value = '';
 
             // Mostrar confirmación inline
             const btn = document.querySelector('#profeUploadPanel button');
