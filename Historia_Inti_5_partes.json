@@ -1,0 +1,302 @@
+[
+  {
+    "id": "inti-parte-1",
+    "title": "Inti, tapurikoj wayna — Parte 1",
+    "subtitle": "La partida",
+    "icon": "🌅",
+    "level": "Intermedio",
+    "scenes": [
+      {
+        "type": "text",
+        "q": "Uj p'unchay, Inti wasiymanta llojsin.",
+        "e": "Un día, Inti sale de su casa."
+      },
+      {
+        "type": "text",
+        "q": "Payqa kusisqa. Llajtaman rishanki.",
+        "e": "Él está feliz. Está yendo a la ciudad."
+      },
+      {
+        "type": "text",
+        "q": "Chakipi rin. Urqos, mayus, phuyus... ¡sumaj!",
+        "e": "Va a pie. Cerros, ríos, nubes... ¡qué lindo!"
+      },
+      {
+        "type": "text",
+        "q": "Ñanpi, doña Rosa kashan.",
+        "e": "En el camino está doña Rosa."
+      },
+      {
+        "type": "text",
+        "q": "Inti: — Imaynalla, doña!",
+        "e": "Inti: — ¡Hola, señora!"
+      },
+      {
+        "type": "text",
+        "q": "Intij wasín urqo patapi kashan.",
+        "e": "La casa de Inti está en la falda del cerro."
+      },
+      {
+        "type": "text",
+        "q": "Payqa wayna. Tapurikoj wayna.",
+        "e": "Él es un joven. Un joven que hace preguntas."
+      },
+      {
+        "type": "question",
+        "title": "¿Mayman rin Inti?",
+        "text": "¿Adónde va Inti?",
+        "options": [
+          "Mercadoman (Al mercado)",
+          "Llajtaman (A la ciudad)",
+          "Wasiyman (A su casa)"
+        ],
+        "correct": 1
+      }
+    ]
+  },
+  {
+    "id": "inti-parte-2",
+    "title": "Inti, tapurikoj wayna — Parte 2",
+    "subtitle": "Doña Rosa",
+    "icon": "👵",
+    "level": "Intermedio",
+    "scenes": [
+      {
+        "type": "text",
+        "q": "Rosa: — Allin p'unchay, wayna! ¿Imaynalla kashanki?",
+        "e": "Rosa: — ¡Buenos días, joven! ¿Cómo estás?"
+      },
+      {
+        "type": "text",
+        "q": "Inti: — Walejlla kashani. ¿Qanrí, doña?",
+        "e": "Inti: — Estoy bien nomás. ¿Y usted, señora?"
+      },
+      {
+        "type": "text",
+        "q": "Rosa: — Noqapis walejlla, gracias. ¿Ima sutiyki?",
+        "e": "Rosa: — Yo también bien, gracias. ¿Cuál es tu nombre?"
+      },
+      {
+        "type": "text",
+        "q": "Inti: — Sutiy Inti. Kusikuni rejsisuspa, doña Rosa.",
+        "e": "Inti: — Mi nombre es Inti. Encantado de conocerla, doña Rosa."
+      },
+      {
+        "type": "text",
+        "q": "Rosa: — Noqapis. ¿Maymanta kanki?",
+        "e": "Rosa: — Yo también. ¿De dónde sos?"
+      },
+      {
+        "type": "text",
+        "q": "Inti: — Urqo llajtamanta kani. ¿Qanrí?",
+        "e": "Inti: — Soy del pueblo del cerro. ¿Y usted?"
+      },
+      {
+        "type": "text",
+        "q": "Rosa: — Noqaqa mayu llajtamanta kani. ¿Mayman rishanki?",
+        "e": "Rosa: — Yo soy del pueblo del río. ¿Adónde estás yendo?"
+      },
+      {
+        "type": "text",
+        "q": "Inti: — Llajtaman rishani. Runa masiykunata rejsiyta munani.",
+        "e": "Inti: — Estoy yendo a la ciudad. Quiero conocer a otras personas."
+      },
+      {
+        "type": "text",
+        "q": "Rosa: — ¡Sumaj! Tinkunakama, wayna.",
+        "e": "Rosa: — ¡Qué bueno! Nos vemos, joven."
+      },
+      {
+        "type": "question",
+        "title": "¿Maymanta kashan Inti?",
+        "text": "¿De dónde es Inti?",
+        "options": [
+          "Mayu llajtamanta (Del pueblo del río)",
+          "Kay llajtamanta (De este pueblo)",
+          "Urqo llajtamanta (Del pueblo del cerro)"
+        ],
+        "correct": 2
+      }
+    ]
+  },
+  {
+    "id": "inti-parte-3",
+    "title": "Inti, tapurikoj wayna — Parte 3",
+    "subtitle": "Don Marcos",
+    "icon": "👨",
+    "level": "Intermedio",
+    "scenes": [
+      {
+        "type": "text",
+        "q": "Inti llajtaman chayan. Jatun llajta, icharí.",
+        "e": "Inti llega a la ciudad. Es un pueblo grande, ¿verdad?"
+      },
+      {
+        "type": "text",
+        "q": "Chaypi, don Marcos kashan. Payqa mana kusisqachu — sayk'usqa kashan.",
+        "e": "Allí está don Marcos. Él no está feliz — está cansado."
+      },
+      {
+        "type": "text",
+        "q": "Inti: — Allin p'unchay, tata! ¿Imaynalla kashanki?",
+        "e": "Inti: — ¡Buenos días, señor! ¿Cómo está?"
+      },
+      {
+        "type": "text",
+        "q": "Marcos: — Sayk'usqa kashani... ¿Pitaj qan, wayna?",
+        "e": "Marcos: — Estoy cansado... ¿Quién sos, joven?"
+      },
+      {
+        "type": "text",
+        "q": "Inti: — Noqa Inti sutikuni. ¿Qanrí, tata?",
+        "e": "Inti: — Yo me llamo Inti. ¿Y usted, señor?"
+      },
+      {
+        "type": "text",
+        "q": "Marcos: — Sutiy Marcos. Kusikuni rejsisuspa. ¿Imapí llajtaman jamorankij?",
+        "e": "Marcos: — Mi nombre es Marcos. Encantado. ¿En qué viniste a la ciudad?"
+      },
+      {
+        "type": "text",
+        "q": "Inti: — Chakipi jamuni. Mana autoyojchu kani.",
+        "e": "Inti: — Vine a pie. No tengo auto."
+      },
+      {
+        "type": "text",
+        "q": "Marcos: — ¿Wasichu chajrachu astawan gustasunki?",
+        "e": "Marcos: — ¿Te gusta más la casa o la chacra?"
+      },
+      {
+        "type": "text",
+        "q": "Inti: — Chajra gustasunki! Urqopi chajra sumaj.",
+        "e": "Inti: — ¡Me gusta la chacra! La chacra en el cerro es hermosa."
+      },
+      {
+        "type": "question",
+        "title": "¿Imaynalla kashan don Marcos?",
+        "text": "¿Cómo está don Marcos?",
+        "options": [
+          "Kusisqa (Feliz)",
+          "Sayk'usqa (Cansado)",
+          "Yarqhasqa (Hambriento)"
+        ],
+        "correct": 1
+      }
+    ]
+  },
+  {
+    "id": "inti-parte-4",
+    "title": "Inti, tapurikoj wayna — Parte 4",
+    "subtitle": "Ana y Carmen",
+    "icon": "👩‍👩‍👧",
+    "level": "Intermedio",
+    "scenes": [
+      {
+        "type": "text",
+        "q": "Chaymantataj, iskay warmakuna ñanpi jamunku. Paykunaqa kusisqa kanku.",
+        "e": "Después, dos chicas llegan por el camino. Ellas están felices."
+      },
+      {
+        "type": "text",
+        "q": "Inti: — Imaynalla! ¿Ima sutiykichej?",
+        "e": "Inti: — ¡Hola! ¿Cómo se llaman ustedes?"
+      },
+      {
+        "type": "text",
+        "q": "Warmi 1: — Noqa Ana sutikuni. Payqa Carmen sutikun.",
+        "e": "Chica 1: — Yo me llamo Ana. Ella se llama Carmen."
+      },
+      {
+        "type": "text",
+        "q": "Inti: — Kusikuni rejsisuspa. ¿Maymanta kankichej?",
+        "e": "Inti: — Encantado de conocerlas. ¿De dónde son ustedes?"
+      },
+      {
+        "type": "text",
+        "q": "Carmen: — Noqayku mayu llajtamanta kayku. ¿Qanrí?",
+        "e": "Carmen: — Nosotras somos del pueblo del río. ¿Y vos?"
+      },
+      {
+        "type": "text",
+        "q": "Inti: — Noqa urqo llajtamanta kani. ¿Imapí kankichej jamurankichej?",
+        "e": "Inti: — Yo soy del pueblo del cerro. ¿En qué vinieron?"
+      },
+      {
+        "type": "text",
+        "q": "Ana: — Noqayku colectivopi jamuyku. ¿Qanrí, Inti?",
+        "e": "Ana: — Nosotras vinimos en colectivo. ¿Y vos, Inti?"
+      },
+      {
+        "type": "text",
+        "q": "Inti: — Noqa chakipi jamuni. ¿Mayman kankichej rishanki?",
+        "e": "Inti: — Yo vine a pie. ¿Adónde están yendo ustedes?"
+      },
+      {
+        "type": "text",
+        "q": "Ana: — Noqayku qhechua cursoman rishayku. ¿Qanchu?",
+        "e": "Ana: — Nosotras vamos al curso de quechua. ¿Y vos?"
+      },
+      {
+        "type": "text",
+        "q": "Inti: — Noqapis! Qhechua yachakuyta munani. Sapa p'unchay risaj.",
+        "e": "Inti: — ¡Yo también! Quiero aprender quechua. Iré todos los días."
+      },
+      {
+        "type": "question",
+        "title": "¿Imapí jamunku Ana Carmen-wan?",
+        "text": "¿En qué vinieron Ana y Carmen?",
+        "options": [
+          "Chakipi (A pie)",
+          "Colectivopi (En colectivo)",
+          "Trenpi (En tren)"
+        ],
+        "correct": 1
+      }
+    ]
+  },
+  {
+    "id": "inti-parte-5",
+    "title": "Inti, tapurikoj wayna — Parte 5",
+    "subtitle": "El final feliz",
+    "icon": "🌟",
+    "level": "Intermedio",
+    "scenes": [
+      {
+        "type": "text",
+        "q": "Kimsa runas sapa p'unchay qhechua yachakunku. Kusisqa kanku.",
+        "e": "Los tres aprenden quechua todos los días. Están felices."
+      },
+      {
+        "type": "text",
+        "q": "Inti mana llakisqachu. Mana sayk'usqachu. Kusisqa kashan.",
+        "e": "Inti no está triste. No está cansado. Está feliz."
+      },
+      {
+        "type": "text",
+        "q": "Chayqa sumaj p'unchay karqa. Runa masiykunata rejsin.",
+        "e": "Fue un día hermoso. Conoció a personas nuevas."
+      },
+      {
+        "type": "text",
+        "q": "Paykunaqa sapa p'unchay rimanku. Qhechua rimanku.",
+        "e": "Ellos hablan todos los días. Hablan en quechua."
+      },
+      {
+        "type": "text",
+        "q": "Inti wasiyman kutimun. Sayk'usqa, ichari, mana — kusisqa!",
+        "e": "Inti vuelve a su casa. ¿Cansado, acaso? ¡No — feliz!"
+      },
+      {
+        "type": "question",
+        "title": "¿Imaynalla kashan Inti tukukuypi?",
+        "text": "¿Cómo está Inti al final del cuento?",
+        "options": [
+          "Llakisqa (Triste)",
+          "Sayk'usqa (Cansado)",
+          "Kusisqa (Feliz)"
+        ],
+        "correct": 2
+      }
+    ]
+  }
+]
