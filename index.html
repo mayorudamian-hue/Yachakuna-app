@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yachakuna (Estudiante)</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#c0392b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Yachakuna">
+    <link rel="apple-touch-icon" href="icono-192.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
@@ -1918,11 +1924,76 @@ function handlePracticeEnter(e) {
 
         function speakCurrentPractice() { if (currentQuestion) speak(document.getElementById('practiceSentence').innerText); }
 
+        // --- AUTO-ACTUALIZACIÓN DESDE GITHUB ---
+        const GITHUB_USER = 'mayorudamian-hue';
+        const GITHUB_REPO = 'Yachakuna-app';
+        const GITHUB_BRANCH = 'main';
+        const GITHUB_API = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents`;
+
+        async function fetchGitHubJSON(path) {
+            try {
+                const res = await fetch(`${GITHUB_API}/${path}?ref=${GITHUB_BRANCH}`, { headers: { 'Accept': 'application/vnd.github.v3+json' } });
+                if (!res.ok) return null;
+                return await res.json();
+            } catch(e) { return null; }
+        }
+
+        async function loadJSONFromGitHub(downloadUrl) {
+            try {
+                const res = await fetch(downloadUrl);
+                if (!res.ok) return null;
+                return await res.json();
+            } catch(e) { return null; }
+        }
+
+        async function syncFromGitHub() {
+            let updatedVocab = false, updatedStories = false;
+            const vocabFiles = await fetchGitHubJSON('json/vocabulario');
+            if (vocabFiles && Array.isArray(vocabFiles)) {
+                for (const file of vocabFiles) {
+                    if (!file.name.endsWith('.json')) continue;
+                    const data = await loadJSONFromGitHub(file.download_url);
+                    if (!Array.isArray(data) || !data.length || !data[0].verb) continue;
+                    data.forEach(newItem => {
+                        if (!newItem.verb || !newItem.translation) return;
+                        const index = dictionary.findIndex(item => item.verb.toLowerCase().trim() === newItem.verb.toLowerCase().trim());
+                        if (index !== -1) {
+                            const { pinned, srs } = dictionary[index];
+                            dictionary[index] = { ...dictionary[index], ...newItem, pinned, srs };
+                        } else {
+                            if (!newItem.srs) newItem.srs = { ef: 2.5, interval: 0, reps: 0, due: Date.now() };
+                            dictionary.push(newItem); updatedVocab = true;
+                        }
+                    });
+                }
+            }
+            const storyFiles = await fetchGitHubJSON('json/historias');
+            if (storyFiles && Array.isArray(storyFiles)) {
+                for (const file of storyFiles) {
+                    if (!file.name.endsWith('.json')) continue;
+                    const data = await loadJSONFromGitHub(file.download_url);
+                    if (!Array.isArray(data) || !data.length || !data[0].scenes) continue;
+                    data.forEach(newStory => {
+                        const index = storiesData.findIndex(s => s.id === newStory.id);
+                        if (index !== -1) storiesData[index] = newStory;
+                        else { storiesData.push(newStory); updatedStories = true; }
+                    });
+                }
+                if (updatedStories) localStorage.setItem('rimay_Stories', JSON.stringify(storiesData));
+            }
+            if (updatedVocab || updatedStories) { save(true); renderCards(); renderPath(); renderAwards(); }
+        }
+
         // --- ARRANQUE DE LA APP ---
         renderCards(); renderPath(); renderAwards();
         if (hasAudioSupport) setTimeout(populateVoices, 100);
         setTimeout(syncFromGitHub, 1500);
         checkSavedSession();
+
+        // --- REGISTRO DEL SERVICE WORKER (PWA) ---
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js').catch(() => {});
+        }
 
     </script>
 
