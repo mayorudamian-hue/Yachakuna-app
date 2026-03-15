@@ -192,15 +192,28 @@
         #storyFooter { padding: 20px; background: white; border-top: 2px solid var(--border); }
         @keyframes popIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* --- ESTILOS CONVERSANDO --- */
+        .chat-container { display: flex; flex-direction: column; height: 65vh; background: white; border: 2px solid var(--border); border-radius: 20px; overflow: hidden; margin-bottom: 16px; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+        .chat-bubble { max-width: 80%; padding: 12px 16px; border-radius: 18px; font-size: 15px; line-height: 1.5; animation: popIn 0.2s ease-out; }
+        .chat-bubble.bot { background: var(--card-bg); border: 2px solid var(--border); border-bottom-left-radius: 4px; align-self: flex-start; }
+        .chat-bubble.user { background: var(--duo-blue); color: white; border-bottom-right-radius: 4px; align-self: flex-end; }
+        .chat-bubble.correction { background: #fff9e6; border: 2px solid var(--duo-yellow); align-self: flex-start; max-width: 90%; }
+        .chat-input-row { display: flex; gap: 8px; padding: 12px; border-top: 2px solid var(--border); background: var(--card-bg); }
+        .chat-input-row input { flex: 1; margin-bottom: 0; border-radius: 20px; padding: 12px 16px; }
+        .chat-input-row button { width: auto; padding: 12px 18px; border-radius: 20px; font-size: 18px; }
+        .chat-typing { display: flex; gap: 5px; align-items: center; padding: 10px 16px; background: var(--card-bg); border: 2px solid var(--border); border-radius: 18px; border-bottom-left-radius: 4px; align-self: flex-start; }
+        .chat-typing span { width: 8px; height: 8px; background: #aaa; border-radius: 50%; animation: bounce 1.2s infinite; }
+        .chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+        .chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes bounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+        .persona-card { background: white; border: 2px solid var(--border); border-radius: 16px; padding: 14px; display: flex; align-items: center; gap: 14px; cursor: pointer; transition: border-color 0.15s, background 0.15s; box-shadow: 0 3px 0 var(--border); }
+        .persona-card:hover, .persona-card.selected { border-color: var(--duo-blue); background: #f0f4ff; }
+        .persona-emoji { font-size: 40px; }
+        .persona-name { font-weight: 800; font-size: 16px; }
+        .persona-desc { font-size: 13px; color: #888; margin-top: 2px; }
+
     </style>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5THP7LLX20"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-5THP7LLX20');
-    </script>
 </head>
 <body>
 
@@ -212,6 +225,7 @@
         <button type="button" class="tab-btn" id="tab-stories" onclick="switchTab('stories')">📖 Leerinapaj</button> 
         <button type="button" class="tab-btn" id="tab-awards" onclick="switchTab('awards')">🏆 Ñaupajman</button>
         <button type="button" class="tab-btn" id="tab-forum" onclick="switchTab('forum')">💬 Comenta</button>
+        <button type="button" class="tab-btn" id="tab-chat" onclick="switchTab('chat')">🗣️ Conversando</button>
         <button type="button" class="tab-btn" id="tab-guide" onclick="switchTab('guide')">ℹ️ Guía</button>
     </div>
 
@@ -350,21 +364,14 @@
                 </div>
             </div>
 
-            <div id="studentControls" style="background: #f0f0f0; padding: 20px; border-radius: 20px; text-align: center; border: 2px dashed var(--border); margin-bottom: 20px;">
-                <div id="profeUploadLocked" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center;">
-                    <span style="font-size:13px; font-weight:800; color:#aaa;">👨‍🏫 Zona del Profe</span>
-                    <input type="password" id="profeUploadPwd" placeholder="Contraseña..." style="flex:1; min-width:120px; margin-bottom:0; padding:10px 14px; font-size:14px; max-width:180px;">
-                    <button type="button" onclick="unlockUpload()" style="width:auto; padding:10px 16px; font-size:14px;">Entrar</button>
-                </div>
-                <div id="profeUploadPanel" style="display:none; margin-top:15px;">
-                    <h3 style="margin-top:0; color: var(--duo-blue); font-weight: 800;">📥 CARGAR ARCHIVOS</h3>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Cargá <b>unidades</b> o <b>historias</b> (.json) manualmente.</p>
-                    <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importData(event)">
-                    <div class="flex-row" style="justify-content: center;">
-                        <button type="button" onclick="document.getElementById('importFile').click()" style="background: var(--duo-blue); border-bottom: 4px solid var(--duo-blue-shadow); min-width: 200px;">
-                            SELECCIONAR ARCHIVO
-                        </button>
-                    </div>
+            <div id="studentControls" style="background: #f0f0f0; padding: 25px; border-radius: 20px; text-align: center; border: 2px dashed var(--duo-blue); margin-bottom: 20px;">
+                <h3 style="margin-top:0; color: var(--duo-blue); font-weight: 800;">📥 CARGAR ARCHIVOS</h3>
+                <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Sube tus <b>Leerinapaj</b> o <b>Lecciones</b> (.json) aquí.</p>
+                <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importData(event)">
+                <div class="flex-row" style="justify-content: center;">
+                    <button type="button" onclick="document.getElementById('importFile').click()" style="background: var(--duo-blue); border-bottom: 4px solid var(--duo-blue-shadow); min-width: 200px;">
+                        SELECCIONAR ARCHIVO
+                    </button>
                 </div>
             </div>
 
@@ -553,6 +560,49 @@
         <!-- Lista de posts -->
         <div id="forumLoading" style="text-align:center; color:#aaa; padding:20px; font-weight:700;">Cargando mensajes... 🦙</div>
         <div id="forumPosts"></div>
+    </div>
+
+    <div id="section-chat" class="hidden">
+        <h2 style="text-align:center; color:var(--duo-blue); margin-bottom:5px;">🗣️ Conversando</h2>
+        <p style="text-align:center; color:#afafaf; margin-bottom:20px;">Practicá quechua conversando con un personaje 🦙</p>
+
+        <div id="chatPersonaSelector">
+            <p style="font-weight:800; color:var(--text); margin-bottom:12px;">¿Con quién querés hablar?</p>
+            <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px;">
+                <div class="persona-card selected" id="persona-rimay" onclick="selectPersona('rimay')">
+                    <div class="persona-emoji">🦙</div>
+                    <div><div class="persona-name">Rimay</div><div class="persona-desc">Una llama sabia y paciente. Te habla despacio y con cariño.</div></div>
+                </div>
+                <div class="persona-card" id="persona-chaska" onclick="selectPersona('chaska')">
+                    <div class="persona-emoji">⭐</div>
+                    <div><div class="persona-name">Chaska</div><div class="persona-desc">Una niña curiosa del altiplano. Le encanta hacer preguntas.</div></div>
+                </div>
+                <div class="persona-card" id="persona-tayta" onclick="selectPersona('tayta')">
+                    <div class="persona-emoji">👴</div>
+                    <div><div class="persona-name">Tayta Rumi</div><div class="persona-desc">Un abuelo sabio de la comunidad. Habla más en quechua.</div></div>
+                </div>
+            </div>
+            <button type="button" onclick="startChat()" class="special">Empezar conversación 🗣️</button>
+        </div>
+
+        <div id="chatArea" style="display:none;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                <span id="chatPersonaEmoji" style="font-size:32px;"></span>
+                <div>
+                    <div id="chatPersonaName" style="font-weight:800; font-size:16px;"></div>
+                    <div style="font-size:12px; color:#aaa;">Usa solo el vocabulario de tus unidades</div>
+                </div>
+                <button type="button" onclick="resetChat()" style="width:auto; padding:8px 14px; font-size:13px; margin-left:auto;" class="secondary">↩️ Cambiar</button>
+            </div>
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages"></div>
+            </div>
+            <div class="chat-input-row">
+                <input type="text" id="chatInput" placeholder="Escribí en quechua o español..." onkeypress="handleChatEnter(event)">
+                <button type="button" onclick="sendChatMessage()" id="chatSendBtn">➤</button>
+            </div>
+            <p style="font-size:12px; color:#bbb; text-align:center; margin-top:8px;">💡 Podés escribir en español o quechua. El personaje solo usará palabras de tus unidades.</p>
+        </div>
     </div>
 
     <div id="llamaPopup" style="position: fixed; bottom: 20px; right: 20px; background: white; border: 4px solid var(--duo-green); border-radius: 20px; padding: 15px 25px; display: flex; align-items: center; gap: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index: 1000; transform: translateY(200%); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
@@ -1086,7 +1136,6 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
         totalXP += xpEarned;
         
         if (isFirstTime) completedStories[currentStory.id] = true;
-        if (typeof gtag !== 'undefined') gtag('event', 'story_complete', { story: currentStory.id, first_time: isFirstTime });
         updateStreakDays();
         save(true);
 
@@ -1652,7 +1701,6 @@ function handlePracticeEnter(e) {
             currentUnit = (filter !== 'all' && filter !== 'favs') ? filter : null;
             let pool = filter === 'all' ? [...dictionary] : filter === 'favs' ? dictionary.filter(d => d.pinned || (d.unit && pinnedUnits[d.unit])) : dictionary.filter(d => d.unit === filter);
             if (pool.length === 0) { alert("No hay suficientes palabras para practicar."); return; }
-            if (typeof gtag !== 'undefined') gtag('event', 'practice_start', { filter });
             practiceStartTime = Date.now();
             let mezcladas = pool.sort(() => 0.5 - Math.random());
             practiceQueue = filter === 'all' ? mezcladas.slice(0, 10) : mezcladas; 
@@ -1665,7 +1713,6 @@ function handlePracticeEnter(e) {
 
         function endPractice(completed) {
             if (practiceStartTime > 0) { studyTimeMs += (Date.now() - practiceStartTime); practiceStartTime = 0; }
-            if (typeof gtag !== 'undefined') gtag('event', 'practice_end', { completed });
             updateStreakDays();
             save(true); 
             document.getElementById('practiceMenu').style.display = 'block'; document.getElementById('practiceBox').style.display = 'none';
@@ -1865,112 +1912,149 @@ function handlePracticeEnter(e) {
 
         function speakCurrentPractice() { if (currentQuestion) speak(document.getElementById('practiceSentence').innerText); }
 
-        // --- AUTO-ACTUALIZACIÓN DESDE GITHUB ---
-        const GITHUB_USER = 'mayorudamian-hue';
-        const GITHUB_REPO = 'Yachakuna-app';
-        const GITHUB_BRANCH = 'main';
-        const GITHUB_API = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents`;
+        // --- CONVERSANDO CON LA IA ---
+        const CLOUDFLARE_PROXY = 'https://yachakuna-proxy.mayoru-damian.workers.dev';
 
-        async function fetchGitHubJSON(path) {
+        const personas = {
+            rimay: {
+                emoji: '🦙', name: 'Rimay',
+                prompt: 'Sos Rimay, una llama sabia y paciente que vive en los Andes bolivianos. Hablás despacio, con cariño y mucha paciencia. Usás frases cortas y simples.'
+            },
+            chaska: {
+                emoji: '⭐', name: 'Chaska',
+                prompt: 'Sos Chaska, una niña curiosa de 10 años del altiplano boliviano. Sos alegre, hacés muchas preguntas y te entusiasmás fácil. Usás un tono infantil y divertido.'
+            },
+            tayta: {
+                emoji: '👴', name: 'Tayta Rumi',
+                prompt: 'Sos Tayta Rumi, un abuelo sabio de la comunidad quechua. Hablás con calma y autoridad. Usás más quechua que los otros personajes y das consejos breves.'
+            }
+        };
+
+        let selectedPersona = 'rimay';
+        let chatHistory = [];
+
+        function selectPersona(id) {
+            selectedPersona = id;
+            document.querySelectorAll('.persona-card').forEach(c => c.classList.remove('selected'));
+            document.getElementById('persona-' + id).classList.add('selected');
+        }
+
+        function startChat() {
+            const p = personas[selectedPersona];
+            document.getElementById('chatPersonaEmoji').innerText = p.emoji;
+            document.getElementById('chatPersonaName').innerText = p.name;
+            document.getElementById('chatPersonaSelector').style.display = 'none';
+            document.getElementById('chatArea').style.display = 'block';
+            chatHistory = [];
+            document.getElementById('chatMessages').innerHTML = '';
+            const welcomes = {
+                rimay: 'Allillanchu! 🦙 Noqa Rimay kani. ¿Imaynallan kashanki? (¡Hola! Yo soy Rimay. ¿Cómo estás?)',
+                chaska: '¡Hola! Noqa Chaska kani ⭐. ¿Ima sutiykim? (¡Hola! Yo soy Chaska. ¿Cómo te llamás?)',
+                tayta: 'Allillanchu, waway. Noqa Tayta Rumi kani. 👴 (Bienvenido, hijo. Yo soy el abuelo Rumi.)'
+            };
+            appendChatBubble(welcomes[selectedPersona], 'bot', '');
+        }
+
+        function resetChat() {
+            document.getElementById('chatPersonaSelector').style.display = 'block';
+            document.getElementById('chatArea').style.display = 'none';
+            chatHistory = [];
+        }
+
+        function handleChatEnter(e) {
+            if (e.key === 'Enter') sendChatMessage();
+        }
+
+        function appendChatBubble(text, type, translation) {
+            const messages = document.getElementById('chatMessages');
+            const bubble = document.createElement('div');
+            bubble.className = 'chat-bubble ' + type;
+            bubble.innerHTML = text;
+            if (translation) {
+                const tr = document.createElement('div');
+                tr.style.cssText = 'font-size:12px;color:#888;font-style:italic;margin-top:5px;border-top:1px solid var(--border);padding-top:4px;';
+                tr.innerText = translation;
+                bubble.appendChild(tr);
+            }
+            messages.appendChild(bubble);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function showTyping() {
+            const messages = document.getElementById('chatMessages');
+            const typing = document.createElement('div');
+            typing.className = 'chat-typing';
+            typing.id = 'chatTyping';
+            typing.innerHTML = '<span></span><span></span><span></span>';
+            messages.appendChild(typing);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function removeTyping() {
+            const t = document.getElementById('chatTyping');
+            if (t) t.remove();
+        }
+
+        async function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (!text) return;
+            input.value = '';
+            const btn = document.getElementById('chatSendBtn');
+            btn.disabled = true;
+
+            appendChatBubble(text, 'user', '');
+            chatHistory.push({ role: 'user', content: text });
+            showTyping();
+
+            const vocab = dictionary.map(d => `${d.verb} = ${d.translation}`).join('\n');
+            const systemPrompt = `${personas[selectedPersona].prompt}
+
+Sos un asistente para aprender quechua boliviano. Tu rol es conversar de forma natural con el alumno.
+
+VOCABULARIO DISPONIBLE (SOLO podés usar estas palabras en quechua — no inventés otras):
+${vocab}
+
+REGLAS ESTRICTAS:
+1. SOLO usá palabras quechua del vocabulario de arriba. Nunca inventes ni uses otras palabras quechua.
+2. Adaptá el nivel: si el alumno escribe en español, respondé con quechua simple + traducción en español entre paréntesis. Si escribe en quechua, respondé más en quechua.
+3. Si el alumno comete un error en quechua, corregilo con amabilidad al final de tu respuesta, usando el formato: "💡 Pequeña corrección: [corrección]".
+4. Respondé de forma breve (2-4 oraciones máximo).
+5. Mantené el personaje en todo momento.
+6. Nunca rompas el personaje ni menciones que sos una IA.`;
+
             try {
-                const res = await fetch(`${GITHUB_API}/${path}?ref=${GITHUB_BRANCH}`, {
-                    headers: { 'Accept': 'application/vnd.github.v3+json' }
+                const response = await fetch(CLOUDFLARE_PROXY, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-20250514',
+                        max_tokens: 300,
+                        system: systemPrompt,
+                        messages: chatHistory
+                    })
                 });
-                if (!res.ok) return null;
-                return await res.json();
-            } catch(e) { return null; }
-        }
-
-        async function loadJSONFromGitHub(downloadUrl) {
-            try {
-                const res = await fetch(downloadUrl);
-                if (!res.ok) return null;
-                return await res.json();
-            } catch(e) { return null; }
-        }
-
-        async function syncFromGitHub() {
-            let updatedVocab = false;
-            let updatedStories = false;
-
-            // --- Sincronizar vocabulario ---
-            const vocabFiles = await fetchGitHubJSON('json/vocabulario');
-            if (vocabFiles && Array.isArray(vocabFiles)) {
-                for (const file of vocabFiles) {
-                    if (!file.name.endsWith('.json')) continue;
-                    const data = await loadJSONFromGitHub(file.download_url);
-                    if (!Array.isArray(data) || data.length === 0) continue;
-                    if (!data[0].verb || !data[0].translation) continue;
-                    data.forEach(newItem => {
-                        if (!newItem.verb || !newItem.translation) return;
-                        const index = dictionary.findIndex(item =>
-                            item.verb.toLowerCase().trim() === newItem.verb.toLowerCase().trim()
-                        );
-                        if (index !== -1) {
-                            const pinned = dictionary[index].pinned;
-                            const srs = dictionary[index].srs;
-                            dictionary[index] = { ...dictionary[index], ...newItem, pinned, srs };
-                        } else {
-                            if (!newItem.srs) newItem.srs = { ef: 2.5, interval: 0, reps: 0, due: Date.now() };
-                            dictionary.push(newItem);
-                            updatedVocab = true;
-                        }
-                    });
+                const data = await response.json();
+                const reply = data.content && data.content[0] ? data.content[0].text : 'Mana yachanichu... (No entendí, intentá de nuevo)';
+                removeTyping();
+                chatHistory.push({ role: 'assistant', content: reply });
+                if (reply.includes('💡 Pequeña corrección:')) {
+                    const parts = reply.split('💡 Pequeña corrección:');
+                    appendChatBubble(parts[0].trim(), 'bot', '');
+                    appendChatBubble('💡 Pequeña corrección: ' + parts[1].trim(), 'correction', '');
+                } else {
+                    appendChatBubble(reply, 'bot', '');
                 }
+            } catch(e) {
+                removeTyping();
+                appendChatBubble('Mana atinichu rispundayta... ¡Revisá tu conexión! 😅', 'bot', '');
             }
-
-            // --- Sincronizar historias ---
-            const storyFiles = await fetchGitHubJSON('json/historias');
-            if (storyFiles && Array.isArray(storyFiles)) {
-                for (const file of storyFiles) {
-                    if (!file.name.endsWith('.json')) continue;
-                    const data = await loadJSONFromGitHub(file.download_url);
-                    if (!Array.isArray(data) || data.length === 0) continue;
-                    if (!data[0].scenes) continue;
-                    data.forEach(newStory => {
-                        const index = storiesData.findIndex(s => s.id === newStory.id);
-                        if (index !== -1) storiesData[index] = newStory;
-                        else { storiesData.push(newStory); updatedStories = true; }
-                    });
-                }
-                if (updatedStories) localStorage.setItem('rimay_Stories', JSON.stringify(storiesData));
-            }
-
-            if (updatedVocab || updatedStories) {
-                save(true);
-                renderCards();
-                renderPath();
-                renderAwards();
-            }
-        }
-
-        // --- DESBLOQUEO CARGA DE ARCHIVOS (PROFE) ---
-        function unlockUpload() {
-            const pwd = document.getElementById('profeUploadPwd').value;
-            if (pwd === 'Ruwaj') {
-                document.getElementById('profeUploadLocked').style.display = 'none';
-                document.getElementById('profeUploadPanel').style.display = 'block';
-                sessionStorage.setItem('yachakuna_profe', '1');
-            } else {
-                document.getElementById('profeUploadPwd').style.borderColor = 'var(--duo-red)';
-                setTimeout(() => document.getElementById('profeUploadPwd').style.borderColor = '', 1500);
-            }
-        }
-        // Si ya estaba logueado como profe, mostrar panel directo
-        if (sessionStorage.getItem('yachakuna_profe') === '1') {
-            document.addEventListener('DOMContentLoaded', () => {
-                const locked = document.getElementById('profeUploadLocked');
-                const panel = document.getElementById('profeUploadPanel');
-                if (locked) locked.style.display = 'none';
-                if (panel) panel.style.display = 'block';
-            });
+            btn.disabled = false;
         }
 
         // --- ARRANQUE DE LA APP ---
         renderCards(); renderPath(); renderAwards();
         if (hasAudioSupport) setTimeout(populateVoices, 100);
-        // Sincronizar con GitHub en segundo plano (silencioso)
-        setTimeout(syncFromGitHub, 1500);
 
     </script>
 
