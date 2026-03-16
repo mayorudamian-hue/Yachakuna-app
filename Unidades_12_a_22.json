@@ -160,14 +160,12 @@
     "pinned": false
   },
   {
-    "verb": "Jatun",
-    "translation": "Grande",
-    "unit": "12. Intej cuenton",
-    "tags": [
-      "Adjetivo"
-    ],
-    "sentences": [
-  
+  "verb": "Jatun",
+  "translation": "Grande",
+  "unit": "12. Intej cuenton",
+  "tags": ["Adjetivo"],
+  "sentences": []
+},
   {
     "verb": "Sumaj",
     "translation": "Lindo / hermoso / ¡bueno!",
@@ -1082,7 +1080,8 @@
       "presente",
       "-ta"
     ],
-    "sentences": [
+    "sentences": []
+},
   {
     "verb": "Parlayta yachani.",
     "translation": "Sé hablar.",
@@ -1834,7 +1833,7 @@
   },
   {
     "verb": "Anchata",
-    "translation": "Mucho (de sentiemientos)",
+    "translation": "Mucho (de sentimientos)",
     "unit": "17. Futuro plural y conversación",
     "tags": [
       "Vocabulario",
