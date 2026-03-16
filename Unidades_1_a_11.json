@@ -76,7 +76,7 @@
     "sentences": [
       {
         "text": "Paykuna kanku",
-        "trans": "Ellos son"
+        "trans": "Ellos/ellas son"
       }
     ],
     "pinned": false,
@@ -479,7 +479,7 @@
     "pinned": false
   },
   {
-    "verb": "Urqo",
+    "verb": "Orqo",
     "translation": "Cerro / Montaña",
     "unit": "5. Naturaleza y Clima",
     "tags": [
@@ -643,7 +643,7 @@
     "pinned": false
   },
   {
-    "verb": "Chaykunaqa chakras",
+    "verb": "Chaykunaqa chajras",
     "translation": "Esas son granjas",
     "unit": "7. Los Plurales",
     "tags": [
@@ -703,7 +703,7 @@
     "pinned": false
   },
   {
-    "verb": "Chaykunaqa yachajkuna",
+    "verb": "Chaykunaqa yachachejkuna",
     "translation": "Esos son maestros",
     "unit": "7. Los Plurales",
     "tags": [
@@ -920,7 +920,7 @@
   },
   {
     "verb": "¿Mayman rinki?",
-    "translation": "¿Adónde irás?",
+    "translation": "¿Adónde vas?",
     "unit": "9. Sufijos -man y -manta",
     "tags": [
       "Gramática",
@@ -1199,7 +1199,7 @@
     "pinned": false
   },
   {
-    "verb": "¿Qhechua cursomanchu?",
+    "verb": "¿Qhechua cursomanchu rinki?",
     "translation": "¿Vas al curso de quechua?",
     "unit": "11. Sufijo -chu en pregunta",
     "tags": [
@@ -1211,32 +1211,19 @@
     "pinned": false
   },
   {
-    "verb": "¿Piwan jamunki?",
-    "translation": "¿Con quién has venido?",
+    "verb": "¿Chayqa Marcoschu?",
+    "translation": "¿Ese es Marcos?",
     "unit": "11. Sufijo -chu en pregunta",
     "tags": [
       "Unidad 11",
       "Pregunta",
-      "Compañía"
-    ],
-    "sentences": [],
-    "pinned": false
-  },
-  {
-    "verb": "Antoniowan, doña Mariawan, don Juliowan.",
-    "translation": "He venido con Antonio, doña María y don Julio.",
-    "unit": "11. Sufijo -chu en pregunta",
-    "tags": [
-      "Unidad 11",
-      "Compañía",
-      "Personas"
     ],
     "sentences": [],
     "pinned": false
   },
   {
     "verb": "¿Paykunawanchu?",
-    "translation": "¿(Has venido) con ellos?",
+    "translation": "¿Con ellos?",
     "unit": "11. Sufijo -chu en pregunta",
     "tags": [
       "Unidad 11",
@@ -1319,7 +1306,7 @@
     "pinned": false
   },
   {
-    "verb": "Jatun llajta, icharí?",
+    "verb": "Jatun llajta, ¿icharí?",
     "translation": "Es un pueblo grande, ¿verdad?",
     "unit": "11. Sufijo -chu en pregunta",
     "tags": [
