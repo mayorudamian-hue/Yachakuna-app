@@ -160,12 +160,14 @@
     "pinned": false
   },
   {
-  "verb": "Jatun",
-  "translation": "Grande",
-  "unit": "12. Intej cuenton",
-  "tags": ["Adjetivo"],
-  "sentences": []
-},
+    "verb": "Jatun",
+    "translation": "Grande",
+    "unit": "12. Intej cuenton",
+    "tags": [
+      "Adjetivo"
+    ],
+    "sentences": []
+  },
   {
     "verb": "Sumaj",
     "translation": "Lindo / hermoso / ¡bueno!",
@@ -270,7 +272,8 @@
       "Frase",
       "Conversación"
     ],
-    "pinned": false
+    "pinned": false,
+    "sentences": []
   },
   {
     "verb": "Uj",
@@ -1081,7 +1084,7 @@
       "-ta"
     ],
     "sentences": []
-},
+  },
   {
     "verb": "Parlayta yachani.",
     "translation": "Sé hablar.",
@@ -2152,20 +2155,21 @@
     ],
     "pinned": false
   },
-{
-  "verb": "Wasi",
-  "translation": "Casa",
-  "unit": "18. Sufijo posesivo (-y, -yki, -n)",
-  "tags": ["Vocabulario"],
-  "sentences": [
-    {
-      "text": "Wasiyqa jatun.",
-      "trans": "Mi casa es grande."
-    }
-  ],
-  "pinned": false
-}
-]
+  {
+    "verb": "Wasi",
+    "translation": "Casa",
+    "unit": "18. Sufijo posesivo (-y, -yki, -n)",
+    "tags": [
+      "Vocabulario"
+    ],
+    "sentences": [
+      {
+        "text": "Wasiyqa jatun.",
+        "trans": "Mi casa es grande."
+      }
+    ],
+    "pinned": false
+  },
   {
     "verb": "Sutiy",
     "translation": "Mi nombre",
@@ -2856,6 +2860,7 @@
       "Vocabulario",
       "Clima"
     ],
+    "sentences": []
   },
   {
     "verb": "Jawa",
