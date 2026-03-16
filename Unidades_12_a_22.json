@@ -1,7 +1,7 @@
 [
   {
-    "verb": "Ripun",
-    "translation": "Se va / parte",
+    "verb": "Ripuy",
+    "translation": "Irse",
     "unit": "12. Intej cuenton",
     "tags": [
       "Verbo",
@@ -16,8 +16,8 @@
     "pinned": false
   },
   {
-    "verb": "Chayan",
-    "translation": "Llega",
+    "verb": "Chayay",
+    "translation": "Llegar",
     "unit": "12. Intej cuenton",
     "tags": [
       "Verbo",
@@ -32,8 +32,8 @@
     "pinned": false
   },
   {
-    "verb": "Kutimun",
-    "translation": "Vuelve / regresa",
+    "verb": "Kutimuy",
+    "translation": "Volver / regresar",
     "unit": "12. Intej cuenton",
     "tags": [
       "Verbo",
@@ -41,15 +41,15 @@
     ],
     "sentences": [
       {
-        "text": "Inti wasiyman kutimun.",
+        "text": "Inti wasinman kutimun.",
         "trans": "Inti vuelve a su casa."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Rejsikun",
-    "translation": "Se conocen",
+    "verb": "Rejsiy",
+    "translation": "Conocer",
     "unit": "12. Intej cuenton",
     "tags": [
       "Verbo",
@@ -64,8 +64,8 @@
     "pinned": false
   },
   {
-    "verb": "Parlanku",
-    "translation": "Hablan / conversan",
+    "verb": "Parlay",
+    "translation": "Hablar / conversar",
     "unit": "12. Intej cuenton",
     "tags": [
       "Verbo",
@@ -80,8 +80,8 @@
     "pinned": false
   },
   {
-    "verb": "Yachakun",
-    "translation": "Aprende",
+    "verb": "Yachakuy",
+    "translation": "Aprender",
     "unit": "12. Intej cuenton",
     "tags": [
       "Verbo",
@@ -89,7 +89,7 @@
     ],
     "sentences": [
       {
-        "text": "Inti quechua yachakun.",
+        "text": "Inti quechuata yachakun.",
         "trans": "Inti aprende quechua."
       }
     ],
@@ -153,8 +153,8 @@
     ],
     "sentences": [
       {
-        "text": "Jatun llajta, icharí.",
-        "trans": "Es un pueblo grande, ¿verdad?"
+        "text": "Jatun llajta, ¿icharí?.",
+        "trans": "Pueblo grande, ¿verdad?"
       }
     ],
     "pinned": false
@@ -167,16 +167,10 @@
       "Adjetivo"
     ],
     "sentences": [
-      {
-        "text": "Jatun llajta.",
-        "trans": "Es un pueblo grande."
-      }
-    ],
-    "pinned": false
-  },
+  
   {
     "verb": "Sumaj",
-    "translation": "Lindo / hermoso / ¡qué bueno!",
+    "translation": "Lindo / hermoso / ¡bueno!",
     "unit": "12. Intej cuenton",
     "tags": [
       "Adjetivo",
@@ -217,14 +211,14 @@
     "sentences": [
       {
         "text": "Chaymantataj, iskay warmis jamunku.",
-        "trans": "Luego, dos chicas llegaron."
+        "trans": "Luego, dos mujeres vienen."
       }
     ],
     "pinned": false
   },
   {
     "verb": "Tapurikoj",
-    "translation": "El que pregunta / preguntando",
+    "translation": "El que pregunta",
     "unit": "12. Intej cuenton",
     "tags": [
       "Participio",
@@ -232,7 +226,7 @@
     ],
     "sentences": [
       {
-        "text": "Inti tapurikoj wayna.",
+        "text": "Inti, tapurikoj wayna.",
         "trans": "Inti, el joven que pregunta."
       }
     ],
@@ -278,12 +272,6 @@
       "Frase",
       "Conversación"
     ],
-    "sentences": [
-      {
-        "text": "Jatun llajta, icharí.",
-        "trans": "Es un pueblo grande, ¿verdad?"
-      }
-    ],
     "pinned": false
   },
   {
@@ -325,7 +313,7 @@
     ],
     "sentences": [
       {
-        "text": "Kimsa punkus",
+        "text": "Kinsa punkus",
         "trans": "Tres puertas"
       }
     ],
@@ -535,7 +523,7 @@
     ],
     "sentences": [
       {
-        "text": "Iskay chunka runa kashanku",
+        "text": "Iskay chunka runas kashanku",
         "trans": "Hay veinte personas"
       }
     ],
@@ -914,7 +902,7 @@
     "pinned": false
   },
   {
-    "verb": "Payqa kimsa chunka watasniyoj.",
+    "verb": "Payqa kinsa chunka watasniyoj.",
     "translation": "Él/ella tiene 30 años.",
     "unit": "14. La edad (-yoj)",
     "tags": [
@@ -924,7 +912,7 @@
     ],
     "sentences": [
       {
-        "text": "Payqa kimsa chunka watasniyoj.",
+        "text": "Payqa kinsa chunka watasniyoj.",
         "trans": "Él tiene 30 años."
       }
     ],
@@ -943,8 +931,8 @@
     "pinned": false
   },
   {
-    "verb": "Mashkha",
-    "translation": "Cuánto / Cuántos",
+    "verb": "¿Mashkha?",
+    "translation": "¿Cuánto / Cuántos?",
     "unit": "14. La edad (-yoj)",
     "tags": [
       "Vocabulario",
@@ -968,7 +956,7 @@
     ],
     "sentences": [
       {
-        "text": "Iskay chunka wata",
+        "text": "Iskay chunka watas",
         "trans": "Veinte años"
       }
     ],
@@ -984,7 +972,7 @@
     ],
     "sentences": [
       {
-        "text": "Kimsa chunka watasniyoj kani.",
+        "text": "Kinsa chunka watasniyoj kani.",
         "trans": "Tengo 30 años."
       }
     ],
@@ -1049,7 +1037,7 @@
     "pinned": false
   },
   {
-    "verb": "Llojsimuyta atisaj.",
+    "verb": "Llojsiyta atisaj.",
     "translation": "Podré salir.",
     "unit": "15. Infinitivo con -ta",
     "tags": [
@@ -1060,47 +1048,41 @@
     ],
     "sentences": [
       {
-        "text": "Ch'isimanqa llojsimuyta atisaj.",
+        "text": "Ch'isimanqa llojsiyta atisaj.",
         "trans": "Esta noche podré salir."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Puñuyta mañarqa.",
-    "translation": "Pidió dormir.",
+    "verb": "Rejsiyta munani.",
+    "translation": "Quiero conocer.",
     "unit": "15. Infinitivo con -ta",
     "tags": [
       "Gramática",
       "Infinitivo",
       "-ta",
-      "Pasado"
+      "Presente"
     ],
     "sentences": [
       {
-        "text": "Wawaqa puñuyta mañarqa.",
-        "trans": "El niño pidió dormir."
+        "text": "Wawaqa puñuyta munan.",
+        "trans": "El bebé quiere dormir."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Mikhuy-ta munani.",
+    "verb": "Mikhuyta munani.",
     "translation": "Quiero comer.",
     "unit": "15. Infinitivo con -ta",
     "tags": [
       "Gramática",
       "Infinitivo",
+      "presente",
       "-ta"
     ],
     "sentences": [
-      {
-        "text": "Noqa mikhuy-ta munani.",
-        "trans": "Yo quiero comer."
-      }
-    ],
-    "pinned": false
-  },
   {
     "verb": "Parlayta yachani.",
     "translation": "Sé hablar.",
@@ -1112,14 +1094,14 @@
     ],
     "sentences": [
       {
-        "text": "Qhechwa parlayta yachani.",
+        "text": "Qhechuata parlayta yachani.",
         "trans": "Sé hablar quechua."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Riyta atinichu.",
+    "verb": "Mana riyta atinichu.",
     "translation": "No puedo ir.",
     "unit": "15. Infinitivo con -ta",
     "tags": [
@@ -1130,14 +1112,14 @@
     ],
     "sentences": [
       {
-        "text": "Kunan riyta atinichu.",
+        "text": "Kunan mana riyta atinichu.",
         "trans": "Ahora no puedo ir."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Yachakunayta munani.",
+    "verb": "Yachakuyta munani.",
     "translation": "Quiero aprender.",
     "unit": "15. Infinitivo con -ta",
     "tags": [
@@ -1147,32 +1129,14 @@
     ],
     "sentences": [
       {
-        "text": "Qhechwa yachakunayta munani.",
+        "text": "Qhechua yachakuyta munani.",
         "trans": "Quiero aprender quechua."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Jamuyta mañarqani.",
-    "translation": "Pedí venir.",
-    "unit": "15. Infinitivo con -ta",
-    "tags": [
-      "Gramática",
-      "Infinitivo",
-      "-ta",
-      "Pasado"
-    ],
-    "sentences": [
-      {
-        "text": "Noqa jamuyta mañarqani.",
-        "trans": "Yo pedí venir."
-      }
-    ],
-    "pinned": false
-  },
-  {
-    "verb": "Qhechwa parlayta atikuni.",
+    "verb": "Qhechuata parlayta atini.",
     "translation": "Puedo hablar quechua.",
     "unit": "15. Infinitivo con -ta",
     "tags": [
@@ -1182,8 +1146,8 @@
     ],
     "sentences": [
       {
-        "text": "Ñan qhechwa parlayta atikuni!",
-        "trans": "¡Ya puedo hablar quechua!"
+        "text": "Noqaqa qhechua parlayta atini!",
+        "trans": "¡Yo puedo hablar quechua!"
       }
     ],
     "pinned": false
@@ -1221,7 +1185,7 @@
     "pinned": false
   },
   {
-    "verb": "Llojsimuy",
+    "verb": "Llojsiy",
     "translation": "Salir",
     "unit": "15. Infinitivo con -ta",
     "tags": [
@@ -1230,24 +1194,8 @@
     ],
     "sentences": [
       {
-        "text": "Llojsimuyta atisaj.",
+        "text": "Llojsiyta atisaj.",
         "trans": "Podré salir."
-      }
-    ],
-    "pinned": false
-  },
-  {
-    "verb": "Mañay",
-    "translation": "Pedir",
-    "unit": "15. Infinitivo con -ta",
-    "tags": [
-      "Verbo",
-      "Vocabulario"
-    ],
-    "sentences": [
-      {
-        "text": "Puñuyta mañarqa.",
-        "trans": "Pidió dormir."
       }
     ],
     "pinned": false
@@ -1262,7 +1210,7 @@
     ],
     "sentences": [
       {
-        "text": "Mikhuy-ta munani.",
+        "text": "Mikhuyta munani.",
         "trans": "Quiero comer."
       }
     ],
@@ -1278,7 +1226,7 @@
     ],
     "sentences": [
       {
-        "text": "Qhechwa parlayta atikuni.",
+        "text": "Qhechuata parlayta atini.",
         "trans": "Puedo hablar quechua."
       }
     ],
@@ -1294,7 +1242,7 @@
     ],
     "sentences": [
       {
-        "text": "Parlayta atikuni.",
+        "text": "Parlayta atini.",
         "trans": "Puedo hablar."
       }
     ],
@@ -1402,8 +1350,8 @@
     "pinned": false
   },
   {
-    "verb": "Noqayku risqayku.",
-    "translation": "Nosotros vamos a ir (sin incluirte).",
+    "verb": "Noqayku risqayku/risajku.",
+    "translation": "Nosotros vamos a ir.",
     "unit": "16. Futuro del verbo",
     "tags": [
       "Gramática",
@@ -1413,7 +1361,7 @@
     ],
     "sentences": [
       {
-        "text": "Noqayku wasiykuman risqayku.",
+        "text": "Noqayku wasiykuman risqayku/risajku.",
         "trans": "Nosotros vamos a ir a nuestra casa."
       }
     ],
@@ -1464,14 +1412,14 @@
     ],
     "sentences": [
       {
-        "text": "Manaraj yachanichu mayman risaj.",
+        "text": "Manaraj yachanichu maymanchus rinayta.",
         "trans": "Todavía no sé adónde voy a ir."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Ichá jamunqa.",
+    "verb": "Ichá jamonqa.",
     "translation": "Tal vez venga.",
     "unit": "16. Futuro del verbo",
     "tags": [
@@ -1481,14 +1429,14 @@
     ],
     "sentences": [
       {
-        "text": "Ichá q'aya jamunqa.",
+        "text": "Ichá q'aya jamonqa.",
         "trans": "Tal vez venga mañana."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Manaraj risaj.",
+    "verb": "Manaraj risajchu.",
     "translation": "Todavía no voy a ir.",
     "unit": "16. Futuro del verbo",
     "tags": [
@@ -1515,7 +1463,7 @@
     ],
     "sentences": [
       {
-        "text": "Noqa parla-saj.",
+        "text": "Noqa parlasaj.",
         "trans": "Yo voy a hablar."
       }
     ],
@@ -1532,7 +1480,7 @@
     ],
     "sentences": [
       {
-        "text": "Qan parla-nki.",
+        "text": "Qan parlanki.",
         "trans": "Tú vas a hablar."
       }
     ],
@@ -1549,7 +1497,7 @@
     ],
     "sentences": [
       {
-        "text": "Pay parla-nqa.",
+        "text": "Pay parlanqa.",
         "trans": "Él/ella va a hablar."
       }
     ],
@@ -1567,7 +1515,7 @@
     ],
     "sentences": [
       {
-        "text": "Noqanchej parla-sunchej.",
+        "text": "Noqanchej parlasunchej.",
         "trans": "Nosotros vamos a hablar."
       }
     ],
@@ -1585,7 +1533,7 @@
     ],
     "sentences": [
       {
-        "text": "Paykuna parla-nqanku.",
+        "text": "Paykuna parlanqanku.",
         "trans": "Ellos van a hablar."
       }
     ],
@@ -1617,7 +1565,7 @@
     ],
     "sentences": [
       {
-        "text": "Minchha jamunqa.",
+        "text": "Minchha jamonqa.",
         "trans": "Pasado mañana va a venir."
       }
     ],
@@ -1649,7 +1597,7 @@
     ],
     "sentences": [
       {
-        "text": "Ichá q'aya jamunqa.",
+        "text": "Ichá q'aya jamonqa.",
         "trans": "Tal vez venga mañana."
       }
     ],
@@ -1667,15 +1615,15 @@
     ],
     "sentences": [
       {
-        "text": "¡Jaku wasiман! Saludasunchej.",
+        "text": "¡Jaku wasiman! Saludasunchej.",
         "trans": "¡Vamos a la casa! Saludaremos."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Cursoman jamusayku.",
-    "translation": "Nosotros venimos al curso.",
+    "verb": "Cursoman risunchej.",
+    "translation": "Vamos a ir al curso.",
     "unit": "17. Futuro plural y conversación",
     "tags": [
       "Gramática",
@@ -1685,8 +1633,8 @@
     ],
     "sentences": [
       {
-        "text": "Arí, cursoman jamusayku.",
-        "trans": "Sí, venimos al curso."
+        "text": "Arí, cursoman risunchej.",
+        "trans": "Sí, vamos a ir al curso."
       }
     ],
     "pinned": false
@@ -1710,7 +1658,7 @@
     "pinned": false
   },
   {
-    "verb": "Wakinqa q'aya chayamonqanku.",
+    "verb": "Wakenqa q'aya chayamonqanku.",
     "translation": "Algunos llegarán mañana.",
     "unit": "17. Futuro plural y conversación",
     "tags": [
@@ -1721,15 +1669,15 @@
     ],
     "sentences": [
       {
-        "text": "Manaraj tukuy chayamunku. Wakinqa q'aya chayamonqanku.",
+        "text": "Manaraj tukuy chayamunku. Wakenqa q'aya chayamonqanku.",
         "trans": "No han llegado todos. Algunos llegarán mañana."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "¿Cursomanchu jamusankichej?",
-    "translation": "¿Están viniendo al curso?",
+    "verb": "¿Cursomanchu jamonqanku?",
+    "translation": "¿Van a venir al curso?",
     "unit": "17. Futuro plural y conversación",
     "tags": [
       "Gramática",
@@ -1739,8 +1687,8 @@
     ],
     "sentences": [
       {
-        "text": "Arí, cursoman jamusayku.",
-        "trans": "Sí, venimos al curso."
+        "text": "Arí, cursoman jamusqayku/jamusajku.",
+        "trans": "Sí, iremos al curso."
       }
     ],
     "pinned": false
@@ -1775,7 +1723,7 @@
     ],
     "sentences": [
       {
-        "text": "Potosí ancha karu kaymanta. Ch'isiman chayamonqa.",
+        "text": "Potosí ancha karu kaymanta kashan. Ch'isiman chayamonqa.",
         "trans": "Potosí está muy lejos de aquí. Va a llegar a la noche."
       }
     ],
@@ -1799,7 +1747,7 @@
     "pinned": false
   },
   {
-    "verb": "Sinchita kusikuyku.",
+    "verb": "Anchata kusikuyku.",
     "translation": "Nos alegramos mucho.",
     "unit": "17. Futuro plural y conversación",
     "tags": [
@@ -1809,15 +1757,15 @@
     ],
     "sentences": [
       {
-        "text": "Sinchita kusikuyku. ¿Ima sutiykichejri?",
+        "text": "Anchata kusikuyku. ¿Ima sutiykichejri?",
         "trans": "Nos alegramos mucho. ¿Cómo se llaman?"
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Ichá animalpi jamusanku.",
-    "translation": "Tal vez están viniendo a lomo de bestia.",
+    "verb": "Ichá autopi jamonqa.",
+    "translation": "Tal vez va a venir en auto.",
     "unit": "17. Futuro plural y conversación",
     "tags": [
       "Frase",
@@ -1826,15 +1774,15 @@
     ],
     "sentences": [
       {
-        "text": "Manaraj chayamunku. Ichá animalpi jamusanku.",
-        "trans": "Todavía no llegaron. Tal vez están viniendo a lomo de bestia."
+        "text": "Manaraj chayamunkuchu. Ichá chakipi jamushanku.",
+        "trans": "Todavía no llegaron. Tal vez están viniendo a pie."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "-sqayku",
-    "translation": "Futuro — Nosotros exclusivo (risqayku = iremos nosotros, sin vos)",
+    "verb": "-sqayku/sajku",
+    "translation": "Futuro — Nosotros exclusivo (risqayku/risajku = iremos nosotros, sin vos)",
     "unit": "17. Futuro plural y conversación",
     "tags": [
       "Gramática",
@@ -1844,8 +1792,8 @@
     ],
     "sentences": [
       {
-        "text": "Noqayku parla-sqayku.",
-        "trans": "Nosotros (exclusivo) vamos a hablar."
+        "text": "Noqayku parlasqayku/parlasajku.",
+        "trans": "Nosotros vamos a hablar."
       }
     ],
     "pinned": false
@@ -1862,7 +1810,7 @@
     ],
     "sentences": [
       {
-        "text": "Qankuna parla-nkichej.",
+        "text": "Qankuna parlankichej.",
         "trans": "Ustedes van a hablar."
       }
     ],
@@ -1885,8 +1833,8 @@
     "pinned": false
   },
   {
-    "verb": "Sinchita",
-    "translation": "Mucho / Con fuerza",
+    "verb": "Anchata",
+    "translation": "Mucho (de sentiemientos)",
     "unit": "17. Futuro plural y conversación",
     "tags": [
       "Vocabulario",
@@ -1894,8 +1842,8 @@
     ],
     "sentences": [
       {
-        "text": "Sinchita parlayta munani.",
-        "trans": "Quiero hablar mucho."
+        "text": "Qankunata anchata munakusunchej.",
+        "trans": "Mucho los vamos a queremos a ustedes."
       }
     ],
     "pinned": false
@@ -1910,14 +1858,14 @@
     ],
     "sentences": [
       {
-        "text": "Ancha karu kaymanta.",
-        "trans": "Muy lejos de aquí."
+        "text": "karu kaymanta.",
+        "trans": "Lejos de aquí."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Wakin",
+    "verb": "Wakin/wakenqa",
     "translation": "Algunos / Unos cuantos",
     "unit": "17. Futuro plural y conversación",
     "tags": [
@@ -1926,7 +1874,7 @@
     ],
     "sentences": [
       {
-        "text": "Wakinqa q'aya jamonqanku.",
+        "text": "Wakenqa q'aya jamonqanku.",
         "trans": "Algunos van a venir mañana."
       }
     ],
@@ -2015,8 +1963,8 @@
     "pinned": false
   },
   {
-    "verb": "Tatanchej jamun.",
-    "translation": "Nuestro padre ha venido (todos juntos).",
+    "verb": "Cartanchej jamun.",
+    "translation": "Nuestra carta ha venido.",
     "unit": "18. Sufijo posesivo (-y, -yki, -n)",
     "tags": [
       "Gramática",
@@ -2034,7 +1982,7 @@
   },
   {
     "verb": "Tatayku jamun.",
-    "translation": "Nuestro padre ha venido (sin incluirte).",
+    "translation": "Nuestro padre ha venido (sin incluir al oyente).",
     "unit": "18. Sufijo posesivo (-y, -yki, -n)",
     "tags": [
       "Gramática",
@@ -2044,7 +1992,7 @@
     ],
     "sentences": [
       {
-        "text": "Wasiyku jatun.",
+        "text": "Wasiykoqa jatun.",
         "trans": "Nuestra casa es grande."
       }
     ],
@@ -2052,7 +2000,7 @@
   },
   {
     "verb": "Tatankichej jamun.",
-    "translation": "Su padre de ustedes ha venido.",
+    "translation": "Su padre (de ustedes) ha venido.",
     "unit": "18. Sufijo posesivo (-y, -yki, -n)",
     "tags": [
       "Gramática",
@@ -2069,7 +2017,7 @@
   },
   {
     "verb": "Tatanku jamun.",
-    "translation": "Su padre de ellos ha venido.",
+    "translation": "Su padre (de ellos) ha venido.",
     "unit": "18. Sufijo posesivo (-y, -yki, -n)",
     "tags": [
       "Gramática",
@@ -2078,8 +2026,8 @@
     ],
     "sentences": [
       {
-        "text": "Wasinkuqa jatun.",
-        "trans": "Su casa de ellos es grande."
+        "text": "Wasinkoqa jatun.",
+        "trans": "Su casa (de ellos) es grande."
       }
     ],
     "pinned": false
@@ -2120,7 +2068,7 @@
     "pinned": false
   },
   {
-    "verb": "Mikhuyniyki sumaj.",
+    "verb": "Mikhuyniykeqa sumaj.",
     "translation": "Tu comida es muy buena.",
     "unit": "18. Sufijo posesivo (-y, -yki, -n)",
     "tags": [
@@ -2147,7 +2095,7 @@
     ],
     "sentences": [
       {
-        "text": "Wasi-y jatun.",
+        "text": "Waseqa jatun.",
         "trans": "Mi casa es grande."
       }
     ],
@@ -2164,7 +2112,7 @@
     ],
     "sentences": [
       {
-        "text": "Wasi-yki jatun.",
+        "text": "Wasiykeqa jatun.",
         "trans": "Tu casa es grande."
       }
     ],
@@ -2172,7 +2120,7 @@
   },
   {
     "verb": "-n",
-    "translation": "Posesivo — Su (payan = su padre)",
+    "translation": "Posesivo — Su (tatan = su padre)",
     "unit": "18. Sufijo posesivo (-y, -yki, -n)",
     "tags": [
       "Gramática",
@@ -2181,7 +2129,7 @@
     ],
     "sentences": [
       {
-        "text": "Wasi-n jatun.",
+        "text": "Wasenqa jatun.",
         "trans": "Su casa es grande."
       }
     ],
@@ -2199,14 +2147,14 @@
     ],
     "sentences": [
       {
-        "text": "Wasi-nchej jatun.",
+        "text": "Wasinchejqa jatun.",
         "trans": "Nuestra casa es grande."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Wasy",
+    "verb": "Wasiy",
     "translation": "Mi casa",
     "unit": "18. Sufijo posesivo (-y, -yki, -n)",
     "tags": [
@@ -2217,7 +2165,7 @@
     "sentences": [
       {
         "text": "Wasiy orqo patapi kashan.",
-        "trans": "Mi casa está en la falda del cerro."
+        "trans": "Mi casa está arriba de la montaña."
       }
     ],
     "pinned": false
@@ -2266,8 +2214,8 @@
     ],
     "sentences": [
       {
-        "text": "Yachachejniyki jamun.",
-        "trans": "Tu profesor ha venido."
+        "text": "Yachachejniykichej jamun.",
+        "trans": "El profesor de ustedes ha venido/viene."
       }
     ],
     "pinned": false
@@ -2282,15 +2230,15 @@
     ],
     "sentences": [
       {
-        "text": "P'achay sumaj.",
+        "text": "P'achayqa sumaj.",
         "trans": "Mi ropa es bonita."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Wasita ruachini.",
-    "translation": "He mandado hacer una casa.",
+    "verb": "Wasiyta ruwachini.",
+    "translation": "He mandado hacer mi casa.",
     "unit": "19. Infijo causativo -chi",
     "tags": [
       "Gramática",
@@ -2299,14 +2247,14 @@
     ],
     "sentences": [
       {
-        "text": "Wasita ruachini.",
-        "trans": "He mandado hacer una casa."
+        "text": "Wasinta ruwachin.",
+        "trans": "Ha mandado hacer su casa."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Perqata ruachinki.",
+    "verb": "Perqata ruwachinki.",
     "translation": "Has mandado hacer una pared.",
     "unit": "19. Infijo causativo -chi",
     "tags": [
@@ -2316,7 +2264,7 @@
     ],
     "sentences": [
       {
-        "text": "¿Pitaj perqata ruachinki?",
+        "text": "¿Pitaj perqata ruwachinki?",
         "trans": "¿A quién le mandaste hacer la pared?"
       }
     ],
@@ -2324,7 +2272,7 @@
   },
   {
     "verb": "Cuentata pagachinku.",
-    "translation": "Han mandado pagar la cuenta.",
+    "translation": "Han mandado pagar la cuenta (ellos).",
     "unit": "19. Infijo causativo -chi",
     "tags": [
       "Gramática",
@@ -2360,7 +2308,7 @@
   },
   {
     "verb": "Cartata apachisaj.",
-    "translation": "Haré llevar la carta.",
+    "translation": "Mandaré (haré llevar) la carta.",
     "unit": "19. Infijo causativo -chi",
     "tags": [
       "Gramática",
@@ -2371,14 +2319,14 @@
     "sentences": [
       {
         "text": "Q'aya cartata apachisaj.",
-        "trans": "Mañana haré llevar la carta."
+        "trans": "Mañana llevaré la carta."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Qolqeta chinkachin.",
-    "translation": "Ha dejado perderse el dinero.",
+    "verb": "Qolqenta chinkachin.",
+    "translation": "Hace perder su dinero.",
     "unit": "19. Infijo causativo -chi",
     "tags": [
       "Gramática",
@@ -2388,15 +2336,15 @@
     ],
     "sentences": [
       {
-        "text": "Qolqeta chinkachin.",
-        "trans": "Ha dejado perderse el dinero."
+        "text": "Qolqenta chinkachenqa.",
+        "trans": "Hará perder (desaparecer) su dinero."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Alqota ayqechin.",
-    "translation": "Ha dejado escapar al perro.",
+    "verb": "Alqoyta ayqechin.",
+    "translation": "Ha dejado escapar mi perro.",
     "unit": "19. Infijo causativo -chi",
     "tags": [
       "Gramática",
@@ -2413,7 +2361,7 @@
     "pinned": false
   },
   {
-    "verb": "Mamanta kusichini.",
+    "verb": "Mamayta kusichini.",
     "translation": "Hago alegrar a mi mamá.",
     "unit": "19. Infijo causativo -chi",
     "tags": [
@@ -2423,15 +2371,15 @@
     ],
     "sentences": [
       {
-        "text": "Noqa mamanta kusichini.",
-        "trans": "Yo hago alegrar a mi mamá."
+        "text": "Qanta kusichisuyta munayku.",
+        "trans": "Queremos hacerte feliz a tí."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Wasita ruachinki.",
-    "translation": "Te has mandado hacer una casa.",
+    "verb": "Wasinta ruwachinki.",
+    "translation": "Te has mandado hacer tu casa.",
     "unit": "19. Infijo causativo -chi",
     "tags": [
       "Gramática",
@@ -2441,7 +2389,7 @@
     ],
     "sentences": [
       {
-        "text": "Wasita ruachikun.",
+        "text": "Wasita ruwachikun.",
         "trans": "Se ha mandado hacer una casa."
       }
     ],
@@ -2460,7 +2408,7 @@
     "sentences": [
       {
         "text": "Q'epita apachimunki.",
-        "trans": "Harás traer el bulto (de vuelta)."
+        "trans": "Harás traer el bulto."
       }
     ],
     "pinned": false
@@ -2476,7 +2424,7 @@
     ],
     "sentences": [
       {
-        "text": "Ruway → rua-chi-ni = hago hacer / mando hacer.",
+        "text": "Ruway → ruwa-chi-ni = hago hacer / mando hacer.",
         "trans": "Verbo + chi = causativo."
       }
     ],
@@ -2501,7 +2449,7 @@
   },
   {
     "verb": "Rikuchiy",
-    "translation": "Mostrar (hacer ver)",
+    "translation": "Demostrar (hacer ver)",
     "unit": "19. Infijo causativo -chi",
     "tags": [
       "Vocabulario",
@@ -2559,7 +2507,7 @@
     ],
     "sentences": [
       {
-        "text": "Perqata ruachinki.",
+        "text": "Perqata ruwachinki.",
         "trans": "Has mandado hacer una pared."
       }
     ],
@@ -2591,7 +2539,7 @@
     ],
     "sentences": [
       {
-        "text": "Wasita ruachini.",
+        "text": "Wasita ruwachini.",
         "trans": "He mandado hacer una casa."
       }
     ],
@@ -2701,8 +2649,8 @@
     "pinned": false
   },
   {
-    "verb": "Ruamusaj.",
-    "translation": "Iré a hacer (y vuelvo).",
+    "verb": "Ajinata ruwamusaj.",
+    "translation": "Iré a hacer así (y vuelvo).",
     "unit": "20. Infijo de movimiento -mu",
     "tags": [
       "Gramática",
@@ -2736,7 +2684,7 @@
     "pinned": false
   },
   {
-    "verb": "Paramusan.",
+    "verb": "Paramushan.",
     "translation": "Está lloviendo (viene la lluvia hacia aquí).",
     "unit": "20. Infijo de movimiento -mu",
     "tags": [
@@ -2747,14 +2695,14 @@
     ],
     "sentences": [
       {
-        "text": "Paramusan. ¡Wasiman yaykusunchej!",
+        "text": "Paramushan. ¡Wasiman yaykuna!",
         "trans": "Está lloviendo. ¡Entremos a la casa!"
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Wayramusan.",
+    "verb": "Wayramushan.",
     "translation": "Hace viento (el viento viene hacia aquí).",
     "unit": "20. Infijo de movimiento -mu",
     "tags": [
@@ -2764,7 +2712,7 @@
     ],
     "sentences": [
       {
-        "text": "Sinchita wayramusan.",
+        "text": "Sinch'ita wayramushan.",
         "trans": "Está haciendo un viento fuerte."
       }
     ],
@@ -2806,7 +2754,7 @@
     "pinned": false
   },
   {
-    "verb": "Qasaymusan.",
+    "verb": "Qasaymushan.",
     "translation": "Está helando (viene la helada).",
     "unit": "20. Infijo de movimiento -mu",
     "tags": [
@@ -2816,26 +2764,8 @@
     ],
     "sentences": [
       {
-        "text": "Tutapi qasaymusan.",
+        "text": "Tutapi qasaymushan.",
         "trans": "De noche está helando."
-      }
-    ],
-    "pinned": false
-  },
-  {
-    "verb": "Inti p'utumunqa.",
-    "translation": "Va a salir el sol (va a llegar el sol).",
-    "unit": "20. Infijo de movimiento -mu",
-    "tags": [
-      "Gramática",
-      "-mu",
-      "Clima",
-      "Futuro"
-    ],
-    "sentences": [
-      {
-        "text": "Manaraj rit'imuqtiqa, inti p'utumunqa.",
-        "trans": "Cuando deje de nevar, saldrá el sol."
       }
     ],
     "pinned": false
@@ -2884,7 +2814,7 @@
     ],
     "sentences": [
       {
-        "text": "Paramusan.",
+        "text": "Paramushan.",
         "trans": "Está lloviendo."
       }
     ],
@@ -2900,8 +2830,8 @@
     ],
     "sentences": [
       {
-        "text": "Sinchita wayramusan.",
-        "trans": "Hace un viento fuerte."
+        "text": "Sinch'ita wayramushan.",
+        "trans": "Está un viento fuerte."
       }
     ],
     "pinned": false
@@ -2916,7 +2846,7 @@
     ],
     "sentences": [
       {
-        "text": "Rit'imusan.",
+        "text": "Rit'imushan.",
         "trans": "Está nevando."
       }
     ],
@@ -2930,13 +2860,6 @@
       "Vocabulario",
       "Clima"
     ],
-    "sentences": [
-      {
-        "text": "Tutapi qasa musan.",
-        "trans": "De noche hay helada."
-      }
-    ],
-    "pinned": false
   },
   {
     "verb": "Jawa",
@@ -3091,8 +3014,8 @@
     "pinned": false
   },
   {
-    "verb": "¡Ama t'antata apamuych chu!",
-    "translation": "¡No traigan el pan! (negativo ustedes)",
+    "verb": "¡Ama t'antata apamuychu!",
+    "translation": "¡No traigan el pan! (ustedes)",
     "unit": "21. Imperativo",
     "tags": [
       "Gramática",
@@ -3332,7 +3255,7 @@
     "pinned": false
   },
   {
-    "verb": "Q'aya cursoman risaj. ¿Qanchu?",
+    "verb": "Q'aya cursoman risaj. ¿Qanrí?",
     "translation": "Mañana voy a ir al curso. ¿Y vos?",
     "unit": "22. Repaso Sección 2",
     "tags": [
@@ -3342,7 +3265,7 @@
     ],
     "sentences": [
       {
-        "text": "Q'aya cursoman risaj. Ichá minchha renqa tatay.",
+        "text": "Q'aya cursoman risaj. Ichá tatay minchha renqa.",
         "trans": "Mañana iré al curso. Tal vez pasado mañana irá mi papá."
       }
     ],
@@ -3366,7 +3289,7 @@
     "pinned": false
   },
   {
-    "verb": "Tatay llajtaman renqa. Yachachejniyki jamonqachu?",
+    "verb": "Tatay llajtaman renqa. ¿Yachachejniyki jamonqachu?",
     "translation": "Mi papá va a ir a la ciudad. ¿Va a venir tu profesor?",
     "unit": "22. Repaso Sección 2",
     "tags": [
@@ -3385,7 +3308,7 @@
     "pinned": false
   },
   {
-    "verb": "Wasita ruachisaj. Cartata apachimunki.",
+    "verb": "Wasita ruwachisaj. Cartata apachimunki.",
     "translation": "Haré construir la casa. Harás traer la carta.",
     "unit": "22. Repaso Sección 2",
     "tags": [
@@ -3397,14 +3320,14 @@
     ],
     "sentences": [
       {
-        "text": "Noqa wasita ruachisaj. Qanqa cartata apachimunki.",
+        "text": "Noqa wasita ruwachisaj. Qanqa cartata apachimunki.",
         "trans": "Yo haré construir la casa. Vos harás traer la carta."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Paramusan. ¡P'achata jawamanta apamuy!",
+    "verb": "Paramushan. ¡P'achata jawamanta apamuy!",
     "translation": "Está lloviendo. ¡Traé la ropa de afuera!",
     "unit": "22. Repaso Sección 2",
     "tags": [
@@ -3417,15 +3340,15 @@
     ],
     "sentences": [
       {
-        "text": "Sinchita wayramusan. ¡Ama jawapi kakuychu!",
+        "text": "Sinch'ita wayramushan. ¡Ama jawapi kakuychu!",
         "trans": "Hace mucho viento. ¡No te quedes afuera!"
       }
     ],
     "pinned": false
   },
   {
-    "verb": "¡Ama waqaychu! Kusikuyta munani.",
-    "translation": "¡No llores! Quiero alegrarte.",
+    "verb": "¡Ama waqaychu! Kusikuy.",
+    "translation": "¡No llores! Alegrate.",
     "unit": "22. Repaso Sección 2",
     "tags": [
       "Repaso",
@@ -3436,15 +3359,15 @@
     ],
     "sentences": [
       {
-        "text": "¡Ama waqaychu! Kusikuyta munani.",
-        "trans": "¡No llores! Quiero alegrarte."
+        "text": "¡Ama waqaychu!.",
+        "trans": "¡No llores!"
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Rit'imusan. Manaraj llajtaman riyta atinichu.",
-    "translation": "Está nevando. Todavía no puedo ir a la ciudad.",
+    "verb": "Paramushan. Manaraj llajtaman riyta atinichu.",
+    "translation": "Está lloviendo. Todavía no puedo ir a la ciudad.",
     "unit": "22. Repaso Sección 2",
     "tags": [
       "Repaso",
@@ -3456,14 +3379,14 @@
     ],
     "sentences": [
       {
-        "text": "Rit'imusan, chiriwan. Manaraj llajtaman riyta atinichu.",
+        "text": "Rit'imushan, chiriwan. Manaraj llajtaman riyta atinichu.",
         "trans": "Está nevando, con frío. Todavía no puedo ir a la ciudad."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "Qhechuata yachachenqa. Sumajtami yachachejniyn.",
+    "verb": "Qhechuata yachachenqa. Sumajta yachachejniy.",
     "translation": "Enseñará quechua. Mi profesor es muy bueno.",
     "unit": "22. Repaso Sección 2",
     "tags": [
@@ -3477,14 +3400,14 @@
     ],
     "sentences": [
       {
-        "text": "Payqa qhechuata yachachenqa. Sumajtami yachachejniyn.",
+        "text": "Payqa qhechuata yachachenqa. Sumajta yachachejnin.",
         "trans": "Él/ella enseñará quechua. Su profesor es muy bueno."
       }
     ],
     "pinned": false
   },
   {
-    "verb": "¡Ripuna! Q'aya llajtaman risqayku.",
+    "verb": "¡Ripuna! Q'aya llajtaman risqayku/risajku.",
     "translation": "¡Vámonos! Mañana iremos a la ciudad (nosotros).",
     "unit": "22. Repaso Sección 2",
     "tags": [
@@ -3543,7 +3466,7 @@
     "pinned": false
   },
   {
-    "verb": "Wasiy jatun. ¿Wasiyki?",
+    "verb": "Waseqa jatun. ¿Wasiykiri?",
     "translation": "Mi casa es grande. ¿Y tu casa?",
     "unit": "22. Repaso Sección 2",
     "tags": [
@@ -3553,14 +3476,14 @@
     ],
     "sentences": [
       {
-        "text": "Wasiy jatun. ¿Wasiyki?",
+        "text": "Waseqa jatun. ¿Wasiykiri?",
         "trans": "Mi casa es grande. ¿Y tu casa?"
       }
     ],
     "pinned": false
   },
   {
-    "verb": "¡T'antata apamullay! Mikhuy-ta munani.",
+    "verb": "¡T'antata apamullay! Mikhuyta munani.",
     "translation": "¡Traé el pan no más! Quiero comer.",
     "unit": "22. Repaso Sección 2",
     "tags": [
@@ -3572,7 +3495,7 @@
     ],
     "sentences": [
       {
-        "text": "¡T'antata apamullay! Yarqhasqa kashani. Mikhuy-ta munani.",
+        "text": "¡T'antata apamullay! Yarqhasqa kashani. Mikhuyta munani.",
         "trans": "¡Traé el pan no más! Estoy hambriento. Quiero comer."
       }
     ],
