@@ -2152,23 +2152,20 @@
     ],
     "pinned": false
   },
-  {
-    "verb": "Wasiy",
-    "translation": "Mi casa",
-    "unit": "18. Sufijo posesivo (-y, -yki, -n)",
-    "tags": [
-      "Vocabulario",
-      "Posesivo",
-      "Ejemplo"
-    ],
-    "sentences": [
-      {
-        "text": "Wasiy orqo patapi kashan.",
-        "trans": "Mi casa está arriba de la montaña."
-      }
-    ],
-    "pinned": false
-  },
+{
+  "verb": "Wasi",
+  "translation": "Casa",
+  "unit": "18. Sufijo posesivo (-y, -yki, -n)",
+  "tags": ["Vocabulario"],
+  "sentences": [
+    {
+      "text": "Wasiyqa jatun.",
+      "trans": "Mi casa es grande."
+    }
+  ],
+  "pinned": false
+}
+]
   {
     "verb": "Sutiy",
     "translation": "Mi nombre",
