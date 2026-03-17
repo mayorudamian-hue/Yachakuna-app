@@ -371,9 +371,18 @@
 
     <div id="section-dict">
         <div id="libraryView">
-            <div id="streakWarningBanner" class="hidden" style="width: 100%; margin-top: 0; margin-bottom: 0; padding: 12px 16px; background: #fff9e6; border: 2px solid var(--duo-yellow); border-radius: 12px; font-size: 14px; font-weight: 700; color: #8b6914; text-align: center; box-sizing: border-box;"></div>
+            <div id="streakWarningBanner" class="hidden" style="width: 100%; margin-top: 0; margin-bottom: 16px; padding: 12px 16px; background: #fff9e6; border: 2px solid var(--duo-yellow); border-radius: 12px; font-size: 14px; font-weight: 700; color: #8b6914; text-align: center; box-sizing: border-box;"></div>
 
-            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+            <!-- Tarjeta peek: primera tarjeta pendiente -->
+            <div id="srsPeekCard" style="display:none; background:white; border:2px solid var(--duo-yellow); border-bottom:4px solid #d4a600; border-radius:20px; padding:20px; margin-bottom:16px; cursor:pointer; text-align:center;" onclick="startSRSReview('all')">
+                <div style="font-size:11px; font-weight:800; color:#d4a600; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">🧠 Tenés tarjetas para repasar</div>
+                <div id="srsPeekEmoji" style="font-size:40px; margin-bottom:6px;">📚</div>
+                <div id="srsPeekTranslation" style="font-size:22px; font-weight:800; color:var(--text); margin-bottom:4px;">...</div>
+                <div style="font-size:13px; color:#aaa; font-weight:700; margin-bottom:12px;">¿Recordás cómo se dice en quechua?</div>
+                <div style="font-size:13px; color:#d4a600; font-weight:800;">Tocá para empezar el repaso ▶</div>
+            </div>
+
+            <div id="srsControls" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
                 <button type="button" class="special" onclick="startSRSReview('all')" style="flex: 1; min-width: 200px; font-size: 16px; padding: 15px;">
                     🧠 Repasar Todas (<span id="dueCount">0</span>)
                 </button>
@@ -1559,6 +1568,28 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             const pendingCards = dictionary.filter(c => c.srs && c.srs.due <= now);
             const counter = document.getElementById('dueCount');
             if(counter) counter.innerText = pendingCards.length;
+
+            // Peek card — mostrar la primera tarjeta pendiente como preview
+            const peekCard = document.getElementById('srsPeekCard');
+            const srsControlsEl = document.getElementById('srsControls');
+            if (peekCard) {
+                // Solo mostrar unidades desbloqueadas
+                const allUnits = getUniqueUnits();
+                const eligiblePending = pendingCards.filter(c => {
+                    const idx = allUnits.indexOf(c.unit);
+                    return idx === -1 || isUnitUnlocked(allUnits, idx);
+                });
+                if (eligiblePending.length > 0) {
+                    const first = eligiblePending[Math.floor(Math.random() * Math.min(5, eligiblePending.length))];
+                    document.getElementById('srsPeekEmoji').innerText = getEmoji(first);
+                    document.getElementById('srsPeekTranslation').innerText = first.translation;
+                    peekCard.style.display = 'block';
+                    if (srsControlsEl) srsControlsEl.style.marginTop = '0';
+                } else {
+                    peekCard.style.display = 'none';
+                }
+            }
+
             const unitSelect = document.getElementById('srsUnitSelect');
             if (unitSelect) {
                 const currentSelection = unitSelect.value;
@@ -1567,7 +1598,6 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                 const pendingUnits = {};
                 pendingCards.forEach(c => {
                     const u = c.unit || "Sin Unidad";
-                    // Solo incluir si la unidad está desbloqueada
                     const unitIndex = allUnits.indexOf(u);
                     if (unitIndex === -1 || isUnitUnlocked(allUnits, unitIndex)) {
                         pendingUnits[u] = (pendingUnits[u] || 0) + 1;
@@ -1862,7 +1892,16 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                     const globalIndex = dictionary.indexOf(item); const card = document.createElement('div');
                     card.className = "verb-card " + (item.pinned ? 'card-pinned' : '');
                     const emoji = getEmoji(item);
-                    card.innerHTML = `<div style="display:flex; gap:15px; align-items:center;"><div style="width:56px; height:56px; font-size:36px; display:flex; align-items:center; justify-content:center; background:var(--card-bg); border-radius:12px; border:2px solid var(--border); flex-shrink:0;">${emoji}</div><button type="button" class="btn-icon btn-speak" onclick="speak('${item.verb.replace(/'/g, "\\'")}')">🔊</button><div style="flex-grow:1;"><div style="font-size:18px; font-weight:800;">${item.verb}</div><div style="font-weight:600; font-size:15px; color: var(--duo-blue);">${item.translation}</div><div style="margin-top:4px;"><span style="font-size:11px; font-weight:800; padding:2px 8px; border-radius:10px; background:#f0f0f0; color:#888;">${getCategoria(item)}</span></div></div><button type="button" class="btn-icon btn-pin ${item.pinned ? 'active' : ''}" onclick="togglePin(${globalIndex})">⭐</button>${isProfeMode ? `<button type="button" class="btn-icon" onclick="editWord(${globalIndex})" style="background:#eaf3ff;border:2px solid #a8cff5;border-bottom:3px solid #a8cff5;color:#1a5fa8;" title="Editar">✏️</button><button type="button" class="btn-icon" onclick="deleteWord(${globalIndex})" style="background:#fde8e8;border:2px solid var(--duo-red);border-bottom:3px solid var(--duo-red-shadow);color:var(--duo-red);" title="Eliminar">🗑️</button>` : ''}</div>`;
+                    const sentencesHTML = (item.sentences && item.sentences.length > 0)
+                        ? `<div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+                            ${item.sentences.map(s => `
+                                <div style="font-size:13px; color:#666; margin-bottom:3px;">
+                                    <span style="font-weight:700; color:var(--duo-blue);">▸ ${s.text}</span>
+                                    <span style="color:#aaa;"> — ${s.trans}</span>
+                                </div>`).join('')}
+                           </div>`
+                        : '';
+                    card.innerHTML = `<div style="display:flex; gap:15px; align-items:center;"><div style="width:56px; height:56px; font-size:36px; display:flex; align-items:center; justify-content:center; background:var(--card-bg); border-radius:12px; border:2px solid var(--border); flex-shrink:0;">${emoji}</div><button type="button" class="btn-icon btn-speak" onclick="speak('${item.verb.replace(/'/g, "\\'")}')">🔊</button><div style="flex-grow:1;"><div style="font-size:18px; font-weight:800;">${item.verb}</div><div style="font-weight:600; font-size:15px; color: var(--duo-blue);">${item.translation}</div><div style="margin-top:4px;"><span style="font-size:11px; font-weight:800; padding:2px 8px; border-radius:10px; background:#f0f0f0; color:#888;">${getCategoria(item)}</span></div>${sentencesHTML}</div><button type="button" class="btn-icon btn-pin ${item.pinned ? 'active' : ''}" onclick="togglePin(${globalIndex})">⭐</button>${isProfeMode ? `<button type="button" class="btn-icon" onclick="editWord(${globalIndex})" style="background:#eaf3ff;border:2px solid #a8cff5;border-bottom:3px solid #a8cff5;color:#1a5fa8;" title="Editar">✏️</button><button type="button" class="btn-icon" onclick="deleteWord(${globalIndex})" style="background:#fde8e8;border:2px solid var(--duo-red);border-bottom:3px solid var(--duo-red-shadow);color:var(--duo-red);" title="Eliminar">🗑️</button>` : ''}</div>`;
                     cardsWrap.appendChild(card);
                 });
                 }
