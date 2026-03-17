@@ -661,8 +661,9 @@
             <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjI1MCIgZmlsbD0iI2ZmYzgwMCIvPjxwYXRoIGQ9Ik0zNjAgMTYwdjgwYzAgNjAtNDAgMTAwLTEwMCAxMDBzLTEwMC00MC0xMDAtMTAwdjgwYzAtNjAgNDAtMTAwIDEwMC0xMDBzMTAwIDQwIDEwMCAxMDB6IiBmaWxsPSIjZmZmIi8+PHBhdGggZD0iTTI1NiAzNjBjLTYwIDAtMTAwLTQwLTEwMC0xMDBoMjAwYzAgNjAtNDAgMTAwLTEwMCAxMDB6IiBmaWxsPSIjZWVlIi8+PGNpcmNsZSBjeD0iMjAwIiBjeT0iMjAwIiByPSIxNSIgZmlsbD0iIzMzMyIvPjxjaXJjbGUgY3g9IjMxMiIgY3k9IjIwMCIgcj0iMTUiIGZpbGw9IiMzMzMiLz48cGF0aCBkPSJNMjMwIDI4MGMwIDIwIDE1IDM1IDI2IDM1czY2LTE1IDY2LTM1IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZjRiNGIiIHN0cm9rZS13aWR0aD0iOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTE4MCAxMjBsMjAtMzBNMzMyIDEyMGwtMjAtMzAiIHN0cm9rZT0iI2NjYyIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+" alt="Llama" style="width: 80%; height: 80%;">
         </div>
         <div>
-            <h3 style="margin: 0; color: var(--duo-green); font-size: 22px; font-weight: 900;">¡May sumajpuni!</h3>
+            <h3 id="llamaTitle" style="margin: 0; color: var(--duo-green); font-size: 22px; font-weight: 900;">¡May sumajpuni!</h3>
             <p id="llamaStreakText" style="margin: 5px 0 0 0; color: #777; font-weight: bold; font-size: 16px;">¡5 aciertos seguidos!</p>
+            <p id="llamaAchievementDesc" style="margin: 3px 0 0 0; color: #aaa; font-size: 13px; display:none;"></p>
         </div>
     </div>
 
@@ -983,10 +984,12 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
         let searchCount = 0;
         let srsReviewCount = 0;
         let forumPosted = false;
+        let notifiedAchievements = {};
         try {
             const sc = localStorage.getItem('rimay_SearchCount'); if (sc) searchCount = parseInt(sc);
             const src = localStorage.getItem('rimay_SRSCount'); if (src) srsReviewCount = parseInt(src);
             const fp = localStorage.getItem('rimay_ForumPosted'); if (fp) forumPosted = fp === '1';
+            const na = localStorage.getItem('rimay_NotifiedAch'); if (na) notifiedAchievements = JSON.parse(na);
         } catch(e) {}
 
         function getVoiceQuality(voice) {
@@ -1504,7 +1507,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
         function exitSRSReview() {
             updateStreakDays();
             document.getElementById('srsReviewView').classList.add('hidden'); document.getElementById('libraryView').classList.remove('hidden');
-            updateSRSCount(); renderCards();
+            updateSRSCount(); renderCards(); renderAwards();
         }
 
         // --- SISTEMA DE EMOJIS AUTOMÁTICO ---
@@ -2107,6 +2110,12 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                 }
                 container.appendChild(card);
             });
+
+            // Verificar logros nuevos y notificar con la llamita
+            const unitAchievements = units.map(u => ({
+                id: 'trophy_' + u, title: u, desc: '¡Unidad completada perfectamente!', icon: '🏆', unlocked: perfectUnits[u] === true
+            }));
+            checkNewAchievements([...xpRanks, ...globalAchievements, ...unitAchievements]);
         }
 
 function handlePracticeEnter(e) { 
@@ -2335,8 +2344,39 @@ function handlePracticeEnter(e) {
 
         function showLlamaPopup(streakNumber) {
             const popup = document.getElementById('llamaPopup');
+            document.getElementById('llamaTitle').innerText = '¡May sumajpuni!';
             document.getElementById('llamaStreakText').innerText = `¡${streakNumber} aciertos seguidos!`;
-            popup.style.transform = 'translateY(0)'; setTimeout(() => popup.style.transform = 'translateY(200%)', 3500);
+            document.getElementById('llamaAchievementDesc').style.display = 'none';
+            popup.style.borderColor = 'var(--duo-green)';
+            popup.style.transform = 'translateY(0)';
+            setTimeout(() => popup.style.transform = 'translateY(200%)', 3500);
+        }
+
+        function showLlamaAchievement(icon, title, desc) {
+            const popup = document.getElementById('llamaPopup');
+            document.getElementById('llamaTitle').innerText = icon + ' ¡' + title + '!';
+            document.getElementById('llamaStreakText').innerText = '¡Nuevo logro desbloqueado!';
+            const descEl = document.getElementById('llamaAchievementDesc');
+            descEl.innerText = desc;
+            descEl.style.display = 'block';
+            popup.style.borderColor = 'var(--duo-yellow)';
+            popup.style.transform = 'translateY(0)';
+            setTimeout(() => popup.style.transform = 'translateY(200%)', 4500);
+        }
+
+        function checkNewAchievements(allAchievements) {
+            let queuedNotifications = [];
+            allAchievements.forEach(ach => {
+                if (ach.unlocked && !notifiedAchievements[ach.id]) {
+                    notifiedAchievements[ach.id] = true;
+                    queuedNotifications.push(ach);
+                }
+            });
+            localStorage.setItem('rimay_NotifiedAch', JSON.stringify(notifiedAchievements));
+            // Show notifications one by one with delay
+            queuedNotifications.forEach((ach, i) => {
+                setTimeout(() => showLlamaAchievement(ach.icon, ach.title, ach.desc), i * 5000);
+            });
         }
 
         function speakCurrentPractice() { if (currentQuestion) speak(document.getElementById('practiceSentence').innerText); }
@@ -2491,6 +2531,25 @@ function handlePracticeEnter(e) {
         if (hasAudioSupport) setTimeout(populateVoices, 100);
         setTimeout(syncFromGitHub, 1500);
         checkSavedSession();
+
+        // --- LLAMITA DE BIENVENIDA SI FALTA MÁS DE 7 DÍAS ---
+        setTimeout(() => {
+            if (!lastPracticeDate) return; // nunca practicó, no molestamos
+            const last = new Date(lastPracticeDate);
+            const today = new Date();
+            const diffDays = Math.floor((today - last) / (1000 * 60 * 60 * 24));
+            if (diffDays >= 7) {
+                const popup = document.getElementById('llamaPopup');
+                document.getElementById('llamaTitle').innerText = '🦙 ¡Te extrañamos!';
+                document.getElementById('llamaStreakText').innerText = '¡May sumajta kutimusqaykimanta!';
+                const descEl = document.getElementById('llamaAchievementDesc');
+                descEl.innerText = `Hace ${diffDays} días que no practicás. ¡Seguí aprendiendo!`;
+                descEl.style.display = 'block';
+                popup.style.borderColor = 'var(--duo-blue)';
+                popup.style.transform = 'translateY(0)';
+                setTimeout(() => popup.style.transform = 'translateY(200%)', 5000);
+            }
+        }, 2000);
 
         // --- REGISTRO DEL SERVICE WORKER (PWA) ---
         if ('serviceWorker' in navigator) {
