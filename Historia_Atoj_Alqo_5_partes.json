@@ -181,7 +181,7 @@
       },
       {
         "type": "text",
-        "q": "Chajrapi ashkha runas kashanku. Paykuna yachachejkuna kanku.",
+        "q": "Chajrapi ashkha runas tiyan. Paykuna yachachejkuna kanku.",
         "e": "En la chacra hay muchas personas. Ellos son maestros."
       },
       {
@@ -191,8 +191,8 @@
       },
       {
         "type": "text",
-        "q": "Alqoqa: — Paykunaqa yachachejkuna. Paykunaqa mana atojkunachu kanku, paykunaqa yachachejkuna kanku.",
-        "e": "El perro dice: — Ellos son maestros. Ellos no son zorros, son maestros."
+        "q": "Alqoqa: — Paykunaqa yachachejkuna kanku. Paykunaqa mana atojkunachu kanku.",
+        "e": "El perro dice: — Ellos son maestros. Ellos no son zorros."
       },
       {
         "type": "question",
@@ -200,7 +200,7 @@
         "text": "¿Quiénes son ellos?",
         "options": [
           "Atojkuna (Zorros)",
-          "Yachajkuna (Maestros)"
+          "Yachachejkuna (Maestros)"
         ],
         "correct": 1
       },
@@ -289,7 +289,7 @@
     "scenes": [
       {
         "type": "text",
-        "q": "Chajraman chayankuña. Atojqa tapun: — ¿Qhechuata yachakuyta munanki?",
+        "q": "Chajraman chayankuña. Atojqa tapun: — ¿Qhechuata yachakuyta munankichu?",
         "e": "Ya llegan a la chacra. El zorro pregunta: — ¿Querés aprender quechua?"
       },
       {
