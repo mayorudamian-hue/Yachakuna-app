@@ -371,13 +371,33 @@
 
     <div id="section-dict">
         <div id="libraryView">
-            <div id="statsDashboard" style="background: white; border: 2px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 20px; justify-content: center; box-shadow: 0 4px 0 var(--border);">
-                <div style="width: 150px; height: 150px; position: relative;">
-                    <canvas id="statsChart"></canvas>
+            <div id="statsDashboard" style="background: white; border: 2px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 0 var(--border);">
+
+                <!-- Fila 1: Donut + Stats -->
+                <div style="display:flex; flex-wrap:wrap; align-items:center; gap:20px; justify-content:center; margin-bottom:20px;">
+                    <div style="width: 150px; height: 150px; position: relative;">
+                        <canvas id="statsChart"></canvas>
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <h3 style="margin: 0 0 10px 0; color: var(--duo-blue); font-weight: 800; text-align: left;">Tu Progreso</h3>
+                        <div id="statsList" style="font-size: 15px; color: #666; display: flex; flex-direction: column; gap: 6px;"></div>
+                    </div>
                 </div>
-                <div style="flex: 1; min-width: 200px;">
-                    <h3 style="margin: 0 0 10px 0; color: var(--duo-blue); font-weight: 800; text-align: left;">Tu Progreso</h3>
-                    <div id="statsList" style="font-size: 15px; color: #666; display: flex; flex-direction: column; gap: 6px;"></div>
+
+                <!-- Fila 2: Barras — últimos 7 días activos -->
+                <div style="border-top: 2px solid var(--border); padding-top: 16px; margin-bottom: 16px;">
+                    <div style="font-size: 13px; font-weight: 800; color: #aaa; margin-bottom: 8px;">📅 DÍAS ACTIVOS — ÚLTIMAS 2 SEMANAS</div>
+                    <div style="height: 90px;">
+                        <canvas id="activityChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Fila 3: Línea — tiempo invertido últimos 10 días -->
+                <div style="border-top: 2px solid var(--border); padding-top: 16px;">
+                    <div style="font-size: 13px; font-weight: 800; color: #aaa; margin-bottom: 8px;">⏱️ TIEMPO DE ESTUDIO — ÚLTIMOS 10 DÍAS (min)</div>
+                    <div style="height: 90px;">
+                        <canvas id="timeChart"></canvas>
+                    </div>
                 </div>
             </div>
             <div id="streakWarningBanner" class="hidden" style="width: 100%; margin-top: 0; margin-bottom: 0; padding: 12px 16px; background: #fff9e6; border: 2px solid var(--duo-yellow); border-radius: 12px; font-size: 14px; font-weight: 700; color: #8b6914; text-align: center; box-sizing: border-box;"></div>
@@ -894,6 +914,14 @@
         let currentStory = null;
         let currentSceneIndex = 0;
         let myChart = null;
+        let activityChart = null;
+        let timeChart = null;
+        // dailyLog: { 'YYYY-MM-DD': { xp: N, timeMs: N } }
+        let dailyLog = {};
+        try {
+            const dl = localStorage.getItem('rimay_DailyLog');
+            if (dl) dailyLog = JSON.parse(dl);
+        } catch(e) {}
         let practiceQueue = [];
         let currentPracticeIndex = 0;
         let lives = 3;
@@ -1165,6 +1193,12 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             localStorage.setItem('rimay_StreakDays', streakDays);
             localStorage.setItem('rimay_BestStreak', bestStreakDays);
             localStorage.setItem('rimay_PinnedUnits', JSON.stringify(pinnedUnits));
+            // Log actividad diaria
+            const today = getTodayString();
+            if (!dailyLog[today]) dailyLog[today] = { xp: 0, timeMs: 0 };
+            dailyLog[today].xp = totalXP;
+            if (practiceStartTime > 0) dailyLog[today].timeMs = (dailyLog[today].timeMs || 0) + (Date.now() - practiceStartTime);
+            localStorage.setItem('rimay_DailyLog', JSON.stringify(dailyLog));
             if (updateChart) renderStatsChart();
         }
 
@@ -1850,21 +1884,26 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
         }
 
         function renderStatsChart() {
-            const total = dictionary.length; const pinned = dictionary.filter(item => item.pinned).length;
+            const total = dictionary.length;
+            const pinned = dictionary.filter(item => item.pinned).length;
             const accuracy = (totalAttempts > 0) ? Math.round((correctAttempts / totalAttempts) * 100) : 0;
             const minutes = Math.floor(studyTimeMs / 60000);
-            const rank = getRank(totalXP); const trofeos = Object.keys(perfectUnits).length;
+            const rank = getRank(totalXP);
+            const trofeos = Object.keys(perfectUnits).length;
             let nuevas = 0, aprendizaje = 0, dominadas = 0;
-            dictionary.forEach(card => { if (!card.srs || card.srs.reps === 0) nuevas++; else if (card.srs.interval >= 21) dominadas++; else aprendizaje++; });
-            
+            dictionary.forEach(card => {
+                if (!card.srs || card.srs.reps === 0) nuevas++;
+                else if (card.srs.interval >= 21) dominadas++;
+                else aprendizaje++;
+            });
+
             const statsList = document.getElementById('statsList');
             const storiesLeidas = Object.keys(completedStories).length;
             const totalStorias = storiesData.length;
             if (statsList) statsList.innerHTML = `<span>🌱 Nivel: <b>${rank}</b></span><span>⭐ Experiencia: <b>${totalXP} XP</b></span><span>🔥 Días seguidos: <b>${streakDays} día${streakDays !== 1 ? 's' : ''}</b></span><span>🏅 Mejor seguidilla: <b>${bestStreakDays} días</b></span><span>🎯 Precisión: <b>${accuracy}%</b></span><span>⏳ Tiempo: <b>${minutes} min</b></span><span>🏆 Trofeos: <b>${trofeos}</b></span><span>📖 Historias leídas: <b>${storiesLeidas} / ${totalStorias}</b></span><span>⭐ Favoritas: <b>${pinned} / ${total || 1}</b></span><div style="margin-top: 10px; padding-top: 10px; border-top: 2px dashed var(--border); display: flex; flex-direction: column; gap: 6px;"><span style="color: #999;">🤍 Nuevas: <b>${nuevas}</b></span><span style="color: #d4a000;">💛 En Aprendizaje: <b>${aprendizaje}</b></span><span style="color: var(--duo-green);">💚 Dominadas: <b>${dominadas}</b></span></div>`;
-            
+
             const streakBanner = document.getElementById('streakWarningBanner');
             if (streakBanner) {
-                const today = getTodayString();
                 const yesterday = getYesterdayString();
                 if (streakDays > 0 && lastPracticeDate === yesterday) {
                     streakBanner.classList.remove('hidden');
@@ -1873,12 +1912,99 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                     streakBanner.classList.add('hidden');
                 }
             }
-            
+
+            // --- GRÁFICO 1: Donut tarjetas ---
             const canvas = document.getElementById('statsChart');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            if (myChart) myChart.destroy();
-            myChart = new Chart(ctx, { type: 'doughnut', data: { labels: ['Nuevas', 'En Aprendizaje', 'Dominadas'], datasets: [{ data: [nuevas, aprendizaje, dominadas], backgroundColor: ['#e5e5e5', '#ffc800', '#58cc02'], borderWidth: 2 }] }, options: { cutout: '70%', plugins: { legend: { display: false } }, animation: { duration: 0 } } });
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                if (myChart) myChart.destroy();
+                myChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Nuevas', 'En Aprendizaje', 'Dominadas'],
+                        datasets: [{ data: [nuevas, aprendizaje, dominadas], backgroundColor: ['#e5e5e5', '#ffc800', '#58cc02'], borderWidth: 2 }]
+                    },
+                    options: { cutout: '70%', plugins: { legend: { display: false } }, animation: { duration: 400 } }
+                });
+            }
+
+            // --- Preparar datos de los últimos N días ---
+            function getLastNDays(n) {
+                const days = [];
+                for (let i = n - 1; i >= 0; i--) {
+                    const d = new Date(); d.setDate(d.getDate() - i);
+                    days.push(d.toISOString().split('T')[0]);
+                }
+                return days;
+            }
+
+            // --- GRÁFICO 2: Barras — actividad últimas 2 semanas ---
+            const actCanvas = document.getElementById('activityChart');
+            if (actCanvas) {
+                const days14 = getLastNDays(14);
+                const labels14 = days14.map(d => {
+                    const [,, dd] = d.split('-');
+                    return dd;
+                });
+                const actData = days14.map(d => dailyLog[d] ? 1 : 0);
+                if (activityChart) activityChart.destroy();
+                activityChart = new Chart(actCanvas.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: labels14,
+                        datasets: [{
+                            data: actData,
+                            backgroundColor: actData.map(v => v ? '#58cc02' : '#e5e5e5'),
+                            borderRadius: 6,
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.raw ? '✅ Activo' : '—' } } },
+                        scales: {
+                            y: { display: false, max: 1.5 },
+                            x: { grid: { display: false }, ticks: { font: { size: 11, weight: 'bold' }, color: '#aaa' } }
+                        },
+                        animation: { duration: 400 }
+                    }
+                });
+            }
+
+            // --- GRÁFICO 3: Línea — tiempo últimos 10 días ---
+            const timeCanvas = document.getElementById('timeChart');
+            if (timeCanvas) {
+                const days10 = getLastNDays(10);
+                const labels10 = days10.map(d => {
+                    const [,mm, dd] = d.split('-');
+                    return `${dd}/${mm}`;
+                });
+                const timeData = days10.map(d => dailyLog[d] ? Math.round((dailyLog[d].timeMs || 0) / 60000) : 0);
+                if (timeChart) timeChart.destroy();
+                timeChart = new Chart(timeCanvas.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: labels10,
+                        datasets: [{
+                            data: timeData,
+                            borderColor: '#c0392b',
+                            backgroundColor: 'rgba(192,57,43,0.1)',
+                            borderWidth: 2.5,
+                            pointBackgroundColor: '#c0392b',
+                            pointRadius: 4,
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.raw + ' min' } } },
+                        scales: {
+                            y: { beginAtZero: true, grid: { color: '#f0f0f0' }, ticks: { font: { size: 11 }, color: '#aaa', callback: v => v + 'm' } },
+                            x: { grid: { display: false }, ticks: { font: { size: 11 }, color: '#aaa' } }
+                        },
+                        animation: { duration: 400 }
+                    }
+                });
+            }
         }
 
         function getUniqueUnits() {
@@ -2254,7 +2380,17 @@ function handlePracticeEnter(e) {
         }
 
         function endPractice(completed) {
-            if (practiceStartTime > 0) { studyTimeMs += (Date.now() - practiceStartTime); practiceStartTime = 0; }
+            if (practiceStartTime > 0) {
+                const elapsed = Date.now() - practiceStartTime;
+                studyTimeMs += elapsed;
+                // Log diario
+                const today = getTodayString();
+                if (!dailyLog[today]) dailyLog[today] = { xp: totalXP, timeMs: 0 };
+                dailyLog[today].timeMs = (dailyLog[today].timeMs || 0) + elapsed;
+                dailyLog[today].xp = totalXP;
+                localStorage.setItem('rimay_DailyLog', JSON.stringify(dailyLog));
+                practiceStartTime = 0;
+            }
             updateStreakDays();
             if (completed) { clearPracticeSession(); }
             save(true); 
