@@ -1899,7 +1899,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                 const catMatch = !activeCatFilter || getCategoria(item) === activeCatFilter;
                 return textMatch && catMatch;
             });
-            if (filteredList.length === 0) { container.innerHTML = '<p style="text-align:center; color:#afafaf; padding: 20px;">No hay palabras.</p>'; updateSRSCount(); return; }
+            if (filteredList.length === 0 && !q) { container.innerHTML = '<p style="text-align:center; color:#afafaf; padding: 20px;">No hay palabras.</p>'; updateSRSCount(); return; }
             
             const groups = {};
             filteredList.forEach(item => { const u = item.unit || "Sin Unidad"; if (!groups[u]) groups[u] = []; groups[u].push(item); });
@@ -1966,6 +1966,61 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                 unitBlock.appendChild(cardsWrap);
                 container.appendChild(unitBlock);
             });
+
+            // --- Búsqueda en historias ---
+            if (q && q.length >= 2) {
+                const storyResults = [];
+                storiesData.forEach(story => {
+                    story.scenes && story.scenes.forEach(scene => {
+                        if (scene.type === 'text') {
+                            const qText = (scene.q || '').toLowerCase();
+                            const eText = (scene.e || '').toLowerCase();
+                            if (qText.includes(q) || eText.includes(q)) {
+                                storyResults.push({ story, scene });
+                            }
+                        }
+                    });
+                });
+                if (storyResults.length > 0) {
+                    const storyBlock = document.createElement('div');
+                    storyBlock.style.cssText = 'margin-top: 24px;';
+                    const storyHeader = document.createElement('div');
+                    storyHeader.className = 'unit-header';
+                    storyHeader.innerHTML = `<span class="unit-arrow">▼</span><span class="unit-title">📖 En las historias (${storyResults.length})</span>`;
+                    const storyCards = document.createElement('div');
+                    storyCards.className = 'unit-cards';
+                    storyHeader.onclick = () => storyBlock.classList.toggle('collapsed');
+                    storyResults.forEach(({ story, scene }) => {
+                        const card = document.createElement('div');
+                        card.className = 'verb-card';
+                        // Highlight matching text
+                        const hl = (text, query) => text.replace(new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'),
+                            '<mark style="background:#fff3b0; border-radius:3px; padding:0 2px;">$1</mark>');
+                        card.innerHTML = `
+                            <div style="display:flex; gap:12px; align-items:flex-start;">
+                                <div style="font-size:28px; flex-shrink:0;">${story.icon || '📖'}</div>
+                                <div style="flex:1;">
+                                    <div style="font-size:11px; font-weight:800; color:#aaa; text-transform:uppercase; margin-bottom:4px;">${story.title}</div>
+                                    <div style="font-size:16px; font-weight:800; color:var(--duo-blue);">${hl(scene.q, q)}</div>
+                                    <div style="font-size:14px; color:#666; margin-top:2px;">${hl(scene.e, q)}</div>
+                                </div>
+                                <button type="button" class="btn-icon btn-speak" onclick="speak('${scene.q.replace(/'/g, "\\'")}')">🔊</button>
+                            </div>`;
+                        storyCards.appendChild(card);
+                    });
+                    storyBlock.appendChild(storyHeader);
+                    storyBlock.appendChild(storyCards);
+                    container.appendChild(storyBlock);
+                }
+
+                // Mensaje si no hay nada en ningún lado
+                if (filteredList.length === 0 && storyResults.length === 0) {
+                    container.innerHTML = '<p style="text-align:center; color:#afafaf; padding: 20px;">No se encontró nada para "<b>' + q + '</b>".</p>';
+                }
+            } else if (filteredList.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#afafaf; padding: 20px;">No hay palabras.</p>';
+            }
+
             updateSRSCount();
         }
 
