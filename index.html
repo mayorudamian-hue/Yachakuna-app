@@ -2657,15 +2657,19 @@ function handlePracticeEnter(e) {
             let options = new Set([q.answer]);
             while(options.size < 4 && dictionary.length >= 4) { let rItem = dictionary[Math.floor(Math.random() * dictionary.length)]; options.add(dir === 'q2e' ? rItem.translation : rItem.verb); }
             Array.from(options).sort(() => 0.5 - Math.random()).forEach(opt => {
-                const btn = document.createElement('button'); btn.className = 'btn-mc'; btn.innerText = opt;
-                btn.onclick = () => checkPractice(opt.toLowerCase() === q.answer.toLowerCase(), q.answer, btn); mcContainer.appendChild(btn);
+                const btn = document.createElement('button'); btn.className = 'btn-mc';
+                btn.innerText = getDisplayAnswer(opt);
+                btn.onclick = () => checkPractice(checkFlexibleMatch(opt, q.answer), q.answer, btn); mcContainer.appendChild(btn);
             });
         }
 
         function generateOrderMode(answer) {
             const dropZone = document.getElementById('orderDropZone'); const wordBank = document.getElementById('orderWordBank');
             dropZone.innerHTML = ''; wordBank.innerHTML = '';
-            let words = answer.split(/\s+/).map(w => w.replace(/[.,?!¿¡]/g, '')).filter(w => w.length > 0 && w !== '/');
+            // Si hay alternativas de frase, elegir una al azar para el modo orden
+            const alts = getAnswerAlternatives(answer);
+            const baseAnswer = alts ? alts[Math.floor(Math.random() * alts.length)] : answer;
+            let words = baseAnswer.split(/\s+/).map(w => w.replace(/[.,?!¿¡]/g, '')).filter(w => w.length > 0 && w !== '/');
             let totalWords = words.length;
             [...words].sort(() => 0.5 - Math.random()).forEach((word, index) => {
                 let token = document.createElement('div'); token.className = 'word-token'; token.innerText = word; token.id = 'word-' + index;
@@ -2676,16 +2680,39 @@ function handlePracticeEnter(e) {
 
         function removeAccents(str) { return str.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
         function escapeRegexChars(str) { return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+        // Devuelve todas las alternativas válidas de una respuesta con barras.
+        // "hola / buenos días / buenas" → ["hola", "buenos días", "buenas"]
+        function getAnswerAlternatives(ans) {
+            const cleaned = removeAccents(ans.toLowerCase().trim()).replace(/[.,¡!¿?]/g, '');
+            // Si hay barras con espacios alrededor, son alternativas de frase completa
+            if (/\s\/\s/.test(cleaned)) {
+                return cleaned.split(/\s*\/\s*/).map(s => s.trim()).filter(s => s.length > 0);
+            }
+            // Si la barra está pegada a palabras (sufijos o/a, os/as), construir regex
+            return null;
+        }
         function checkFlexibleMatch(input, ans) {
-            let cleanInput = removeAccents(input.toLowerCase().trim()).replace(/[.,¡!¿?]/g, '');
+            let cleanInput = removeAccents(input.toLowerCase().trim()).replace(/[.,¡!¿?]/g, '').replace(/\s+/g, ' ');
+            // Alternativas de frase completa (barra con espacios)
+            const alternatives = getAnswerAlternatives(ans);
+            if (alternatives) {
+                return alternatives.some(alt => alt.replace(/\s+/g, ' ') === cleanInput);
+            }
+            // Caso inline (sufijos pegados): construir regex
             let cleanAns = removeAccents(ans.toLowerCase().trim()).replace(/[.,¡!¿?]/g, '');
-            // Escapar caracteres especiales ANTES de construir el patrón de variantes
             cleanAns = cleanAns
                 .replace(/(\w+)os\s*\/\s*as\b/g, (_, stem) => `(?:${escapeRegexChars(stem)}os|${escapeRegexChars(stem)}as)`)
                 .replace(/(\w+)o\s*\/\s*a\b/g,  (_, stem) => `(?:${escapeRegexChars(stem)}o|${escapeRegexChars(stem)}a)`)
                 .replace(/(\S+)\s*\/\s*(\S+)/g,  (_, a, b) => `(?:${escapeRegexChars(a)}|${escapeRegexChars(b)})`);
-            cleanAns = cleanAns.replace(/\s+/g, ' '); cleanInput = cleanInput.replace(/\s+/g, ' ');
+            cleanAns = cleanAns.replace(/\s+/g, ' ');
             try { return new RegExp('^' + cleanAns + '$', 'i').test(cleanInput); } catch(e) { return cleanInput === cleanAns; }
+        }
+        // Retorna la respuesta limpia para mostrar al usuario (sin barras)
+        function getDisplayAnswer(ans) {
+            const alternatives = getAnswerAlternatives(ans);
+            if (alternatives) return alternatives[0];
+            // Quitar barras inline: "niño/a" → "niño/a" se deja, pero barras con espacios se limpian
+            return ans.replace(/\s*\/\s*/g, ' / ');
         }
 
         function checkPracticeWritten() {
@@ -2715,8 +2742,9 @@ function handlePracticeEnter(e) {
                 if (currentStreak > 0 && currentStreak % 5 === 0) showLlamaPopup(currentStreak);
             } else {
                 playIncorrectSound(); currentStreak = 0; lives--; document.getElementById('lives').innerHTML = `❤️ ${lives}`;
-                banner.className = 'practice-banner banner-incorrect'; banner.innerHTML = `Respuesta correcta:<br><strong>${correctAnswer}</strong><br><button type="button" class="btn-mc" style="margin-top:15px; font-size: 15px; padding: 10px; border-color:var(--duo-red); color:var(--duo-red); background: white;" onclick="overrideCorrect()">⚠️ Mi respuesta es correcta</button>`;
-                if(btnNode) { btnNode.classList.add('mc-wrong'); document.querySelectorAll('.btn-mc').forEach(b => { if (b.innerText.toLowerCase() === correctAnswer.toLowerCase()) b.classList.add('mc-correct'); }); }
+                const displayAnswer = getDisplayAnswer(correctAnswer);
+                banner.className = 'practice-banner banner-incorrect'; banner.innerHTML = `Respuesta correcta:<br><strong>${displayAnswer}</strong><br><button type="button" class="btn-mc" style="margin-top:15px; font-size: 15px; padding: 10px; border-color:var(--duo-red); color:var(--duo-red); background: white;" onclick="overrideCorrect()">⚠️ Mi respuesta es correcta</button>`;
+                if(btnNode) { btnNode.classList.add('mc-wrong'); document.querySelectorAll('.btn-mc').forEach(b => { if (checkFlexibleMatch(b.innerText, correctAnswer)) b.classList.add('mc-correct'); }); }
                 practiceQueue.push(currentQuestion); lastFailedQuestion = currentQuestion; lastFailedBtnNode = btnNode;
             }
             document.getElementById('streak').innerHTML = `🔥 ${currentStreak}`; document.getElementById('xp').innerHTML = `⭐ ${totalXP}`; currentPracticeIndex++;
