@@ -2921,9 +2921,10 @@ function handlePracticeEnter(e) {
                         } else {
                             // Detectar si cambió la traducción u otro campo relevante
                             const existing = dictionary[index];
-                            const changed = existing.translation !== newItem.translation ||
-                                            existing.unit !== newItem.unit ||
-                                            JSON.stringify(existing.sentences) !== JSON.stringify(newItem.sentences);
+                            const normSentences = s => JSON.stringify((s || []).map(x => ({q: (x.q||'').trim(), e: (x.e||'').trim()})));
+                            const changed = (existing.translation || '').trim() !== (newItem.translation || '').trim() ||
+                                            (existing.unit || '').trim() !== (newItem.unit || '').trim() ||
+                                            normSentences(existing.sentences) !== normSentences(newItem.sentences);
                             if (changed) editedWords.push({ index, newItem });
                         }
                     });
