@@ -1423,9 +1423,17 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             const unitSelect = document.getElementById('srsUnitSelect');
             if (unitSelect) {
                 const currentSelection = unitSelect.value;
-                unitSelect.innerHTML = ''; 
+                unitSelect.innerHTML = '';
+                const allUnits = getUniqueUnits();
                 const pendingUnits = {};
-                pendingCards.forEach(c => { const u = c.unit || "Sin Unidad"; pendingUnits[u] = (pendingUnits[u] || 0) + 1; });
+                pendingCards.forEach(c => {
+                    const u = c.unit || "Sin Unidad";
+                    // Solo incluir si la unidad está desbloqueada
+                    const unitIndex = allUnits.indexOf(u);
+                    if (unitIndex === -1 || isUnitUnlocked(allUnits, unitIndex)) {
+                        pendingUnits[u] = (pendingUnits[u] || 0) + 1;
+                    }
+                });
                 if (Object.keys(pendingUnits).length === 0) {
                     unitSelect.innerHTML = '<option value="">Todo al día 🎉</option>'; unitSelect.disabled = true;
                 } else {
@@ -1440,7 +1448,14 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
 
         function startSRSReview(filterType = 'all') {
             const now = Date.now();
-            let srsCandidates = dictionary.map((c, i) => ({card: c, index: i}));
+            const allUnits = getUniqueUnits();
+            let srsCandidates = dictionary.map((c, i) => ({card: c, index: i}))
+                .filter(item => {
+                    // Solo tarjetas de unidades desbloqueadas
+                    const u = item.card.unit || "Sin Unidad";
+                    const unitIndex = allUnits.indexOf(u);
+                    return unitIndex === -1 || isUnitUnlocked(allUnits, unitIndex);
+                });
             if (filterType === 'unit') {
                 const selectedUnit = document.getElementById('srsUnitSelect').value;
                 if (!selectedUnit) { alert("No hay tarjetas pendientes o no seleccionaste una unidad."); return; }
@@ -1665,20 +1680,44 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                 const unitBlock = document.createElement('div');
                 unitBlock.className = 'unit-block collapsed';
                 unitBlock.setAttribute('data-unit', unit);
+
+                // Determinar si la unidad está bloqueada
+                const allUnits = getUniqueUnits();
+                const unitIndex = allUnits.indexOf(unit);
+                const locked = !isUnitUnlocked(allUnits, unitIndex);
+
                 const header = document.createElement('div');
                 header.className = 'unit-header';
-                header.innerHTML = `<span class="unit-arrow">▼</span><span class="unit-title">📦 ${unit}</span>`;
+                if (locked) {
+                    header.style.cssText = 'opacity:0.5; cursor:not-allowed;';
+                    header.innerHTML = `<span class="unit-arrow" style="visibility:hidden;">▼</span><span class="unit-title">🔒 ${unit}</span>`;
+                } else {
+                    header.innerHTML = `<span class="unit-arrow">▼</span><span class="unit-title">📦 ${unit}</span>`;
+                }
+
                 const pinBtn = document.createElement('button');
                 pinBtn.type = 'button';
-                pinBtn.className = 'btn-unit-pin ' + (pinnedUnits[unit] ? 'active' : '');
-                pinBtn.innerHTML = '⭐';
-                pinBtn.title = pinnedUnits[unit] ? 'Quitar unidad de Favoritos' : 'Marcar unidad para practicar (Favoritos)';
-                pinBtn.onclick = function(e) { e.stopPropagation(); toggleUnitPin(unit); };
+                if (locked) {
+                    pinBtn.className = 'btn-unit-pin';
+                    pinBtn.innerHTML = '⭐';
+                    pinBtn.style.cssText = 'opacity:0.3; cursor:not-allowed;';
+                    pinBtn.disabled = true;
+                    pinBtn.title = 'Completá las unidades anteriores para desbloquear';
+                } else {
+                    pinBtn.className = 'btn-unit-pin ' + (pinnedUnits[unit] ? 'active' : '');
+                    pinBtn.innerHTML = '⭐';
+                    pinBtn.title = pinnedUnits[unit] ? 'Quitar unidad de Favoritos' : 'Marcar unidad para practicar (Favoritos)';
+                    pinBtn.onclick = function(e) { e.stopPropagation(); toggleUnitPin(unit); };
+                }
                 header.appendChild(pinBtn);
-                header.onclick = function() { unitBlock.classList.toggle('collapsed'); };
+
+                if (!locked) {
+                    header.onclick = function() { unitBlock.classList.toggle('collapsed'); };
+                }
                 unitBlock.appendChild(header);
                 const cardsWrap = document.createElement('div');
                 cardsWrap.className = 'unit-cards';
+                if (!locked) {
                 groups[unit].sort((a, b) => (b.pinned === a.pinned) ? 0 : b.pinned ? 1 : -1).forEach(item => {
                     const globalIndex = dictionary.indexOf(item); const card = document.createElement('div');
                     card.className = "verb-card " + (item.pinned ? 'card-pinned' : '');
@@ -1686,6 +1725,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                     card.innerHTML = `<div style="display:flex; gap:15px; align-items:center;"><div style="width:56px; height:56px; font-size:36px; display:flex; align-items:center; justify-content:center; background:var(--card-bg); border-radius:12px; border:2px solid var(--border); flex-shrink:0;">${emoji}</div><button type="button" class="btn-icon btn-speak" onclick="speak('${item.verb.replace(/'/g, "\\'")}')">🔊</button><div style="flex-grow:1;"><div style="font-size:18px; font-weight:800;">${item.verb}</div><div style="font-weight:600; font-size:15px; color: var(--duo-blue);">${item.translation}</div><div style="margin-top:4px;"><span style="font-size:11px; font-weight:800; padding:2px 8px; border-radius:10px; background:#f0f0f0; color:#888;">${getCategoria(item)}</span></div></div><button type="button" class="btn-icon btn-pin ${item.pinned ? 'active' : ''}" onclick="togglePin(${globalIndex})">⭐</button>${isProfeMode ? `<button type="button" class="btn-icon" onclick="editWord(${globalIndex})" style="background:#eaf3ff;border:2px solid #a8cff5;border-bottom:3px solid #a8cff5;color:#1a5fa8;" title="Editar">✏️</button><button type="button" class="btn-icon" onclick="deleteWord(${globalIndex})" style="background:#fde8e8;border:2px solid var(--duo-red);border-bottom:3px solid var(--duo-red-shadow);color:var(--duo-red);" title="Eliminar">🗑️</button>` : ''}</div>`;
                     cardsWrap.appendChild(card);
                 });
+                }
                 unitBlock.appendChild(cardsWrap);
                 container.appendChild(unitBlock);
             });
