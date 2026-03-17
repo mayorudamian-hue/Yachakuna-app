@@ -539,12 +539,6 @@
                     </div>
                     <button type="button" onclick="resumePracticeSection()" style="width:auto; padding:10px 16px; font-size:14px; background:var(--duo-green); border-bottom:4px solid var(--duo-green-shadow);">Continuar ▶</button>
                 </div>
-                <div style="display:flex; gap:10px;">
-                    <select id="sectionSelect" style="flex:1; margin-bottom:0;">
-                        <option value="">Cargando secciones...</option>
-                    </select>
-                    <button type="button" class="special" onclick="startPracticeSection()" style="width:auto; padding:14px 20px;">Practicar 🧠</button>
-                </div>
                 <button type="button" class="secondary" onclick="startPractice('favs')">Favoritos ⭐</button>
             </div>
 
@@ -595,7 +589,7 @@
     <div id="section-awards" class="hidden">
         <h2 style="text-align: center; color: var(--text);">Salón de la Fama 🏆</h2>
         <p style="text-align: center; color: #afafaf; font-weight: bold; margin-bottom: 30px;">
-            ¡Completa unidades sin perder vidas para desbloquear estos trofeos!
+            Completá logros para descubrir tus trofeos 🔒
         </p>
         <div id="awardsContainer" style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;"></div>
     </div>
@@ -986,6 +980,14 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
         const hasAudioSupport = ('speechSynthesis' in window);
         let voices = [];
         let selectedVoiceName = localStorage.getItem('rimay_voice') || '';
+        let searchCount = 0;
+        let srsReviewCount = 0;
+        let forumPosted = false;
+        try {
+            const sc = localStorage.getItem('rimay_SearchCount'); if (sc) searchCount = parseInt(sc);
+            const src = localStorage.getItem('rimay_SRSCount'); if (src) srsReviewCount = parseInt(src);
+            const fp = localStorage.getItem('rimay_ForumPosted'); if (fp) forumPosted = fp === '1';
+        } catch(e) {}
 
         function getVoiceQuality(voice) {
             const lang = voice.lang.toLowerCase();
@@ -1198,7 +1200,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             if(t==='practice') renderPath(); 
             if(t==='awards') renderAwards();
             if(t==='stories') renderStoriesList();
-            if(t==='forum') loadForumPosts();
+            if(t==='forum') { if (typeof window.loadForumPosts === 'function') loadForumPosts(); else setTimeout(loadForumPosts, 800); }
         }
 
         // --- LÓGICA DE HISTORIAS ---
@@ -1480,6 +1482,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                 else card.srs.interval = Math.round(card.srs.interval * card.srs.ef);
             }
             card.srs.due = Date.now() + (card.srs.interval * 24 * 3600 * 1000);
+            srsReviewCount++; localStorage.setItem('rimay_SRSCount', srsReviewCount);
             save(); showNextSRSCard();
         }
 
@@ -1645,6 +1648,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             const container = document.getElementById('entriesContainer');
             if (!container) return;
             const q = document.getElementById('searchInput') ? document.getElementById('searchInput').value.toLowerCase() : "";
+            if (q.length >= 2) { searchCount++; localStorage.setItem('rimay_SearchCount', searchCount); }
             container.innerHTML = '';
             let filteredList = dictionary.filter(item => {
                 const v = item.verb || ""; const t = item.translation || ""; const u = item.unit || "";
@@ -1826,9 +1830,10 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
         let currentPracticeSectionIndex = 0;
 
         function startPracticeSection() {
-            const select = document.getElementById('sectionSelect');
-            const s = parseInt(select.value);
-            if (isNaN(s)) { alert('Elegí una sección primero.'); return; }
+            startPracticeSectionIndex(currentPracticeSectionIndex || 0);
+        }
+
+        function startPracticeSectionIndex(s) {
             const units = getUniqueUnits();
             const UNITS_PER_SECTION = 11;
             const sectionUnits = units.slice(s * UNITS_PER_SECTION, (s + 1) * UNITS_PER_SECTION);
@@ -1954,6 +1959,19 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                 });
 
                 body.appendChild(inner);
+
+                // Botón Repaso al final de la sección
+                const repasoDiv = document.createElement('div');
+                repasoDiv.style = 'padding: 12px 16px 16px;';
+                const repasoBtn = document.createElement('button');
+                repasoBtn.type = 'button';
+                repasoBtn.className = 'special';
+                repasoBtn.style = 'width:100%; padding:12px 16px; font-size:15px;';
+                repasoBtn.innerText = '📝 Repaso — Sección ' + sectionIndex;
+                repasoBtn.onclick = (function(idx){ return function(){ startPracticeSectionIndex(idx); }; })(s);
+                repasoDiv.appendChild(repasoBtn);
+                body.appendChild(repasoDiv);
+
                 section.appendChild(header);
                 section.appendChild(body);
                 container.appendChild(section);
@@ -1962,39 +1980,92 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
 
         function renderAwards() {
             const container = document.getElementById('awardsContainer'); container.innerHTML = '';
-            const units = getUniqueUnits(); const srsCards = dictionary.filter(c => c.srs && c.srs.reps > 0);
+            const units = getUniqueUnits();
+            const srsCards = dictionary.filter(c => c.srs && c.srs.reps > 0);
+            const dominated = dictionary.filter(c => c.srs && c.srs.interval >= 21).length;
             const totalStoriesCompleted = Object.keys(completedStories).length;
-            const globalAchievements = [
-                { id: 'bandeja', title: 'Bandeja Limpia', desc: '0 pendientes', icon: '🧹', unlocked: (srsCards.length > 0) && (dictionary.filter(c => c.srs && c.srs.due <= Date.now()).length === 0) },
-                { id: 'oro', title: 'Corona de Oro', desc: 'Todas perfectas', icon: '👑', unlocked: (units.length > 0) && units.every(u => getUnitHealth(u).status === 'perfect') },
-                { id: 'erudito', title: 'Erudito Quechua', desc: '50 aprendidas', icon: '📚', unlocked: srsCards.length >= 50 },
-                { id: 'mente', title: 'Mente Maestra', desc: '20 dominadas', icon: '🧠', unlocked: dictionary.filter(c => c.srs && c.srs.interval >= 21).length >= 20 },
-                { id: 'narrador', title: 'Narrador', desc: '1ª historia', icon: '📖', unlocked: totalStoriesCompleted >= 1 },
-                { id: 'cuentista', title: 'Cuentista', desc: '3 historias', icon: '📚', unlocked: totalStoriesCompleted >= 3 },
-                { id: 'sabio_rimay', title: 'Sabio Rimay', desc: 'Todas las historias', icon: '🦙', unlocked: totalStoriesCompleted >= storiesData.length && storiesData.length > 0 }
-            ];
-            const titleGlobal = document.createElement('h3'); titleGlobal.style = "width: 100%; text-align: center; color: var(--duo-blue); margin-bottom: 15px; font-weight: 800;"; titleGlobal.innerText = "🌟 Logros Especiales"; container.appendChild(titleGlobal);
-            globalAchievements.forEach(ach => {
-                const card = document.createElement('div'); card.className = `trophy-card ${ach.unlocked ? 'unlocked' : 'locked'}`;
-                card.innerHTML = `<div class="trophy-icon">${ach.unlocked ? ach.icon : '🔒'}</div><div class="trophy-title" style="margin-bottom: 5px;">${ach.title}</div><div style="font-size: 11px; color: ${ach.unlocked ? '#888' : '#aaa'};">${ach.desc}</div>`;
-                container.appendChild(card);
-            });
+            const trophiesUnlocked = Object.keys(perfectUnits).length;
 
-            // --- Insignias de Leerinapaj ---
+            const xpRanks = [
+                { title: 'Qallarej', desc: '100 XP alcanzados', icon: '🌱', unlocked: totalXP >= 100 },
+                { title: 'Purej', desc: '200 XP alcanzados', icon: '🌿', unlocked: totalXP >= 200 },
+                { title: 'Yachakoj', desc: '400 XP alcanzados', icon: '🔥', unlocked: totalXP >= 400 },
+                { title: 'Yachachej', desc: '800 XP alcanzados', icon: '⭐', unlocked: totalXP >= 800 },
+                { title: 'Yachayniyoj', desc: '1600 XP alcanzados', icon: '👑', unlocked: totalXP >= 1600 },
+            ];
+
+            const globalAchievements = [
+                { title: 'Gran Buscador', desc: 'Buscá 30 palabras', icon: '🔍', unlocked: searchCount >= 30 },
+                { title: 'Primer Repaso', desc: 'Repasá 50 tarjetas', icon: '🃏', unlocked: srsReviewCount >= 50 },
+                { title: 'Repasador', desc: 'Repasá 150 tarjetas', icon: '🎴', unlocked: srsReviewCount >= 150 },
+                { title: 'Memorizador', desc: 'Repasá 500 tarjetas', icon: '🧠', unlocked: srsReviewCount >= 500 },
+                { title: 'Maestro del Repaso', desc: 'Repasá 1000 tarjetas', icon: '🏅', unlocked: srsReviewCount >= 1000 },
+                { title: 'Primer Mensaje', desc: 'Publicá en Comenta', icon: '💬', unlocked: forumPosted },
+                { title: 'Narrador', desc: 'Completá 1 historia', icon: '📖', unlocked: totalStoriesCompleted >= 1 },
+                { title: 'Sumajta leerinki', desc: 'Completá 10 historias', icon: '📚', unlocked: totalStoriesCompleted >= 10 },
+                { title: 'Allinta leerikoj', desc: 'Completá 30 historias', icon: '🦙', unlocked: totalStoriesCompleted >= 30 },
+                { title: 'Erudito Quechua', desc: 'Aprendé 50 palabras', icon: '📝', unlocked: srsCards.length >= 50 },
+                { title: 'Mente Maestra', desc: 'Dominá 20 palabras', icon: '💡', unlocked: dominated >= 20 },
+                { title: 'Primer Trofeo', desc: 'Ganaste tu primer trofeo', icon: '🥉', unlocked: trophiesUnlocked >= 1 },
+                { title: 'Coleccionista', desc: 'Ganaste 5 trofeos', icon: '🥈', unlocked: trophiesUnlocked >= 5 },
+                { title: 'Corona de Oro', desc: 'Todas las unidades perfectas', icon: '👑', unlocked: (units.length > 0) && units.every(u => getUnitHealth(u).status === 'perfect') },
+                { title: 'Bandeja Limpia', desc: '0 tarjetas pendientes', icon: '🧹', unlocked: (srsCards.length > 0) && (dictionary.filter(c => c.srs && c.srs.due <= Date.now()).length === 0) },
+            ];
+
+            function makeCard(ach) {
+                const card = document.createElement('div');
+                if (!ach.unlocked) {
+                    card.className = 'trophy-card locked';
+                    card.innerHTML = `<div class="trophy-icon" style="filter:grayscale(1) opacity(0.2);">🔒</div><div class="trophy-title" style="color:#ccc;">???</div><div style="font-size:11px;color:#ddd;">Seguí jugando</div>`;
+                } else {
+                    card.className = 'trophy-card unlocked';
+                    card.innerHTML = `<div class="trophy-icon">${ach.icon}</div><div class="trophy-title" style="margin-bottom:5px;">${ach.title}</div><div style="font-size:11px;color:#888;">${ach.desc}</div>`;
+                }
+                return card;
+            }
+
+            const titleRanks = document.createElement('h3');
+            titleRanks.style = "width:100%;text-align:center;color:var(--duo-blue);margin-bottom:15px;font-weight:800;";
+            titleRanks.innerText = "🎖️ Rangos por XP"; container.appendChild(titleRanks);
+            xpRanks.forEach(r => container.appendChild(makeCard(r)));
+
+            const titleGlobal = document.createElement('h3');
+            titleGlobal.style = "width:100%;text-align:center;color:var(--duo-blue);margin-top:30px;margin-bottom:15px;font-weight:800;";
+            titleGlobal.innerText = "🌟 Logros Especiales"; container.appendChild(titleGlobal);
+            globalAchievements.forEach(ach => container.appendChild(makeCard(ach)));
+
             if (storiesData.length > 0) {
-                const titleStories = document.createElement('h3'); titleStories.style = "width: 100%; text-align: center; color: var(--duo-blue); margin-top: 30px; margin-bottom: 15px; font-weight: 800;"; titleStories.innerText = "📖 Insignias de Leerinapaj"; container.appendChild(titleStories);
+                const titleStories = document.createElement('h3');
+                titleStories.style = "width:100%;text-align:center;color:var(--duo-blue);margin-top:30px;margin-bottom:15px;font-weight:800;";
+                titleStories.innerText = "📖 Insignias de Leerinapaj"; container.appendChild(titleStories);
                 storiesData.forEach(s => {
                     const isDone = completedStories[s.id];
-                    const card = document.createElement('div'); card.className = `trophy-card ${isDone ? 'unlocked' : 'locked'}`;
-                    card.innerHTML = `<div class="trophy-icon">${isDone ? (s.icon || '📖') : '🔒'}</div><div class="trophy-title" style="margin-bottom: 5px;">${s.title}</div><div style="font-size: 11px; color: ${isDone ? '#888' : '#aaa'};">${isDone ? '¡Completada! 🏅' : s.subtitle || 'Sin completar'}</div>`;
+                    const card = document.createElement('div');
+                    if (!isDone) {
+                        card.className = 'trophy-card locked';
+                        card.innerHTML = `<div class="trophy-icon" style="filter:grayscale(1) opacity(0.2);">🔒</div><div class="trophy-title" style="color:#ccc;">???</div><div style="font-size:11px;color:#ddd;">Historia no completada</div>`;
+                    } else {
+                        card.className = 'trophy-card unlocked';
+                        card.innerHTML = `<div class="trophy-icon">${s.icon || '📖'}</div><div class="trophy-title" style="margin-bottom:5px;">${s.title}</div><div style="font-size:11px;color:#888;">¡Completada! 🏅</div>`;
+                    }
                     container.appendChild(card);
                 });
             }
 
-            const titleUnits = document.createElement('h3'); titleUnits.style = "width: 100%; text-align: center; color: var(--duo-blue); margin-top: 30px; margin-bottom: 15px; font-weight: 800;"; titleUnits.innerText = "🏆 Trofeos por Unidad"; container.appendChild(titleUnits);
-            units.forEach((u) => {
-                const isPerfect = perfectUnits[u] === true; const card = document.createElement('div'); card.className = `trophy-card ${isPerfect ? 'unlocked' : 'locked'}`;
-                card.innerHTML = `<div class="trophy-icon">${isPerfect ? '🏆' : '🔒'}</div><div class="trophy-title">${u}</div>`; container.appendChild(card);
+            const titleUnits = document.createElement('h3');
+            titleUnits.style = "width:100%;text-align:center;color:var(--duo-blue);margin-top:30px;margin-bottom:15px;font-weight:800;";
+            titleUnits.innerText = "🏆 Trofeos por Unidad"; container.appendChild(titleUnits);
+            units.forEach(u => {
+                const isPerfect = perfectUnits[u] === true;
+                const card = document.createElement('div');
+                if (!isPerfect) {
+                    card.className = 'trophy-card locked';
+                    card.innerHTML = `<div class="trophy-icon" style="filter:grayscale(1) opacity(0.2);">🔒</div><div class="trophy-title" style="color:#ccc;">???</div>`;
+                } else {
+                    card.className = 'trophy-card unlocked';
+                    card.innerHTML = `<div class="trophy-icon">🏆</div><div class="trophy-title">${u}</div>`;
+                }
+                container.appendChild(card);
             });
         }
 
@@ -2557,6 +2628,7 @@ function handlePracticeEnter(e) {
                 document.getElementById('forumText').value = '';
                 if (!isProfe) document.getElementById('forumName').value = '';
                 btn.disabled = false; btn.innerText = 'Publicar mensaje 📨';
+                forumPosted = true; localStorage.setItem('rimay_ForumPosted', '1');
                 // Notificación email
                 await sendEmailNotification(
                     isProfe ? '👨‍🏫 Mensaje del Profe' : '💬 Nuevo mensaje',
