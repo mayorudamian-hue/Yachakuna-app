@@ -371,35 +371,6 @@
 
     <div id="section-dict">
         <div id="libraryView">
-            <div id="statsDashboard" style="background: white; border: 2px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 0 var(--border);">
-
-                <!-- Fila 1: Donut + Stats -->
-                <div style="display:flex; flex-wrap:wrap; align-items:center; gap:20px; justify-content:center; margin-bottom:20px;">
-                    <div style="width: 150px; height: 150px; position: relative;">
-                        <canvas id="statsChart"></canvas>
-                    </div>
-                    <div style="flex: 1; min-width: 200px;">
-                        <h3 style="margin: 0 0 10px 0; color: var(--duo-blue); font-weight: 800; text-align: left;">Tu Progreso</h3>
-                        <div id="statsList" style="font-size: 15px; color: #666; display: flex; flex-direction: column; gap: 6px;"></div>
-                    </div>
-                </div>
-
-                <!-- Fila 2: Barras — últimos 7 días activos -->
-                <div style="border-top: 2px solid var(--border); padding-top: 16px; margin-bottom: 16px;">
-                    <div style="font-size: 13px; font-weight: 800; color: #aaa; margin-bottom: 8px;">📅 DÍAS ACTIVOS — ÚLTIMAS 2 SEMANAS</div>
-                    <div style="height: 90px;">
-                        <canvas id="activityChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Fila 3: Línea — tiempo invertido últimos 10 días -->
-                <div style="border-top: 2px solid var(--border); padding-top: 16px;">
-                    <div style="font-size: 13px; font-weight: 800; color: #aaa; margin-bottom: 8px;">⏱️ TIEMPO DE ESTUDIO — ÚLTIMOS 10 DÍAS (min)</div>
-                    <div style="height: 90px;">
-                        <canvas id="timeChart"></canvas>
-                    </div>
-                </div>
-            </div>
             <div id="streakWarningBanner" class="hidden" style="width: 100%; margin-top: 0; margin-bottom: 0; padding: 12px 16px; background: #fff9e6; border: 2px solid var(--duo-yellow); border-radius: 12px; font-size: 14px; font-weight: 700; color: #8b6914; text-align: center; box-sizing: border-box;"></div>
 
             <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
@@ -425,7 +396,30 @@
             </div>
             <button type="button" onclick="toggleFavoritesPanel()" id="favPanelBtn" class="secondary" style="margin-bottom:20px; font-size:14px;">⭐ Ver Mis Favoritos</button>
 
-            <div id="studentControls" style="background: #f0f0f0; padding: 20px; border-radius: 20px; text-align: center; border: 2px dashed var(--border); margin-bottom: 20px;">
+            <div class="container" style="padding: 15px;">
+                <label style="font-size: 12px; font-weight: 800; color: #afafaf; text-transform: uppercase; display: block; margin-bottom: 6px;">🔊 Voz para Quechua</label>
+                <select id="voiceSelect" style="width: 100%; margin-bottom: 6px; padding: 8px;">
+                    <option value="">Cargando voces...</option>
+                </select>
+                <div id="voiceQualityBadge" style="font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 8px; display: inline-block; margin-bottom: 10px;"></div>
+                <input type="text" id="searchInput" placeholder="🔍 Buscar palabras..." onkeyup="renderCards()" style="margin-bottom: 10px;">
+                <div id="categoryFilters" style="display:flex; flex-wrap:wrap; gap:6px;">
+                    <button type="button" class="cat-chip active" onclick="setCatFilter('')">Todos</button>
+                    <button type="button" class="cat-chip" onclick="setCatFilter('Verbo')">🔤 Verbos</button>
+                    <button type="button" class="cat-chip" onclick="setCatFilter('Sustantivo')">📌 Sustantivos</button>
+                    <button type="button" class="cat-chip" onclick="setCatFilter('Adjetivo')">🎨 Adjetivos</button>
+                    <button type="button" class="cat-chip" onclick="setCatFilter('Adverbio')">📍 Adverbios</button>
+                    <button type="button" class="cat-chip" onclick="setCatFilter('Pronombre')">🙋 Pronombres</button>
+                    <button type="button" class="cat-chip" onclick="setCatFilter('Frase')">💬 Frases</button>
+                    <button type="button" class="cat-chip" onclick="setCatFilter('Pregunta')">❓ Preguntas</button>
+                    <button type="button" class="cat-chip" onclick="setCatFilter('Sufijo')">🔩 Sufijos</button>
+                    <button type="button" class="cat-chip" onclick="setCatFilter('Número')">🔢 Números</button>
+                </div>
+            </div>
+
+            <div id="entriesContainer"></div>
+
+            <div id="studentControls" style="background: #f0f0f0; padding: 20px; border-radius: 20px; text-align: center; border: 2px dashed var(--border); margin-top: 30px;">
                 <div id="profeUploadLocked" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center;">
                     <span style="font-size:13px; font-weight:800; color:#aaa;">👨‍🏫 Zona del Profe</span>
                     <input type="password" id="profeUploadPwd" placeholder="Contraseña..." style="flex:1; min-width:120px; margin-bottom:0; padding:10px 14px; font-size:14px; max-width:180px;">
@@ -456,7 +450,6 @@
                     <button type="button" onclick="addNewWord()" style="background:var(--duo-green); border-bottom:4px solid var(--duo-green-shadow); margin-bottom:20px;">
                         ➕ Agregar palabra
                     </button>
-
                     <h3 style="margin-top:0; color: var(--duo-blue); font-weight: 800;">📥 CARGAR ARCHIVOS</h3>
                     <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Cargá <b>unidades</b> o <b>historias</b> (.json) manualmente.</p>
                     <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importData(event)">
@@ -470,29 +463,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="container" style="padding: 15px;">
-                <label style="font-size: 12px; font-weight: 800; color: #afafaf; text-transform: uppercase; display: block; margin-bottom: 6px;">🔊 Voz para Quechua</label>
-                <select id="voiceSelect" style="width: 100%; margin-bottom: 6px; padding: 8px;">
-                    <option value="">Cargando voces...</option>
-                </select>
-                <div id="voiceQualityBadge" style="font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 8px; display: inline-block; margin-bottom: 10px;"></div>
-                <input type="text" id="searchInput" placeholder="🔍 Buscar palabras..." onkeyup="renderCards()" style="margin-bottom: 10px;">
-                <div id="categoryFilters" style="display:flex; flex-wrap:wrap; gap:6px;">
-                    <button type="button" class="cat-chip active" onclick="setCatFilter('')">Todos</button>
-                    <button type="button" class="cat-chip" onclick="setCatFilter('Verbo')">🔤 Verbos</button>
-                    <button type="button" class="cat-chip" onclick="setCatFilter('Sustantivo')">📌 Sustantivos</button>
-                    <button type="button" class="cat-chip" onclick="setCatFilter('Adjetivo')">🎨 Adjetivos</button>
-                    <button type="button" class="cat-chip" onclick="setCatFilter('Adverbio')">📍 Adverbios</button>
-                    <button type="button" class="cat-chip" onclick="setCatFilter('Pronombre')">🙋 Pronombres</button>
-                    <button type="button" class="cat-chip" onclick="setCatFilter('Frase')">💬 Frases</button>
-                    <button type="button" class="cat-chip" onclick="setCatFilter('Pregunta')">❓ Preguntas</button>
-                    <button type="button" class="cat-chip" onclick="setCatFilter('Sufijo')">🔩 Sufijos</button>
-                    <button type="button" class="cat-chip" onclick="setCatFilter('Número')">🔢 Números</button>
-                </div>
-            </div>
-
-            <div id="entriesContainer"></div>
         </div> 
 
         <div id="srsReviewView" class="hidden">
@@ -639,9 +609,34 @@
 
     <div id="section-awards" class="hidden">
         <h2 style="text-align: center; color: var(--text);">Salón de la Fama 🏆</h2>
-        <p style="text-align: center; color: #afafaf; font-weight: bold; margin-bottom: 30px;">
+        <p style="text-align: center; color: #afafaf; font-weight: bold; margin-bottom: 20px;">
             Completá logros para descubrir tus trofeos 🔒
         </p>
+
+        <!-- Bloque de progreso -->
+        <div id="statsDashboard" style="background: white; border: 2px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 24px; box-shadow: 0 4px 0 var(--border);">
+            <!-- Fila 1: Donut + Stats -->
+            <div style="display:flex; flex-wrap:wrap; align-items:center; gap:20px; justify-content:center; margin-bottom:20px;">
+                <div style="width: 150px; height: 150px; position: relative;">
+                    <canvas id="statsChart"></canvas>
+                </div>
+                <div style="flex: 1; min-width: 200px;">
+                    <h3 style="margin: 0 0 10px 0; color: var(--duo-blue); font-weight: 800; text-align: left;">Tu Progreso</h3>
+                    <div id="statsList" style="font-size: 15px; color: #666; display: flex; flex-direction: column; gap: 6px;"></div>
+                </div>
+            </div>
+            <!-- Fila 2: Barras — días activos -->
+            <div style="border-top: 2px solid var(--border); padding-top: 16px; margin-bottom: 16px;">
+                <div style="font-size: 13px; font-weight: 800; color: #aaa; margin-bottom: 8px;">📅 DÍAS ACTIVOS — ÚLTIMAS 2 SEMANAS</div>
+                <div style="height: 90px;"><canvas id="activityChart"></canvas></div>
+            </div>
+            <!-- Fila 3: Línea — tiempo -->
+            <div style="border-top: 2px solid var(--border); padding-top: 16px;">
+                <div style="font-size: 13px; font-weight: 800; color: #aaa; margin-bottom: 8px;">⏱️ TIEMPO DE ESTUDIO — ÚLTIMOS 10 DÍAS (min)</div>
+                <div style="height: 90px;"><canvas id="timeChart"></canvas></div>
+            </div>
+        </div>
+
         <div id="awardsContainer" style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;"></div>
     </div>
 
@@ -1266,7 +1261,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             document.getElementById('section-'+t).classList.remove('hidden'); 
             if (typeof gtag !== 'undefined') gtag('event', 'section_view', { section: t });
             if(t==='practice') renderPath(); 
-            if(t==='awards') renderAwards();
+            if(t==='awards') { renderAwards(); renderStatsChart(); }
             if(t==='stories') renderStoriesList();
             if(t==='forum') { if (typeof window.loadForumPosts === 'function') window.loadForumPosts(); else setTimeout(() => { if (typeof window.loadForumPosts === 'function') window.loadForumPosts(); }, 1500); }
             if(t==='guide' && !localStorage.getItem('rimay_GuideVisited')) {
@@ -1874,7 +1869,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                 unitBlock.appendChild(cardsWrap);
                 container.appendChild(unitBlock);
             });
-            renderStatsChart(); updateSRSCount();
+            updateSRSCount();
         }
 
         function getRank(xp) {
