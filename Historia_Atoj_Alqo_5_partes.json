@@ -63,7 +63,7 @@
       },
       {
         "type": "question",
-        "title": "¿Imaynalla kashan atoj?",
+        "title": "¿Imayná atoj kashan?",
         "text": "¿Cómo está el zorro?",
         "options": [
           "Kusisqa (Feliz)",
@@ -87,7 +87,7 @@
       },
       {
         "type": "text",
-        "q": "Alqoqa: — Imaynalla!",
+        "q": "Alqoqa: — ¡Imaynalla!",
         "e": "El perro dice: — ¡Hola!"
       },
       {
@@ -127,7 +127,7 @@
       },
       {
         "type": "question",
-        "title": "¿Maymanta kashan atoj?",
+        "title": "¿Maymanta atoj kashan?",
         "text": "¿De dónde es el zorro?",
         "options": [
           "Mayu llajtamanta (Del pueblo del río)",
@@ -137,7 +137,7 @@
       },
       {
         "type": "text",
-        "q": "Alqoqa: — Noqa mayu llajtamanta kani. Kusisqa kani rejsisuspayki!",
+        "q": "Alqoqa: — Noqa mayu llajtamanta kani. ¡Kusikuni rejsisuspa!",
         "e": "El perro dice: — Yo soy del pueblo del río. ¡Estoy feliz de conocerte!"
       }
     ]
@@ -181,23 +181,23 @@
       },
       {
         "type": "text",
-        "q": "Chajrapi ashkha runas kashanku. Chaykunaqa yachajkuna.",
-        "e": "En la chacra hay muchas personas. Esas son maestros."
+        "q": "Chajrapi ashkha runas kashanku. Paykuna yachachejkuna kanku.",
+        "e": "En la chacra hay muchas personas. Ellos son maestros."
       },
       {
         "type": "text",
-        "q": "Atojqa: — ¿Pitaj paykuna?",
+        "q": "Atojqa: — ¿Pitaj paykuna kanku?",
         "e": "El zorro dice: — ¿Quiénes son ellos?"
       },
       {
         "type": "text",
-        "q": "Alqoqa: — Chaykunaqa yachajkuna. Payqa mana atojchu, payqa yachaj.",
-        "e": "El perro dice: — Esos son maestros. Ese no es un zorro, es un maestro."
+        "q": "Alqoqa: — Paykunaqa yachachejkuna. Paykunaqa mana atojkunachu kanku, paykunaqa yachachejkuna kanku.",
+        "e": "El perro dice: — Ellos son maestros. Ellos no son zorros, son maestros."
       },
       {
         "type": "question",
-        "title": "¿Pitaj chaykunaqa?",
-        "text": "¿Quiénes son los que están en la chacra?",
+        "title": "¿Pitaj paykuna kanku?",
+        "text": "¿Quiénes son ellos?",
         "options": [
           "Atojkuna (Zorros)",
           "Yachajkuna (Maestros)"
@@ -206,8 +206,8 @@
       },
       {
         "type": "text",
-        "q": "Atojqa mana phiñasqachu. Payqa kusisqa kashan yachajkunawan.",
-        "e": "El zorro no está enojado. Está feliz con los maestros."
+        "q": "Atojqa mana phiñasqachu. Payqa kusisqa kashan yachachejkunawan.",
+        "e": "El zorro no está enojado. Él está feliz con los maestros."
       }
     ]
   },
@@ -230,7 +230,7 @@
       },
       {
         "type": "text",
-        "q": "Atojqa: — Noqapis chakipi rini. ¿Autopichu colectivopich astawan gustasunki?",
+        "q": "Atojqa: — Noqapis chakipi rini. ¿Autopichu colectivopichu astawan gustasunki?",
         "e": "El zorro dice: — Yo también voy a pie. ¿Te gusta más el auto o el colectivo?"
       },
       {
@@ -245,12 +245,12 @@
       },
       {
         "type": "text",
-        "q": "Alqoqa: — Colectivopi gustasun! Ichari mana colectivoyojkuchu kayku.",
-        "e": "El perro dice: — ¡Nos gusta el colectivo! Pero no tenemos colectivo."
+        "q": "Alqoqa: — Colectivopi gustawan! Jinapis mana colectivoyoj kanchej.",
+        "e": "El perro dice: — ¡Me gusta el colectivo! Pero no tenemos colectivo."
       },
       {
         "type": "text",
-        "q": "Ñanpi rimanku. Atojqa tapun: — ¿Maymanta jamunki kunan?",
+        "q": "Ñanpi parlanku. Atojqa tapun: — ¿Maymanta jamunki kunan?",
         "e": "En el camino conversan. El zorro pregunta: — ¿De dónde venís ahora?"
       },
       {
@@ -270,12 +270,12 @@
       },
       {
         "type": "text",
-        "q": "Atojqa: — Noqapis sapa p'unchay chajraman rini. ¡Noqanchej chajrakuna!",
-        "e": "El zorro dice: — ¡Yo también voy a la chacra todos los días. ¡Somos los de la chacra!"
+        "q": "Atojqa: — Noqapis sapa p'unchay chajraman rini. ¡Noqanchej llank'ajkuna kanchej!",
+        "e": "El zorro dice: — ¡Yo también voy a la chacra todos los días. ¡Nosotros somos trabajadores!"
       },
       {
         "type": "text",
-        "q": "Iskayninku kusisqa kanku. Chajraman rinku paykunawan.",
+        "q": "Iskayninku kusisqa kanku. Chajraman khuskha rinku.",
         "e": "Los dos están felices. Van juntos a la chacra."
       }
     ]
@@ -289,17 +289,17 @@
     "scenes": [
       {
         "type": "text",
-        "q": "Chajrapi chayankuña. Atojqa tapun: — ¿Qhechua yachakuyta munanki?",
+        "q": "Chajraman chayankuña. Atojqa tapun: — ¿Qhechuata yachakuyta munanki?",
         "e": "Ya llegan a la chacra. El zorro pregunta: — ¿Querés aprender quechua?"
       },
       {
         "type": "text",
-        "q": "Alqoqa: — ¡Ari! Quechua yachakuyta munani. ¿Qanrí?",
+        "q": "Alqoqa: — ¡Ari! Quechuata yachakuyta munani. ¿Qanrí?",
         "e": "El perro dice: — ¡Sí! Quiero aprender quechua. ¿Y vos?"
       },
       {
         "type": "text",
-        "q": "Atojqa: — Noqapis! Sapa p'unchay yachakusaj.",
+        "q": "Atojqa: — ¡Noqapis! Sapa p'unchay yachakusaj.",
         "e": "El zorro dice: — ¡Yo también! Aprenderé todos los días."
       },
       {
@@ -319,7 +319,7 @@
       },
       {
         "type": "text",
-        "q": "Alqoqa: — Qanwan risaj! Qanqa amigoy kanki.",
+        "q": "Alqoqa: — ¡Qanwan risaj! Qanqa amigoy kanki.",
         "e": "El perro dice: — ¡Iré con vos! Vos sos mi amigo."
       },
       {
@@ -329,7 +329,7 @@
       },
       {
         "type": "question",
-        "title": "¿Imaynalla kashan atoj tukukuypi?",
+        "title": "¿Imayná kashan atoj tukukuypi?",
         "text": "¿Cómo está el zorro al final?",
         "options": [
           "Llakisqa (Triste)",
@@ -340,7 +340,7 @@
       },
       {
         "type": "text",
-        "q": "Atojwan alqowan — amigos kanku. Sapa p'unchay rimanku, sapa p'unchay yachakunku.",
+        "q": "Atojwan alqowan — amigos kanku. Sapa p'unchay parlanku, sapa p'unchay yachakunku.",
         "e": "El zorro y el perro — son amigos. Todos los días conversan, todos los días aprenden."
       },
       {
