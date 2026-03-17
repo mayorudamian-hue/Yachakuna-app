@@ -1456,7 +1456,7 @@
   },
   {
     "verb": "-saj",
-    "translation": "Futuro — Yo (risaj = iré)",
+    "translation": "Futuro — Yo",
     "unit": "16. Futuro del verbo",
     "tags": [
       "Gramática",
@@ -1473,7 +1473,7 @@
   },
   {
     "verb": "-nki",
-    "translation": "Futuro — Tú (rinki = irás)",
+    "translation": "Futuro — Tú",
     "unit": "16. Futuro del verbo",
     "tags": [
       "Gramática",
@@ -1490,7 +1490,7 @@
   },
   {
     "verb": "-nqa",
-    "translation": "Futuro — Él/Ella (renqa = irá)",
+    "translation": "Futuro — Él/Ella",
     "unit": "16. Futuro del verbo",
     "tags": [
       "Gramática",
@@ -1507,7 +1507,7 @@
   },
   {
     "verb": "-sunchej",
-    "translation": "Futuro — Nosotros inclusivo (risunchej = iremos todos)",
+    "translation": "Futuro — Nosotros inclusivo",
     "unit": "16. Futuro del verbo",
     "tags": [
       "Gramática",
@@ -1525,7 +1525,7 @@
   },
   {
     "verb": "-nqanku",
-    "translation": "Futuro — Ellos (renqanku = irán)",
+    "translation": "Futuro — Ellos",
     "unit": "16. Futuro del verbo",
     "tags": [
       "Gramática",
@@ -1697,7 +1697,7 @@
   },
   {
     "verb": "¿Allintachu chayamunkichej?",
-    "translation": "¿Llegaron bien?",
+    "translation": "¿Llegarán bien?",
     "unit": "17. Futuro plural y conversación",
     "tags": [
       "Gramática",
@@ -1707,8 +1707,8 @@
     ],
     "sentences": [
       {
-        "text": "Arí, allinta chayamuyku.",
-        "trans": "Sí, llegamos bien."
+        "text": "Arí, allinta chayasun/chayasunchej.",
+        "trans": "Sí, llegaremos bien."
       }
     ],
     "pinned": false
@@ -1749,8 +1749,8 @@
     "pinned": false
   },
   {
-    "verb": "Anchata kusikuyku.",
-    "translation": "Nos alegramos mucho.",
+    "verb": "Anchata kusikusun/kusikusunchej.",
+    "translation": "Nos alegraremos mucho.",
     "unit": "17. Futuro plural y conversación",
     "tags": [
       "Frase",
@@ -1759,8 +1759,8 @@
     ],
     "sentences": [
       {
-        "text": "Anchata kusikuyku. ¿Ima sutiykichejri?",
-        "trans": "Nos alegramos mucho. ¿Cómo se llaman?"
+        "text": "Anchata kusikusun/kusikusunchej",
+        "trans": "Nos alegraremos mucho"
       }
     ],
     "pinned": false
@@ -1776,15 +1776,15 @@
     ],
     "sentences": [
       {
-        "text": "Manaraj chayamunkuchu. Ichá chakipi jamushanku.",
-        "trans": "Todavía no llegaron. Tal vez están viniendo a pie."
+        "text": "Manaraj risunchu. Ichá chakipi risun.",
+        "trans": "Todavía no vamos a ir. Tal vez iremos a pie."
       }
     ],
     "pinned": false
   },
   {
     "verb": "-sqayku/sajku",
-    "translation": "Futuro — Nosotros exclusivo (risqayku/risajku = iremos nosotros, sin vos)",
+    "translation": "Futuro — Nosotros exclusivo",
     "unit": "17. Futuro plural y conversación",
     "tags": [
       "Gramática",
@@ -1802,7 +1802,7 @@
   },
   {
     "verb": "-nkichej",
-    "translation": "Futuro — Ustedes (rinkichej = irán ustedes)",
+    "translation": "Futuro — Ustedes",
     "unit": "17. Futuro plural y conversación",
     "tags": [
       "Gramática",
@@ -1820,7 +1820,7 @@
   },
   {
     "verb": "Jaku",
-    "translation": "¡Vamos! (invitación a ir juntos)",
+    "translation": "¡Vamos!/invitación a ir juntos",
     "unit": "17. Futuro plural y conversación",
     "tags": [
       "Vocabulario",
@@ -1836,7 +1836,7 @@
   },
   {
     "verb": "Anchata",
-    "translation": "Mucho (de sentimientos)",
+    "translation": "Mucho",
     "unit": "17. Futuro plural y conversación",
     "tags": [
       "Vocabulario",
@@ -1909,7 +1909,7 @@
     "sentences": [
       {
         "text": "¡Jaku! ¡Qhawasunchej!",
-        "trans": "¡Vamos! ¡Miremos!"
+        "trans": "¡Vamos! ¡Miraremos!"
       }
     ],
     "pinned": false
@@ -1977,7 +1977,7 @@
     "sentences": [
       {
         "text": "Tatanchej llajtaman renqa.",
-        "trans": "Nuestro padre va a ir a la ciudad."
+        "trans": "Nuestro padre va a ir a la ciudad/nuestro padre irá a la ciudad"
       }
     ],
     "pinned": false
@@ -2019,7 +2019,7 @@
   },
   {
     "verb": "Tatanku jamun.",
-    "translation": "Su padre (de ellos) ha venido.",
+    "translation": "Su padre ha venido/de ellos .",
     "unit": "18. Sufijo posesivo (-y, -yki, -n)",
     "tags": [
       "Gramática",
@@ -2088,7 +2088,7 @@
   },
   {
     "verb": "-y",
-    "translation": "Posesivo — Mi (tatay = mi padre)",
+    "translation": "Posesivo — Mi",
     "unit": "18. Sufijo posesivo (-y, -yki, -n)",
     "tags": [
       "Gramática",
@@ -2105,7 +2105,7 @@
   },
   {
     "verb": "-yki",
-    "translation": "Posesivo — Tu (tatayki = tu padre)",
+    "translation": "Posesivo — Tu",
     "unit": "18. Sufijo posesivo (-y, -yki, -n)",
     "tags": [
       "Gramática",
@@ -2122,7 +2122,7 @@
   },
   {
     "verb": "-n",
-    "translation": "Posesivo — Su (tatan = su padre)",
+    "translation": "Posesivo — Su/de él o ella",
     "unit": "18. Sufijo posesivo (-y, -yki, -n)",
     "tags": [
       "Gramática",
@@ -2139,7 +2139,7 @@
   },
   {
     "verb": "-nchej",
-    "translation": "Posesivo — Nuestro inclusivo (tatanchej = nuestro padre)",
+    "translation": "Posesivo — Nuestro inclusivo",
     "unit": "18. Sufijo posesivo (-y, -yki, -n)",
     "tags": [
       "Gramática",
@@ -2181,7 +2181,7 @@
     ],
     "sentences": [
       {
-        "text": "Sutiy Jorgito. ¿Sutiyki?",
+        "text": "Sutiy Jorgito. ¿Sutiykiri?",
         "trans": "Mi nombre es Jorgito. ¿Tu nombre?"
       }
     ],
@@ -2264,15 +2264,15 @@
     ],
     "sentences": [
       {
-        "text": "¿Pitaj perqata ruwachinki?",
-        "trans": "¿A quién le mandaste hacer la pared?"
+        "text": "¿Ima perqatataj ruwachinki?",
+        "trans": "¿Qué tipo de pared mandaste hacer?"
       }
     ],
     "pinned": false
   },
   {
     "verb": "Cuentata pagachinku.",
-    "translation": "Han mandado pagar la cuenta (ellos).",
+    "translation": "Han mandado pagar la cuenta/ellos.",
     "unit": "19. Infijo causativo -chi",
     "tags": [
       "Gramática",
@@ -2290,7 +2290,7 @@
   },
   {
     "verb": "Qhechuata yachachenqa.",
-    "translation": "Enseñará quechua. (hará saber)",
+    "translation": "Enseñará quechua/hará saber",
     "unit": "19. Infijo causativo -chi",
     "tags": [
       "Gramática",
@@ -2308,7 +2308,7 @@
   },
   {
     "verb": "Cartata apachisaj.",
-    "translation": "Mandaré (haré llevar) la carta.",
+    "translation": "Mandaré la carta/haré llevar la carta",
     "unit": "19. Infijo causativo -chi",
     "tags": [
       "Gramática",
@@ -2326,7 +2326,7 @@
   },
   {
     "verb": "Qolqenta chinkachin.",
-    "translation": "Hace perder su dinero.",
+    "translation": "Hace perder su dinero/desperdicia su dinero",
     "unit": "19. Infijo causativo -chi",
     "tags": [
       "Gramática",
@@ -2432,7 +2432,7 @@
   },
   {
     "verb": "Yachachiy",
-    "translation": "Enseñar (hacer saber)",
+    "translation": "Enseñar/hacer saber",
     "unit": "19. Infijo causativo -chi",
     "tags": [
       "Vocabulario",
@@ -2449,7 +2449,7 @@
   },
   {
     "verb": "Rikuchiy",
-    "translation": "Demostrar (hacer ver)",
+    "translation": "Demostrar/hacer ver",
     "unit": "19. Infijo causativo -chi",
     "tags": [
       "Vocabulario",
@@ -2492,7 +2492,7 @@
     "sentences": [
       {
         "text": "Qolqeta chinkachin.",
-        "trans": "Ha dejado perderse el dinero."
+        "trans": "Ha dejado perderse el dinero/desperdicia su dinero"
       }
     ],
     "pinned": false
