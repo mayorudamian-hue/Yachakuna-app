@@ -486,7 +486,25 @@
 
             <div id="entriesContainer"></div>
 
-            <div id="studentControls" style="background: #f0f0f0; padding: 20px; border-radius: 20px; text-align: center; border: 2px dashed var(--border); margin-top: 30px;">
+            <!-- Zona de reinicio — visible para todos -->
+            <div style="background: #fff5f5; padding: 18px 20px; border-radius: 20px; border: 2px dashed #f5c0c0; margin-top: 30px;">
+                <h3 style="margin-top:0; margin-bottom:6px; color: var(--duo-red); font-weight: 800; text-align:center;">⚠️ Zona de Reinicio</h3>
+                <p style="font-size: 13px; color: #999; margin-bottom: 12px; text-align:center;">Normalmente la app detecta cambios sola. Si el aviso no apareció, podés forzar la actualización manualmente acá.</p>
+                <div class="flex-row" style="gap:10px;">
+                    <button type="button" onclick="resetDictionary()" style="background: var(--duo-yellow); border-bottom: 4px solid #d4a600; flex:1; font-size:13px; padding:12px 8px;">
+                        🔄 Actualizar vocabulario
+                    </button>
+                    <button type="button" onclick="resetProgress()" style="background: var(--duo-red); border-bottom: 4px solid var(--duo-red-shadow); flex:1; font-size:13px; padding:12px 8px;">
+                        🗑️ Borrar mi progreso
+                    </button>
+                </div>
+                <p style="font-size: 11px; color: #bbb; margin-top:8px; text-align:center; line-height:1.4;">
+                    <b>Actualizar vocabulario</b>: respaldo manual por si la detección automática no funcionó.<br>
+                    <b>Borrar progreso</b>: si querés empezar de cero, elimina XP, racha, SRS y estadísticas (no borra el vocabulario).
+                </p>
+            </div>
+
+            <div id="studentControls" style="background: #f0f0f0; padding: 20px; border-radius: 20px; text-align: center; border: 2px dashed var(--border); margin-top: 16px;">
                 <div id="profeUploadLocked" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center;">
                     <span style="font-size:13px; font-weight:800; color:#aaa;">👨‍🏫 Zona del Profe</span>
                     <input type="password" id="profeUploadPwd" placeholder="Contraseña..." style="flex:1; min-width:120px; margin-bottom:0; padding:10px 14px; font-size:14px; max-width:180px;">
@@ -525,6 +543,7 @@
                             💾 Exportar JSON
                         </button>
                     </div>
+
                 </div>
             </div>
         </div> 
@@ -598,6 +617,20 @@
         </div>
 
         <div id="practiceMenu">
+            <div id="vocabUpdateBanner" style="display:none; background:#fff9e6; border:2px solid var(--duo-yellow); border-radius:16px; padding:14px 16px; margin-bottom:16px; align-items:center; gap:12px; flex-wrap:wrap;">
+                <span style="font-size:22px;">📚</span>
+                <div style="flex:1; min-width:160px;">
+                    <div style="font-weight:800; font-size:15px; color:#92400e;">¡El profe actualizó el vocabulario!</div>
+                    <div id="vocabUpdateMsg" style="font-size:13px; color:#b45309; margin-top:2px;"></div>
+                </div>
+                <button type="button" onclick="applyVocabUpdate()" style="width:auto; padding:10px 16px; font-size:13px; background:var(--duo-yellow); border-bottom:3px solid #d4a600; white-space:nowrap;">
+                    🔄 Incorporar ahora
+                </button>
+                <button type="button" onclick="document.getElementById('vocabUpdateBanner').style.display='none'" style="width:auto; padding:10px 14px; font-size:13px; background:white; border:2px solid var(--border); border-bottom:3px solid var(--border); color:#aaa;">
+                    Después
+                </button>
+            </div>
+
             <div class="container" style="padding: 15px;">
                 <h3 style="margin-top:0;">⚙️ Ajustes</h3>
                 <div class="flex-row" style="margin-bottom:0;">
@@ -1037,6 +1070,21 @@
         dictionary.forEach(item => { 
             if (!item.srs) item.srs = { ef: 2.5, interval: 0, reps: 0, due: Date.now() }; 
         });
+    }
+    // Reinyectar SRS/favoritos si venimos de un reinicio de vocabulario
+    const srsBackupRaw = localStorage.getItem('rimay_srsBackup');
+    if (srsBackupRaw) {
+        const srsBackup = JSON.parse(srsBackupRaw);
+        dictionary.forEach(item => {
+            const backup = srsBackup[item.verb];
+            if (backup) {
+                if (backup.srs) item.srs = backup.srs;
+                if (backup.pinned) item.pinned = backup.pinned;
+            }
+        });
+        localStorage.removeItem('rimay_srsBackup');
+        // Guardar el diccionario ya con los datos reinyectados
+        localStorage.setItem('rimay_vMaster', JSON.stringify(dictionary));
     }
             // Cargar Historias Guardadas
             const savedStories = localStorage.getItem('rimay_Stories');
@@ -1882,6 +1930,37 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             a.href = URL.createObjectURL(blob);
             a.download = 'vocabulario_exportado.json';
             a.click();
+        }
+
+        function resetDictionary() {
+            if (!confirm('¿Actualizar el vocabulario?\n\nSe recarga el archivo original del servidor incorporando palabras nuevas.\n\nTu XP, racha, SRS, favoritos y estadísticas se conservan.')) return;
+            // Rescatar datos SRS y favoritos antes de borrar el diccionario
+            const srsBackup = {};
+            dictionary.forEach(w => {
+                if (w.verb && (w.srs || w.pinned)) {
+                    srsBackup[w.verb] = { srs: w.srs || null, pinned: w.pinned || false };
+                }
+            });
+            localStorage.setItem('rimay_srsBackup', JSON.stringify(srsBackup));
+            localStorage.removeItem('rimay_vMaster');
+            location.reload();
+        }
+
+        function resetProgress() {
+            if (!confirm('¿Borrar todo tu progreso?\n\nSe eliminarán: XP, racha, SRS, estadísticas, unidades completadas y logros.\n\nEl vocabulario NO se borra.')) return;
+            const keysToRemove = [
+                'rimay_Progress', 'rimay_Perfect', 'rimay_XP', 'rimay_Attempts',
+                'rimay_Time', 'rimay_CompletedStories', 'rimay_LastPracticeDate',
+                'rimay_StreakDays', 'rimay_BestStreak', 'rimay_SRSCount',
+                'rimay_SearchCount', 'rimay_NotifiedAch', 'rimay_DailyLog',
+                'rimay_PracticeSession', 'rimay_ForumPosted', 'rimay_likedPosts',
+                'rimay_PinnedUnits', 'rimay_GuideVisited'
+            ];
+            keysToRemove.forEach(k => localStorage.removeItem(k));
+            dictionary.forEach(w => { delete w.srs; delete w.pinned; });
+            save();
+            alert('✅ Progreso borrado. ¡A empezar de nuevo!');
+            location.reload();
         }
 
         function renderCards() {
@@ -2819,10 +2898,11 @@ function handlePracticeEnter(e) {
             } catch(e) { return null; }
         }
 
-        async function syncFromGitHub() {
-            let updatedVocab = false, updatedStories = false;
+        let pendingVocabUpdate = null; // palabras nuevas/editadas desde GitHub sin aplicar aún
 
-            // Buscar todos los JSON en la raíz del repositorio
+        async function syncFromGitHub() {
+            let newWords = [], editedWords = [], updatedStories = false;
+
             const rootFiles = await fetchGitHubJSON('');
             if (!rootFiles || !Array.isArray(rootFiles)) return;
 
@@ -2832,22 +2912,22 @@ function handlePracticeEnter(e) {
                 const data = await loadJSONFromGitHub(file.download_url);
                 if (!Array.isArray(data) || data.length === 0) continue;
 
-                // ¿Es vocabulario?
                 if (data[0].verb && data[0].translation) {
                     data.forEach(newItem => {
                         if (!newItem.verb || !newItem.translation) return;
                         const index = dictionary.findIndex(item => item.verb.toLowerCase().trim() === newItem.verb.toLowerCase().trim());
-                        if (index !== -1) {
-                            const { pinned, srs } = dictionary[index];
-                            dictionary[index] = { ...dictionary[index], ...newItem, pinned, srs };
+                        if (index === -1) {
+                            newWords.push(newItem);
                         } else {
-                            if (!newItem.srs) newItem.srs = { ef: 2.5, interval: 0, reps: 0, due: Date.now() };
-                            dictionary.push(newItem); updatedVocab = true;
+                            // Detectar si cambió la traducción u otro campo relevante
+                            const existing = dictionary[index];
+                            const changed = existing.translation !== newItem.translation ||
+                                            existing.unit !== newItem.unit ||
+                                            JSON.stringify(existing.sentences) !== JSON.stringify(newItem.sentences);
+                            if (changed) editedWords.push({ index, newItem });
                         }
                     });
-                }
-                // ¿Es historias?
-                else if (data[0].scenes) {
+                } else if (data[0].scenes) {
                     data.forEach(newStory => {
                         const index = storiesData.findIndex(s => s.id === newStory.id);
                         if (index !== -1) storiesData[index] = newStory;
@@ -2856,8 +2936,40 @@ function handlePracticeEnter(e) {
                 }
             }
 
-            if (updatedStories) localStorage.setItem('rimay_Stories', JSON.stringify(storiesData));
-            if (updatedVocab || updatedStories) { save(true); renderCards(); renderPath(); renderAwards(); }
+            if (updatedStories) { localStorage.setItem('rimay_Stories', JSON.stringify(storiesData)); renderPath(); renderAwards(); }
+
+            if (newWords.length > 0 || editedWords.length > 0) {
+                pendingVocabUpdate = { newWords, editedWords };
+                const banner = document.getElementById('vocabUpdateBanner');
+                const msg = document.getElementById('vocabUpdateMsg');
+                if (banner && msg) {
+                    const parts = [];
+                    if (newWords.length > 0) parts.push(`${newWords.length} palabra${newWords.length > 1 ? 's' : ''} nueva${newWords.length > 1 ? 's' : ''}`);
+                    if (editedWords.length > 0) parts.push(`${editedWords.length} editada${editedWords.length > 1 ? 's' : ''}`);
+                    msg.textContent = parts.join(' · ');
+                    banner.style.display = 'flex';
+                }
+            }
+        }
+
+        function applyVocabUpdate() {
+            if (!pendingVocabUpdate) return;
+            const { newWords, editedWords } = pendingVocabUpdate;
+            newWords.forEach(newItem => {
+                if (!newItem.srs) newItem.srs = { ef: 2.5, interval: 0, reps: 0, due: Date.now() };
+                dictionary.push(newItem);
+            });
+            editedWords.forEach(({ index, newItem }) => {
+                const { pinned, srs } = dictionary[index];
+                dictionary[index] = { ...dictionary[index], ...newItem, pinned, srs };
+            });
+            pendingVocabUpdate = null;
+            save(true); renderCards(); renderPath(); renderAwards();
+            const banner = document.getElementById('vocabUpdateBanner');
+            if (banner) banner.style.display = 'none';
+            // Mini confirmación
+            const msg = document.getElementById('vocabUpdateMsg');
+            if (msg) { banner.style.background = '#d4f5dc'; banner.style.borderColor = 'var(--duo-green)'; banner.querySelector('div > div').style.color = '#1e7a2e'; banner.querySelector('div > div').textContent = '¡Vocabulario incorporado!'; msg.textContent = ''; banner.style.display = 'flex'; setTimeout(() => { banner.style.display = 'none'; }, 3000); }
         }
 
         // --- DESBLOQUEO CARGA DE ARCHIVOS (PROFE) ---
