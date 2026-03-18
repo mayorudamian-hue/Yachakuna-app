@@ -1320,7 +1320,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             const tryNext = (urls) => {
                 if (urls.length === 0) { nativeAudioCache[filename] = false; speakSynth(text); return; }
                 const audio = new Audio(urls[0]);
-                audio.oncanplaythrough = () => { nativeAudioCache[filename] = urls[0]; audio.play(); };
+                audio.onloadeddata = () => { nativeAudioCache[filename] = urls[0]; audio.play(); };
                 audio.onerror = () => tryNext(urls.slice(1));
                 audio.load();
             };
