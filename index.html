@@ -1937,6 +1937,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
 
         function resetDictionary() {
             if (!confirm('¿Actualizar el vocabulario?\n\nSe recarga el archivo original del servidor incorporando palabras nuevas.\n\nTu XP, racha, SRS, favoritos y estadísticas se conservan.')) return;
+            localStorage.removeItem('rimay_syncedWords');
             // Rescatar datos SRS y favoritos antes de borrar el diccionario
             const srsBackup = {};
             dictionary.forEach(w => {
@@ -2931,10 +2932,12 @@ function handlePracticeEnter(e) {
                             // Detectar si cambió la traducción u otro campo relevante
                             const existing = dictionary[index];
                             const normSentences = s => JSON.stringify((s || []).map(x => ({q: (x.q||'').trim(), e: (x.e||'').trim()})));
-                            const changed = (existing.translation || '').trim() !== (newItem.translation || '').trim() ||
-                                            (existing.unit || '').trim() !== (newItem.unit || '').trim() ||
-                                            normSentences(existing.sentences) !== normSentences(newItem.sentences);
-                            if (changed) editedWords.push({ index, newItem });
+                            const normTags = t => JSON.stringify((t || []).slice().sort());
+                            const tChanged = (existing.translation || '').trim() !== (newItem.translation || '').trim();
+                            const uChanged = (existing.unit || '').trim() !== (newItem.unit || '').trim();
+                            const sChanged = normSentences(existing.sentences) !== normSentences(newItem.sentences);
+                            const gChanged = normTags(existing.tags) !== normTags(newItem.tags);
+                            if (tChanged || uChanged || sChanged || gChanged) editedWords.push({ index, newItem });
                         }
                     });
                 } else if (data[0].scenes) {
@@ -2949,15 +2952,22 @@ function handlePracticeEnter(e) {
             if (updatedStories) { localStorage.setItem('rimay_Stories', JSON.stringify(storiesData)); renderPath(); renderAwards(); }
 
             if (newWords.length > 0 || editedWords.length > 0) {
-                pendingVocabUpdate = { newWords, editedWords };
-                const banner = document.getElementById('vocabUpdateBanner');
-                const msg = document.getElementById('vocabUpdateMsg');
-                if (banner && msg) {
-                    const parts = [];
-                    if (newWords.length > 0) parts.push(`${newWords.length} palabra${newWords.length > 1 ? 's' : ''} nueva${newWords.length > 1 ? 's' : ''}`);
-                    if (editedWords.length > 0) parts.push(`${editedWords.length} editada${editedWords.length > 1 ? 's' : ''}`);
-                    msg.textContent = parts.join(' · ');
-                    banner.style.display = 'flex';
+                // Filtrar palabras que ya fueron sincronizadas antes
+                const synced = JSON.parse(localStorage.getItem('rimay_syncedWords') || '{}');
+                const normKey = item => (item.verb||'').trim() + '|' + (item.translation||'').trim() + '|' + (item.unit||'').trim();
+                const filteredNew = newWords.filter(w => !synced[normKey(w)]);
+                const filteredEdited = editedWords.filter(({newItem}) => !synced[normKey(newItem)]);
+                if (filteredNew.length > 0 || filteredEdited.length > 0) {
+                    pendingVocabUpdate = { newWords: filteredNew, editedWords: filteredEdited };
+                    const banner = document.getElementById('vocabUpdateBanner');
+                    const msg = document.getElementById('vocabUpdateMsg');
+                    if (banner && msg) {
+                        const parts = [];
+                        if (filteredNew.length > 0) parts.push(`${filteredNew.length} palabra${filteredNew.length > 1 ? 's' : ''} nueva${filteredNew.length > 1 ? 's' : ''}`);
+                        if (filteredEdited.length > 0) parts.push(`${filteredEdited.length} editada${filteredEdited.length > 1 ? 's' : ''}`);
+                        msg.textContent = parts.join(' · ');
+                        banner.style.display = 'flex';
+                    }
                 }
             }
         }
@@ -2965,14 +2975,19 @@ function handlePracticeEnter(e) {
         function applyVocabUpdate() {
             if (!pendingVocabUpdate) return;
             const { newWords, editedWords } = pendingVocabUpdate;
+            const synced = JSON.parse(localStorage.getItem('rimay_syncedWords') || '{}');
+            const normKey = item => (item.verb||'').trim() + '|' + (item.translation||'').trim() + '|' + (item.unit||'').trim();
             newWords.forEach(newItem => {
                 if (!newItem.srs) newItem.srs = { ef: 2.5, interval: 0, reps: 0, due: Date.now() };
                 dictionary.push(newItem);
+                synced[normKey(newItem)] = 1;
             });
             editedWords.forEach(({ index, newItem }) => {
                 const { pinned, srs } = dictionary[index];
                 dictionary[index] = { ...dictionary[index], ...newItem, pinned, srs };
+                synced[normKey(newItem)] = 1;
             });
+            localStorage.setItem('rimay_syncedWords', JSON.stringify(synced));
             pendingVocabUpdate = null;
             save(true); renderCards(); renderPath(); renderAwards();
             const banner = document.getElementById('vocabUpdateBanner');
