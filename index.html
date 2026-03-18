@@ -1301,9 +1301,9 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             window.speechSynthesis.speak(utterance);
         }
 
-        function speak(text) {
+        function speak(text, audioHint) {
             if (!text) return;
-            const filename = text.trim().toLowerCase()
+            const filename = audioHint || text.trim().toLowerCase()
                 .replace(/[¿¡.,]/g, '')
                 .replace(/\s+/g, '_')
                 .replace(/[^a-záéíóúüñ0-9_']/gi, '');
@@ -2082,7 +2082,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                                 </div>`).join('')}
                            </div>`
                         : '';
-                    card.innerHTML = `<div style="display:flex; gap:15px; align-items:center;"><div style="width:56px; height:56px; font-size:36px; display:flex; align-items:center; justify-content:center; background:var(--card-bg); border-radius:12px; border:2px solid var(--border); flex-shrink:0;">${emoji}</div><button type="button" class="btn-icon btn-speak" onclick="speak('${item.verb.replace(/'/g, "\\'")}')">🔊</button><div style="flex-grow:1;"><div style="font-size:18px; font-weight:800;">${item.verb}</div><div style="font-weight:600; font-size:15px; color: var(--duo-blue);">${item.translation}</div><div style="margin-top:4px;"><span style="font-size:11px; font-weight:800; padding:2px 8px; border-radius:10px; background:#f0f0f0; color:#888;">${getCategoria(item)}</span></div>${sentencesHTML}</div><button type="button" class="btn-icon btn-pin ${item.pinned ? 'active' : ''}" onclick="togglePin(${globalIndex})">⭐</button>${isProfeMode ? `<button type="button" class="btn-icon" onclick="editWord(${globalIndex})" style="background:#eaf3ff;border:2px solid #a8cff5;border-bottom:3px solid #a8cff5;color:#1a5fa8;" title="Editar">✏️</button><button type="button" class="btn-icon" onclick="deleteWord(${globalIndex})" style="background:#fde8e8;border:2px solid var(--duo-red);border-bottom:3px solid var(--duo-red-shadow);color:var(--duo-red);" title="Eliminar">🗑️</button>` : ''}</div>`;
+                    card.innerHTML = `<div style="display:flex; gap:15px; align-items:center;"><div style="width:56px; height:56px; font-size:36px; display:flex; align-items:center; justify-content:center; background:var(--card-bg); border-radius:12px; border:2px solid var(--border); flex-shrink:0;">${emoji}</div><button type="button" class="btn-icon btn-speak" onclick="speak('${item.verb.replace(/'/g, "\\'")}', '${(item.audio||'').replace(/'/g, "\\'")}')" >🔊</button><div style="flex-grow:1;"><div style="font-size:18px; font-weight:800;">${item.verb}</div><div style="font-weight:600; font-size:15px; color: var(--duo-blue);">${item.translation}</div><div style="margin-top:4px;"><span style="font-size:11px; font-weight:800; padding:2px 8px; border-radius:10px; background:#f0f0f0; color:#888;">${getCategoria(item)}</span></div>${sentencesHTML}</div><button type="button" class="btn-icon btn-pin ${item.pinned ? 'active' : ''}" onclick="togglePin(${globalIndex})">⭐</button>${isProfeMode ? `<button type="button" class="btn-icon" onclick="editWord(${globalIndex})" style="background:#eaf3ff;border:2px solid #a8cff5;border-bottom:3px solid #a8cff5;color:#1a5fa8;" title="Editar">✏️</button><button type="button" class="btn-icon" onclick="deleteWord(${globalIndex})" style="background:#fde8e8;border:2px solid var(--duo-red);border-bottom:3px solid var(--duo-red-shadow);color:var(--duo-red);" title="Eliminar">🗑️</button>` : ''}</div>`;
                     cardsWrap.appendChild(card);
                 });
                 }
