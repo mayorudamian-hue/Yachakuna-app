@@ -114,9 +114,18 @@
         .path-section-body { position: relative; }
         .path-section-body.hidden { display: none !important; }
 
-        /* Línea vertical dentro de sección */
-        .path-inner { display: flex; flex-direction: column; align-items: stretch; padding: 30px 0 20px; position: relative; }
-        .path-inner::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 10px; background-color: var(--path-gray); transform: translateX(-50%); z-index: 1; border-radius: 10px; }
+        /* Camino zigzag con puntos */
+        .path-inner { display: flex; flex-direction: column; align-items: center; padding: 20px 0 10px; position: relative; }
+        .path-dots-row { display: flex; align-items: center; height: 26px; width: 100%; }
+        .path-dots-row.to-right { justify-content: center; padding-left: 12%; }
+        .path-dots-row.to-left  { justify-content: center; padding-right: 12%; }
+        .path-dot { width: 7px; height: 7px; border-radius: 50%; background: #d8d0c4; margin: 0 5px; flex-shrink: 0; }
+        .path-dot.done { background: #58cc02; }
+        .path-dot.current { background: #1cb0f6; }
+        .path-llama { display: flex; flex-direction: column; align-items: center; margin: 2px 0 6px; }
+        .path-llama-icon { font-size: 36px; animation: llama-munch 1.3s ease-in-out infinite; }
+        .path-llama-grass { font-size: 16px; letter-spacing: 3px; opacity: 0.75; margin-top: -4px; }
+        @keyframes llama-munch { 0%,100%{ transform: scaleY(1) rotate(-4deg); } 50%{ transform: scaleY(0.88) rotate(4deg); } }
 
         /* Panel de gramática */
         .grammar-toggle { display: flex; align-items: center; gap: 10px; margin: 12px 16px 0; background: #eaf3ff; border: 2px solid #a8cff5; border-radius: 14px; padding: 10px 16px; cursor: pointer; font-weight: 800; font-size: 14px; color: #1a5fa8; user-select: none; transition: background 0.15s; }
@@ -134,9 +143,9 @@
         .grammar-panel .example { background: #fff9e6; border-left: 4px solid var(--duo-yellow); padding: 8px 12px; border-radius: 0 10px 10px 0; margin: 8px 0; font-style: italic; }
         .grammar-panel strong { color: #1a5fa8; }
 
-        .unit-node-wrapper { position: relative; z-index: 2; margin-bottom: 40px; display: flex; flex-direction: column; align-items: center; width: 50%; }
-        .unit-node-wrapper:nth-child(odd) { align-self: flex-start; align-items: flex-start; margin-left: 5%; }
-        .unit-node-wrapper:nth-child(even) { align-self: flex-end; align-items: flex-end; margin-right: 5%; }
+        .unit-node-wrapper { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .unit-node-wrapper.left  { align-self: flex-start; align-items: flex-start; padding-left: 12%; }
+        .unit-node-wrapper.right { align-self: flex-end;   align-items: flex-end;   padding-right: 12%; }
         
         .unit-node { width: 80px; height: 80px; border-radius: 50%; background-color: var(--duo-blue); border: 4px solid white; box-shadow: 0 8px 0 var(--duo-blue-shadow); display: flex; align-items: center; justify-content: center; font-size: 32px; cursor: pointer; transition: transform 0.1s, box-shadow 0.1s; position: relative; }
         .unit-node:active { transform: translateY(8px); box-shadow: 0 0px 0 var(--duo-blue-shadow); }
@@ -2443,29 +2452,62 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                 }
 
                 const inner = document.createElement('div');
-                inner.className = 'path-inner';
+                           inner.className = 'path-inner';
+
+                const zigSides = ['left','right','right','left'];
+                let currentLocalIdx = -1;
+                sectionUnits.forEach((u, li) => {
+                    if (currentLocalIdx === -1 && isUnitUnlocked(units, s * UNITS_PER_SECTION + li) && !unitProgress[u]) currentLocalIdx = li;
+                });
 
                 sectionUnits.forEach((u, localIdx) => {
                     const globalIdx = s * UNITS_PER_SECTION + localIdx;
                     const health = getUnitHealth(u);
                     const defaultIcons = ['🌟','🚀','🔥','🧠','🎯'];
                     let icon = defaultIcons[globalIdx % defaultIcons.length];
-                    let nodeClass = '', nodeStyle = '', crownHTML = '', extraText = '';
+                    let nodeStyle = '', crownHTML = '', extraText = '';
                     const unlocked = isUnitUnlocked(units, globalIdx);
+                    const isCurrent = localIdx === currentLocalIdx;
+                    const side = zigSides[localIdx % zigSides.length];
 
                     const node = document.createElement('div');
-                    node.className = 'unit-node-wrapper';
+                    node.className = 'unit-node-wrapper ' + side;
 
                     if (!unlocked) {
-                        node.innerHTML = `<div class="unit-node" style="background-color:var(--path-gray);box-shadow:0 8px 0 #b0a090;cursor:not-allowed;opacity:0.7;" title="Completá la unidad anterior para desbloquear">🔒</div><div class="unit-title" style="color:#aaa;">${u}</div>`;
+                        node.style.opacity = '0.5';
+                        node.innerHTML = `<div class="unit-node" style="background-color:var(--path-gray);box-shadow:0 8px 0 #b0a090;cursor:not-allowed;">🔒</div><div class="unit-title" style="color:#aaa;">${u}</div>`;
                     } else {
-                        if (health.status === 'perfect') { nodeClass = 'mastered'; icon = '👑'; crownHTML = '<div class="unit-crown">👑</div>'; }
-                        else if (health.status === 'nocrown') { nodeClass = 'mastered'; icon = '👑'; }
-                        else if (health.status === 'warning') { nodeClass = 'mastered'; icon = '⚠️'; nodeStyle = 'background-color:#ff9600;box-shadow:0 8px 0 #cc7800;border-color:white;'; extraText = '<div style="color:#ff9600;font-weight:900;font-size:13px;margin-top:8px;text-transform:uppercase;">⚠️ Repasota ruway</div>'; }
-                        else if (health.status === 'broken') { nodeClass = 'mastered'; icon = '💔'; nodeStyle = 'filter:grayscale(100%) opacity(0.6);'; }
-                        node.innerHTML = `<div class="unit-node ${nodeClass}" style="${nodeStyle}" onclick="startPractice('${u.replace(/'/g, "\\'")}')">${icon}${crownHTML}</div><div class="unit-title">${u}</div>${extraText}`;
+                        let nodeBg = 'var(--duo-blue)', nodeShadow = 'var(--duo-blue-shadow)';
+                        if (health.status === 'perfect')       { nodeBg='var(--duo-yellow)'; nodeShadow='#d4a600'; icon='👑'; crownHTML='<div class="unit-crown">👑</div>'; }
+                        else if (health.status === 'nocrown')  { nodeBg='var(--duo-yellow)'; nodeShadow='#d4a600'; icon='👑'; }
+                        else if (health.status === 'warning')  { nodeBg='#ff9600'; nodeShadow='#cc7800'; icon='⚠️'; extraText='<div style="color:#ff9600;font-weight:900;font-size:13px;margin-top:6px;text-transform:uppercase;">⚠️ Repasota ruway</div>'; }
+                        else if (health.status === 'broken')   { nodeStyle='filter:grayscale(100%) opacity(0.6);'; icon='💔'; }
+                        node.innerHTML = `<div class="unit-node" style="background-color:${nodeBg};box-shadow:0 8px 0 ${nodeShadow};${nodeStyle}" onclick="startPractice('${u.replace(/'/g, "\'")}')">${icon}${crownHTML}</div><div class="unit-title">${u}</div>${extraText}`;
                     }
                     inner.appendChild(node);
+
+                    if (isCurrent) {
+                        const llamaEl = document.createElement('div');
+                        llamaEl.className = 'path-llama';
+                        llamaEl.innerHTML = '<div class="path-llama-icon">🦙</div><div class="path-llama-grass">🌿🌱🌾</div>';
+                        inner.appendChild(llamaEl);
+                    }
+
+                    if (localIdx < sectionUnits.length - 1) {
+                        const nextSide = zigSides[(localIdx + 1) % zigSides.length];
+                        let dir = (side === 'left' && nextSide === 'right') ? 'to-right'
+                                : (side === 'right' && nextSide === 'left')  ? 'to-left'
+                                : (side === 'left') ? 'to-left' : 'to-right';
+                        const dotsRow = document.createElement('div');
+                        dotsRow.className = 'path-dots-row ' + dir;
+                        for (let d = 0; d < 5; d++) {
+                            const dot = document.createElement('div');
+                            const dotStatus = localIdx < currentLocalIdx ? 'done' : localIdx === currentLocalIdx ? 'current' : '';
+                            dot.className = 'path-dot' + (dotStatus ? ' ' + dotStatus : '');
+                            dotsRow.appendChild(dot);
+                        }
+                        inner.appendChild(dotsRow);
+                    }
                 });
 
                 body.appendChild(inner);
