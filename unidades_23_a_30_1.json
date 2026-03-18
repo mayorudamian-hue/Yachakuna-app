@@ -16,5 +16,23 @@
         "audio": "qan_quechuata_parlankichu",
         "sentences": [],
         "pinned": false
+    },
+    {
+        "verb": "Q'ayakama.",
+        "translation": "Hasta mañana.",
+        "unit": "23. En el territorio (Parte 1)",
+        "tags": ["Frase"],
+        "audio": "Q'ayakama",
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Tinkunakama.",
+        "translation": "Hasta pronto / Hasta que nos veamos.",
+        "unit": "23. En el territorio (Parte 1)",
+        "tags": ["Frase"],
+        "audio": "Tinkunakama",
+        "sentences": [],
+        "pinned": false
     }
 ]
