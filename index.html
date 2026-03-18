@@ -494,12 +494,15 @@
                     <button type="button" onclick="resetDictionary()" style="background: var(--duo-yellow); border-bottom: 4px solid #d4a600; flex:1; font-size:13px; padding:12px 8px;">
                         🔄 Actualizar vocabulario
                     </button>
+                    <button type="button" onclick="resetStories()" style="background: var(--duo-green); border-bottom: 4px solid var(--duo-green-shadow); flex:1; font-size:13px; padding:12px 8px;">
+                        📖 Actualizar historias
+                    </button>
                     <button type="button" onclick="resetProgress()" style="background: var(--duo-red); border-bottom: 4px solid var(--duo-red-shadow); flex:1; font-size:13px; padding:12px 8px;">
                         🗑️ Borrar mi progreso
                     </button>
                 </div>
                 <p style="font-size: 11px; color: #bbb; margin-top:8px; text-align:center; line-height:1.4;">
-                    <b>Actualizar vocabulario</b>: respaldo manual por si la detección automática no funcionó.<br>
+                    <b>Actualizar vocabulario / historias</b>: respaldo manual por si la detección automática no funcionó.<br>
                     <b>Borrar progreso</b>: si querés empezar de cero, elimina XP, racha, SRS y estadísticas (no borra el vocabulario).
                 </p>
             </div>
@@ -1943,6 +1946,12 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             });
             localStorage.setItem('rimay_srsBackup', JSON.stringify(srsBackup));
             localStorage.removeItem('rimay_vMaster');
+            location.reload();
+        }
+
+        function resetStories() {
+            if (!confirm('¿Actualizar las historias?\n\nSe borran las historias guardadas y se recargan desde el archivo original.\n\nTu progreso (historias completadas) NO se borra.')) return;
+            localStorage.removeItem('rimay_Stories');
             location.reload();
         }
 
