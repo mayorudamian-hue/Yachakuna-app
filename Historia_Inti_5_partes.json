@@ -238,7 +238,7 @@
       },
       {
         "type": "text",
-        "q": "Inti: — ¡Noqapis! Quechua yachakuyta munani. Sapa p'unchay risaj.",
+        "q": "Inti: — ¡Noqapis! Quechuata yachakuyta munani. Sapa p'unchay risaj.",
         "e": "Inti: — ¡Yo también! Quiero aprender quechua. Iré todos los días."
       },
       {
@@ -263,7 +263,7 @@
     "scenes": [
       {
         "type": "text",
-        "q": "Kinsa runas sapa p'unchay quechua yachakunku. Kusisqa kanku.",
+        "q": "Kinsa runas sapa p'unchay quechuata yachakunku. Kusisqa kanku.",
         "e": "Los tres aprenden quechua todos los días. Están felices."
       },
       {
@@ -295,7 +295,7 @@
           "Sayk'usqa (Cansado)",
           "Phiñasqa (Enojado)"
         ],
-        "correct": 2
+        "correct": 1
       }
     ]
   }
