@@ -127,7 +127,7 @@
       },
       {
         "type": "question",
-        "title": "¿Maymanta atoj kashan?",
+        "title": "¿Maymantataj atoj?",
         "text": "¿De dónde es el zorro?",
         "options": [
           "Mayu llajtamanta (Del pueblo del río)",
@@ -181,8 +181,8 @@
       },
       {
         "type": "text",
-        "q": "Chajrapi ashkha runas tiyan. Paykuna yachachejkuna kanku.",
-        "e": "En la chacra hay muchas personas. Ellos son maestros."
+        "q": "Chajrapi ashkha runas tiyan. Wakinninku yachachejkuna kanku.",
+        "e": "En la chacra hay muchas personas. Algunos de ellos son maestros."
       },
       {
         "type": "text",
@@ -231,7 +231,7 @@
       {
         "type": "text",
         "q": "Atojqa: — Noqapis chakipi rini. ¿Autopichu colectivopichu astawan gustasunki?",
-        "e": "El zorro dice: — Yo también voy a pie. ¿Te gusta más el auto o el colectivo?"
+        "e": "El zorro dice: — Yo también voy a pie. ¿Te gusta más en auto o en colectivo?"
       },
       {
         "type": "question",
@@ -250,12 +250,12 @@
       },
       {
         "type": "text",
-        "q": "Ñanpi parlanku. Atojqa tapun: — ¿Maymanta jamunki kunan?",
+        "q": "Ñanpi parlanku. Atojqa tapun: — ¿Maymantataj jamushanki kunan?",
         "e": "En el camino conversan. El zorro pregunta: — ¿De dónde venís ahora?"
       },
       {
         "type": "text",
-        "q": "Alqoqa: — Mayu llajtamanta jamuni. Sapa p'unchay chajraman rini.",
+        "q": "Alqoqa: — Mayu llajtamanta jamushani. Sapa p'unchay chajraman rini.",
         "e": "El perro dice: — Vengo del pueblo del río. Todos los días voy a la chacra."
       },
       {
@@ -308,7 +308,7 @@
         "text": "¿Qué quieren los dos?",
         "options": [
           "Llajtaman riy (Ir a la ciudad)",
-          "Quechua yachakuy (Aprender quechua)"
+          "Quechuata yachakuy (Aprender quechua)"
         ],
         "correct": 1
       },
