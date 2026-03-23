@@ -6,15 +6,15 @@
     "icon": "📚",
     "level": "Intermedio",
     "scenes": [
-      {"type": "text", "q": "Jorgito uj wayna. Payqa qhechua yachakuyta munasqa.", "e": "Jorgito es un joven. Él quería aprender quechua."},
+      {"type": "text", "q": "Jorgitoqa uj wayna. Payqa qhechuata yachakuyta munasqa.", "e": "Jorgito es un joven. Él quería aprender quechua."},
       {"type": "text", "q": "Uj p'unchay, cursoman risaj nispa wasiymanta llojsin.", "e": "Un día, diciendo 'voy a ir al curso', sale de su casa."},
-      {"type": "text", "q": "Payqa kusisqa, ichaqa manchachisqa ima.", "e": "Él está feliz, pero también un poco asustado."},
-      {"type": "text", "q": "Cursopi chayamun. Jatun wasi. Ashqa yachakojkuna kashanku.", "e": "Llega al curso. Una casa grande. Hay muchos alumnos."},
+      {"type": "text", "q": "Payqa kusisqa, ichapis manchachisqa ima.", "e": "Él está feliz, pero también un poco asustado."},
+      {"type": "text", "q": "Cursopi chayamun. Jatun wasi. Ashkha yachakojkuna kashanku.", "e": "Llega al curso. Una casa grande. Hay muchos alumnos."},
       {"type": "text", "q": "Uj warmi qayllaykun: — ¡Imaynalla! Noqa Marta sutikuni.", "e": "Una chica se acerca: — ¡Hola! Yo me llamo Marta."},
       {"type": "text", "q": "Jorgito: — Imaynalla! Noqa Jorgito sutikuni. Kusikuni rejsisuspa.", "e": "Jorgito: — ¡Hola! Yo me llamo Jorgito. Encantado de conocerte."},
-      {"type": "text", "q": "Marta: — ¿Qhechuata yachakuyta munanki, Jorgitorí?", "e": "Marta: — ¿Vos también querés aprender quechua, Jorgito?"},
+      {"type": "text", "q": "Marta: — ¿Qanpis quechuata yachakuyta munankichu, Jorgito?", "e": "Marta: — ¿Vos también querés aprender quechua, Jorgito?"},
       {"type": "text", "q": "Jorgito: — Arí! Sinchita yachakuyta munani.", "e": "Jorgito: — ¡Sí! Quiero aprender mucho."},
-      {"type": "question", "title": "¿Imaynalla kashan Jorgito cursoman chayaspa?", "text": "¿Cómo está Jorgito al llegar al curso?", "options": ["Llakisqa (Triste)", "Kusisqa ichaqa manchachisqa (Feliz pero asustado)", "Sayk'usqa (Cansado)"], "correct": 1}
+      {"type": "question", "title": "¿Imayná kashan Jorgito cursoman chayaspa?", "text": "¿Cómo está Jorgito al llegar al curso?", "options": ["Llakisqa (Triste)", "Kusisqa ichapis manchachisqa (Feliz y un poco asustado)", "Sayk'usqa (Cansado)"], "correct": 1}
     ]
   },
   {
@@ -26,12 +26,12 @@
     "scenes": [
       {"type": "text", "q": "Yachachejqa yaykumun. Payqa don Roberto.", "e": "El profesor entra. Él es don Roberto."},
       {"type": "text", "q": "Don Roberto: — ¡Allillanchu, yachakojkuna! ¿Imaynalla kankichej?", "e": "Don Roberto: — ¡Hola, alumnos! ¿Cómo están?"},
-      {"type": "text", "q": "Yachakojkuna: — ¡Walejlla, yachachejniykichej!", "e": "Alumnos: — ¡Bien nomás, nuestro profesor!"},
-      {"type": "text", "q": "Don Roberto: — Qhechuaqa sumaj simí. Yachakuyta munankichejchu?", "e": "Don Roberto: — El quechua es una lengua hermosa. ¿Quieren aprenderla?"},
-      {"type": "text", "q": "Tukuykuna: — ¡Arí, yachachejníy! ¡Yachakuyta munayku!", "e": "Todos: — ¡Sí, profesor! ¡Queremos aprender!"},
-      {"type": "text", "q": "Don Roberto: — ¡Sumaj! Sapa p'unchay shamusunkichej chayqa, usqhayta yachakunkichej.", "e": "Don Roberto: — ¡Muy bien! Si vienen todos los días, aprenderán rápido."},
-      {"type": "text", "q": "Jorgito yuyarin: 'Sapa p'unchay shamunisaj. Mana pantasajchu.'", "e": "Jorgito piensa: 'Voy a venir todos los días. No me voy a equivocar.'"},
-      {"type": "question", "title": "¿Imata niq don Roberto yachakojkunaman?", "text": "¿Qué les dice don Roberto a los alumnos?", "options": ["Qhechuaqa ancha sasacha (El quechua es muy difícil)", "Sapa p'unchay shamusunkichej chayqa usqhayta yachakunkichej (Si vienen todos los días aprenderán rápido)", "Mana yachachisajchu (No voy a enseñar)"], "correct": 1}
+      {"type": "text", "q": "Yachakojkuna: — ¡Walejlla, yachachej!", "e": "Alumnos: — ¡Bien nomás, profesor!"},
+      {"type": "text", "q": "Don Roberto: — Quechuaqa sumaj. ¿Yachakuyta munankichejchu?", "e": "Don Roberto: — El quechua es hermoso. ¿Quieren aprender?"},
+      {"type": "text", "q": "Tukuy: — ¡Arí, yachachej! ¡Yachakuyta munayku!", "e": "Todos: — ¡Sí, profesor! ¡Queremos aprender!"},
+      {"type": "text", "q": "Don Roberto: — ¡Sumaj! Sichus sapa p'unchay jamunkichej chayqa, usqhallata yachakunkichej.", "e": "Don Roberto: — ¡Muy bien! Si vienen todos los días, aprenderán rápido."},
+      {"type": "text", "q": "Jorgito yuyarin: 'Sapa p'unchay jamusaj. Mana pantasajchu.'", "e": "Jorgito piensa: 'Voy a venir todos los días. No me voy a equivocar.'"},
+      {"type": "question", "title": "¿Imatá nin don Roberto yachakojkunaman?", "text": "¿Qué les dice don Roberto a los alumnos?", "options": ["Qhechuaqa mana facilchu (El quechua no es fácil)", "Sichus sapa p'unchay jamunkichej chayqa, usqhayllata yachakunkichej (Si vienen todos los días aprenderán rápido)", "Mana yachachisajchu (No voy a enseñar)"], "correct": 1}
     ]
   },
   {
@@ -41,15 +41,15 @@
     "icon": "✏️",
     "level": "Intermedio",
     "scenes": [
-      {"type": "text", "q": "Ñawpaj lecciónpi, don Roberto tapun: — ¿Ima sutiykichej?", "e": "En la primera lección, don Roberto pregunta: — ¿Cómo se llaman?"},
+      {"type": "text", "q": "Uj kaj lecciónpi, don Roberto tapun: — ¿Ima sutiykichej?", "e": "En la primera lección, don Roberto pregunta: — ¿Cómo se llaman?"},
       {"type": "text", "q": "Marta: — Noqa Marta sutikuni. Moreno llajtamanta kani.", "e": "Marta: — Yo me llamo Marta. Soy de la ciudad de Moreno."},
       {"type": "text", "q": "Carlos: — Noqa Carlos. Noqapis Moreno llajtamanta kani.", "e": "Carlos: — Yo soy Carlos. Yo también soy de la ciudad de Moreno."},
-      {"type": "text", "q": "Jorgito: — Noqa Jorgito sutikuni. Orqo llajtamanta kani.", "e": "Jorgito: — Yo me llamo Jorgito. Soy del pueblo del cerro."},
+      {"type": "text", "q": "Jorgito: — Noqa Jorgito sutikuni. Pilar llajtamanta kani.", "e": "Jorgito: — Yo me llamo Jorgito. Soy de la ciudad de Pilar."},
       {"type": "text", "q": "Don Roberto: — ¡Sumaj! ¿Imapí cursoman jamunkichej?", "e": "Don Roberto: — ¡Muy bien! ¿En qué vienen al curso?"},
       {"type": "text", "q": "Marta: — Noqa colectivopi jamuni.", "e": "Marta: — Yo vengo en colectivo."},
       {"type": "text", "q": "Jorgito: — Noqa chakipi jamuni. Wasiy karu kashan.", "e": "Jorgito: — Yo vengo a pie. Mi casa está lejos."},
-      {"type": "text", "q": "Don Roberto: — ¡Kallpachakuy, Jorgito! Sinchita ruwanki.", "e": "Don Roberto: — ¡Esforzate, Jorgito! Lo hacés muy bien."},
-      {"type": "question", "title": "¿Maymanta kashan Jorgito?", "text": "¿De dónde es Jorgito?", "options": ["Moreno llajtamanta (De la ciudad de Moreno)", "Mayu llajtamanta (Del pueblo del río)", "Orqo llajtamanta (Del pueblo del cerro)"], "correct": 2}
+      {"type": "text", "q": "Don Roberto: — ¡Kallpachakuy, Jorgito! Allinta ruwanki.", "e": "Don Roberto: — ¡Esforzate, Jorgito! Lo hacés muy bien."},
+      {"type": "question", "title": "¿Maymantataj Jorgito?", "text": "¿De dónde es Jorgito?", "options": ["Moreno llajtamanta", "Pilar llajtamanta", "Orqo llajtamanta"], "correct": 2}
     ]
   },
   {
@@ -59,15 +59,15 @@
     "icon": "😰",
     "level": "Intermedio",
     "scenes": [
-      {"type": "text", "q": "Kinsa p'unchay pasarqa. Damianqa sayk'usqa kashan.", "e": "Pasaron tres días. Jorgito está cansado."},
-      {"type": "text", "q": "Payqa llakikunsqa: 'Qhechuaqa ancha sasá. Mana entiendenichu.'", "e": "Él se entristece: 'El quechua es muy difícil. No entiendo.'"},
-      {"type": "text", "q": "Cursopi, Jorgito pantarqa. Yachachejqa tapurqa.", "e": "En el curso, Jorgito se equivocó. El profesor preguntó."},
-      {"type": "text", "q": "Don Roberto: — Jorgito, ¿imaynalla kashanki?", "e": "Don Roberto: — Jorgito, ¿cómo estás?"},
+      {"type": "text", "q": "Kinsa p'unchay pasajtin, Jorgitoqa sayk'usqa kasqa.", "e": "Cuando pasaron tres días. Jorgito estaba cansado."},
+      {"type": "text", "q": "Payqa llakisqa kaspa, nerqa: 'Quechuaqa mana facilchu. Mana entiendenichu.'nispa", "e": "Él estando triste dijo: 'El quechua no es fácil. No entiendo.'"},
+      {"type": "text", "q": "Cursopi, Jorgito pantarqa. Chaymantataj yachachejqa payta taporqa.", "e": "En el curso, Jorgito se equivocó. Después de eso, el profesor le preguntó."},
+      {"type": "text", "q": "Don Roberto: — Jorgito, ¿imayná kakushanki?", "e": "Don Roberto: — Jorgito, ¿cómo te encuentras?"},
       {"type": "text", "q": "Jorgito: — Llakisqa kashani, yachachejníy. Mana parlayta atinichu.", "e": "Jorgito: — Estoy triste, profesor. No puedo hablar."},
-      {"type": "text", "q": "Don Roberto: — ¡Ama llakikuychu! Tukuy pantanku qallarispa.", "e": "Don Roberto: — ¡No te pongas triste! Todos se equivocan al empezar."},
-      {"type": "text", "q": "Don Roberto: — Qan sinchi wayna kanki. Yachakuyta atinki.", "e": "Don Roberto: — Vos sos un joven fuerte. Podés aprender."},
-      {"type": "text", "q": "Jorgito uyarin. Pisi pisi kusikun.", "e": "Jorgito escucha. De a poco se alegra."},
-      {"type": "question", "title": "¿Imaraykus llakisqa kashan Jorgito?", "text": "¿Por qué está triste Jorgito?", "options": ["Sayk'usqa kashan (Está cansado)", "Mana parlayta atinichu (No puede hablar)", "Wasiman kutimunqa (Va a volver a su casa)"], "correct": 1}
+      {"type": "text", "q": "Don Roberto: — ¡Ama llakikuychu! Tukuy pantanchej qallarispa.", "e": "Don Roberto: — ¡No te pongas triste! Todos nos equivocamos al empezar."},
+      {"type": "text", "q": "Don Roberto: — Qan kallpachakushanki. Yachakuyta atinki.", "e": "Don Roberto: — Vos te estás esforzando. Podrás aprender."},
+      {"type": "text", "q": "Jorgito uyarin. Pisimanta pisi kusikun.", "e": "Jorgito escucha. De a poco se alegra."},
+      {"type": "question", "title": "¿Imaraykuchus llakisqa kashan Jorgito?", "text": "¿Por qué está triste Jorgito?", "options": ["Sayk'usqa kasqanrayku", "Mana parlayta atisqanrayku", "Wasiman kutimusqanrayku"], "correct": 1}
     ]
   },
   {
@@ -79,14 +79,14 @@
     "scenes": [
       {"type": "text", "q": "Chaymanta, Marta Carlostawan Jorgitoman qayllaykunku.", "e": "Después, Marta y Carlos se acercan a Jorgito."},
       {"type": "text", "q": "Marta: — ¡Ama llakikuychu, Jorgito! Noqaykupis pantarqayku qallarispa.", "e": "Marta: — ¡No te pongas triste, Jorgito! Nosotros también nos equivocamos al empezar."},
-      {"type": "text", "q": "Carlos: — Noqa iskay watata yachakuni. Kunanqa parlayta atikuni.", "e": "Carlos: — Yo llevo dos años aprendiendo. Ahora puedo hablar."},
-      {"type": "text", "q": "Jorgito: — ¿Iskay watata? ¡Ancha unay!", "e": "Jorgito: — ¿Dos años? ¡Qué largo!"},
-      {"type": "text", "q": "Marta: — Mana. Usqhayta pasarqa. Sapa p'unchay yachakuspa, usqhayta yachanki.", "e": "Marta: — No. Pasó rápido. Aprendiendo todos los días, aprendés rápido."},
+      {"type": "text", "q": "Carlos: — Noqa kinsa watasta yachakushani. Kunanqa parlayta atikuni.", "e": "Carlos: — Yo llevo tres años aprendiendo. Ahora puedo hablar."},
+      {"type": "text", "q": "Jorgito: — ¿Kinsa watasta? ¡Unay tiempo!", "e": "Jorgito: — ¿Tres años? ¡Mucho tiempo!"},
+      {"type": "text", "q": "Marta: — Mana. Usqhayllata pasarqa. Sapa p'unchay yachakuspa, usqhayllata yachakunki.", "e": "Marta: — No. Pasó rápido. Aprendiendo todos los días, aprenderás rápido."},
       {"type": "text", "q": "Carlos: — ¿Mashkha watasniyoj kanki, Jorgito?", "e": "Carlos: — ¿Cuántos años tenés, Jorgito?"},
       {"type": "text", "q": "Jorgito: — Noqa iskay chunka kinsayoj watasniyoj kani.", "e": "Jorgito: — Yo tengo 23 años."},
-      {"type": "text", "q": "Marta: — ¡Wayna kanki! Ashka tiempoyoj kanki yachakuyta.", "e": "Marta: — ¡Sos joven! Tenés mucho tiempo para aprender."},
-      {"type": "text", "q": "Jorgito sonqonpi ch'ikan kallpa taripun.", "e": "Jorgito encuentra un poco de fuerza en su corazón."},
-      {"type": "question", "title": "¿Mashkha watasniyoj kashan Carlos qhechuata yachakuspa?", "text": "¿Cuánto tiempo lleva Carlos aprendiendo quechua?", "options": ["Uj wata (Un año)", "Kinsa wata (Tres años)", "Iskay wata (Dos años)"], "correct": 2}
+      {"type": "text", "q": "Marta: — ¡Wayna kanki! Ashka tiempoyoj kanki yachakunaykipaj.", "e": "Marta: — ¡Sos joven! Tenés mucho tiempo para aprender."},
+      {"type": "text", "q": "Jorgito sonqonpi kusikun.", "e": "Jorgito se alegra en su corazón."},
+      {"type": "question", "title": "¿Mashkha watasniyoj kashan Carlos qhechuata yachakuspa?", "text": "¿Cuánto tiempo lleva Carlos aprendiendo quechua?", "options": ["Uj wata", "Kinsa watas", "Iskay watas"], "correct": 1}
     ]
   },
   {
@@ -96,15 +96,15 @@
     "icon": "💪",
     "level": "Intermedio",
     "scenes": [
-      {"type": "text", "q": "Chaymanta, Jorgito sapa p'unchay cursoman rirqa.", "e": "Después de eso, Jorgito fue al curso todos los días."},
-      {"type": "text", "q": "Para musan chayqa, chakipi rirqa. Chiri musan chayqa, chakipi rirqa.", "e": "Cuando llovía, iba a pie. Cuando hacía frío, iba a pie."},
-      {"type": "text", "q": "Payqa yuyarqa: 'Ama saqenichu. Sapa p'unchay risaj.'", "e": "Él pensaba: 'No voy a abandonar. Iré todos los días.'"},
-      {"type": "text", "q": "Uj p'unchay, don Roberto tapurqa: — ¿Imapí cursoman jamunki, Jorgito?", "e": "Un día, don Roberto preguntó: — ¿En qué venís al curso, Jorgito?"},
+      {"type": "text", "q": "Chaymanta, Jorgito sapa p'unchay cursoman rerqa.", "e": "Después de eso, Jorgito fue al curso todos los días."},
+      {"type": "text", "q": "Sichus paramushan chayqa, chakipi rerqa. Sichus chirimushan chayqa, chakipi rerqa.", "e": "Cuando estaba lloviendo, fue a pie. Cuando estaba frío, fue a pie."},
+      {"type": "text", "q": "Payqa yuyaj: 'Ama saqenichu. Sapa p'unchay risaj.'", "e": "Él pensaba: 'No voy a abandonar. Iré todos los días.'"},
+      {"type": "text", "q": "Uj p'unchay, don Roberto taporqa: — ¿Imapí cursoman jamunki, Jorgito?", "e": "Un día, don Roberto preguntó: — ¿En qué venís al curso, Jorgito?"},
       {"type": "text", "q": "Jorgito: — Chakipi jamuni, yachachejníy. Wasiy karu kashan.", "e": "Jorgito: — Vengo a pie, profesor. Mi casa está lejos."},
       {"type": "text", "q": "Don Roberto: — ¿Autopichu colectivopíchu jamuyta atinki?", "e": "Don Roberto: — ¿Podés venir en auto o en colectivo?"},
-      {"type": "text", "q": "Jorgito: — Mana qolqeyojchu kani. Chakipi jamuni.", "e": "Jorgito: — No tengo dinero. Vengo a pie."},
-      {"type": "text", "q": "Don Roberto sonqonpi llakikun. Payqa Damianta sumajtam qhawan.", "e": "Don Roberto se entristece en su corazón. Él ve muy bien a Jorgito."},
-      {"type": "question", "title": "¿Imaraykus chakipi rin Jorgito?", "text": "¿Por qué Jorgito va a pie?", "options": ["Puriyta munan (Le gusta caminar)", "Mana qolqeyojchu kashan (No tiene dinero)", "Karu kashan (Está lejos)"], "correct": 1}
+      {"type": "text", "q": "Jorgito: — Mana qolqe kanchu. Chakillapi tukuy ladoman rini.", "e": "Jorgito: — No hay dinero. Voy solo a pie a todos lados."},
+      {"type": "text", "q": "Don Roberto sonqonpi llakikun. Payqa Jorgitota mayta valoran.", "e": "Don Roberto se entristece en su corazón. Él valora a Jorgito."},
+      {"type": "question", "title": "¿Imaraykutaj chakipi rin Jorgito?", "text": "¿Por qué Jorgito va a pie?", "options": ["Puriyta munan", "Mana qolqe kanchu", "Karu kashan"], "correct": 1}
     ]
   },
   {
@@ -114,15 +114,16 @@
     "icon": "🌱",
     "level": "Intermedio",
     "scenes": [
-      {"type": "text", "q": "Chunka p'unchay pasarqa. Jorgito astawanraq yachakun.", "e": "Pasaron diez días. Jorgito aprende cada vez más."},
-      {"type": "text", "q": "Kunanqa wakin simikunata parlayta atikun.", "e": "Ahora puede hablar algunas palabras."},
-      {"type": "text", "q": "Uj p'unchay, Marta tapurqa: — ¿Imaynalla kashanki, Jorgito?", "e": "Un día, Marta preguntó: — ¿Cómo estás, Jorgito?"},
-      {"type": "text", "q": "Jorgito: — ¡Kusisqa kashani! Kunan parlayta qallarini.", "e": "Jorgito: — ¡Estoy feliz! Ahora empiezo a hablar."},
-      {"type": "text", "q": "Marta: — ¡Sumaj! ¿Imaynalla kashanki qhechuapi?", "e": "Marta: — ¡Qué bueno! ¿Cómo estás en quechua?"},
-      {"type": "text", "q": "Jorgito quechuapi kutichín: — Walejlla kashani, gracias! ¡Kusisqa!", "e": "Jorgito responde en quechua: — ¡Estoy bien, gracias! ¡Feliz!"},
-      {"type": "text", "q": "Marta: — ¡Imaymana sumaj! ¡Aswan allin parlanki!", "e": "Marta: — ¡Qué hermoso! ¡Hablás cada vez mejor!"},
-      {"type": "text", "q": "Jorgito sonqonpi jatun kusikuyta taripun.", "e": "Jorgito encuentra una gran alegría en su corazón."},
-      {"type": "question", "title": "¿Imaynalla kashan Jorgito chunka p'unchay pasaqtinqa?", "text": "¿Cómo está Jorgito después de diez días?", "options": ["Llakisqa (Triste)", "Kusisqa, parlayta qallarispa (Feliz, empezando a hablar)", "Sayk'usqa (Cansado)"], "correct": 1}
+      {"type": "text", "q": "Tawa chunka p'unchay pasajtin, Jorgito astawanraj yachakun.", "e": "Cuando pasaron cuarenta días. Jorgito aprende aún más."},
+      {"type": "text", "q": "Kunanqa wakin palabrasta parlayta atin.", "e": "Ahora puede hablar algunas palabras."},
+      {"type": "text", "q": "Uj p'unchay, Marta taporqa: — ¿Imaynalla kashanki, Jorgito?", "e": "Un día, Marta preguntó: — ¿Cómo estás, Jorgito?"},
+      {"type": "text", "q": "Jorgito: — ¡Kusisqa kashani! Kunan wakin palabrasta parlayta atini.", "e": "Jorgito: — ¡Estoy feliz! Ahora puedo hablar algunas palabras."},
+      {"type": "text", "q": "Marta: — ¡Sumaj! ¿Astawan yachakunkichu?", "e": "Marta: — ¡Qué bueno! ¿Aprendiste más?"},
+      {"type": "text", "q": "Jorgito quechuapi kutichin: — Arí, gracias! Sapa día astawan yachakuni", "e": "Jorgito responde en quechua: — Arí, gracias! Cada día aprendo más"},
+      {"type": "text", "q": "Marta: — ¡Sapa kuti aswan allinta parlanki!", "e": "Marta: — ¡Hablás mejor cada vez!"},
+      {"type": "text", "q": "Jorgito sonqonpi kusikun.", "e": "Jorgito se alegra en su corazón."},
+      {"type": "question", "title": "¿Imayná kashan Jorgito tiempo pasajtin?", "text": "¿Cómo está Jorgito al pasar el tiempo?", "options": ["Llakisqa", "Kusisqa", "Sayk'usqa"], "correct": 1},
+      {"type": "question", "title": "¿Maskha tiempotaj pasarqa Jorgito astawanraj yachakunanpaj?", "text": "¿Cuánto tiempo pasó para que jorgito aprendiera aún más?", "options": ["iskay chunka días", "Kinsa chunka días", "Tawa chunka días"], "correct": 2}
     ]
   },
   {
@@ -132,15 +133,15 @@
     "icon": "🌧️",
     "level": "Intermedio",
     "scenes": [
-      {"type": "text", "q": "Uj p'unchay, sinchita paramusan. Wayramusan ima.", "e": "Un día, llueve mucho. También hace viento."},
-      {"type": "text", "q": "Wakin yachakojkuna mana jamusankuchu. Paykunaqa wasipi kakusanku.", "e": "Algunos alumnos no vienen. Ellos se quedan en su casa."},
-      {"type": "text", "q": "Jorgito ichaqa chayamun. Joq'osqa, chiriwan, kusisqa.", "e": "Jorgito en cambio llega. Mojado, con frío, feliz."},
-      {"type": "text", "q": "Don Roberto: — ¡Jorgito! ¿Chakipis jamorankichu kay parapi?", "e": "Don Roberto: — ¡Jorgito! ¿Has venido a pie con esta lluvia?"},
-      {"type": "text", "q": "Jorgito: — Arí, yachachejníy. Mana saqenichu nispa jamorqani.", "e": "Jorgito: — Sí, profesor. Vine diciendo que no voy a abandonar."},
-      {"type": "text", "q": "Don Roberto sinchita kusikun. Ñawisninpi yarqha tiyan.", "e": "Don Roberto se alegra mucho. En sus ojos hay lágrimas."},
-      {"type": "text", "q": "Don Roberto: — Qan, Jorgito, sumaj yachakoj kanki. Yachachejníy kusikun.", "e": "Don Roberto: — Vos, Jorgito, sos un gran alumno. Tu profesor está feliz."},
+      {"type": "text", "q": "Uj p'unchay, sinch'ita paramushan, wayramushan ima.", "e": "Un día, llueve mucho, y hace viento."},
+      {"type": "text", "q": "Wakin yachakojkuna mana jamushankuchu. Paykunaqa wasinkupi kashanku.", "e": "Algunos alumnos no vienen. Ellos están en sus casas."},
+      {"type": "text", "q": "Pero Jorgito, paychá chayamonqa. Joq'ochasqa kajtinpis, pay jamonqa.", "e": "Pero Jorgito, el seguro llegará. Aunque nieve, el vendrá."},
+      {"type": "text", "q": "Don Roberto: — ¡Jorgito! ¿Chakipi jamunkichu kay sinch'i parawan?", "e": "Don Roberto: — ¡Jorgito! ¿Has venido a pie con esta gran lluvia?"},
+      {"type": "text", "q": "Jorgito: — Arí, yachachejníy. Mana saqesajchu nispa jamorqani.", "e": "Jorgito: — Sí, profesor. Vine diciendo que no voy a abandonar."},
+      {"type": "text", "q": "Don Roberto mayta kusikun.", "e": "Don Roberto se alegra mucho."},
+      {"type": "text", "q": "Don Roberto: — Qan, Jorgito, sumaj yachakoj kanki. Yachachejniyki kusikun.", "e": "Don Roberto: — Vos, Jorgito, sos un gran alumno. Tu profesor se alegra."},
       {"type": "text", "q": "Jorgito: — ¡Noqapis kusikuni, yachachejníy! Parlayta yachachiwanki.", "e": "Jorgito: — ¡Yo también estoy feliz, profesor! Me enseñás a hablar."},
-      {"type": "question", "title": "¿Imaraykus jamorqa Jorgito parapi?", "text": "¿Por qué vino Jorgito bajo la lluvia?", "options": ["Para musan mana yachaqtiñ (No sabía que llovía)", "Mana saqenichu nispa (Diciendo que no va a abandonar)", "Colectivopi jamorqa (Vino en colectivo)"], "correct": 1}
+      {"type": "question", "title": "¿Imarayku jamorqa Jorgito parawan?", "text": "¿Por qué vino Jorgito bajo la lluvia?", "options": ["Paramushasqanrayku", "Mana saqeyta munasqanrayku", "Colectivopi jamusqanrayku"], "correct": 1}
     ]
   },
   {
@@ -150,16 +151,16 @@
     "icon": "💬",
     "level": "Intermedio",
     "scenes": [
-      {"type": "text", "q": "Iskay killapi, Jorgito ashkata yachakurqa.", "e": "En dos meses, Jorgito aprendió mucho."},
-      {"type": "text", "q": "Uj p'unchay, Carlos tapurqa qhechuapi:", "e": "Un día, Carlos le preguntó en quechua:"},
-      {"type": "text", "q": "Carlos: — ¿Imaynalla kashanki, Jorgito? ¿Qhechuata parlayta atinkiraqchu?", "e": "Carlos: — ¿Cómo estás, Jorgito? ¿Todavía podés hablar quechua?"},
-      {"type": "text", "q": "Jorgito qhechuapi kutichín: — Walejlla kashani. Kunanqa parlayta atikuni.", "e": "Jorgito responde en quechua: — Estoy bien. Ahora puedo hablar."},
-      {"type": "text", "q": "Carlos: — ¡Imaymana sumaj! ¿Maymanta kanki?", "e": "Carlos: — ¡Qué hermoso! ¿De dónde sos?"},
+      {"type": "text", "q": "Sojta killapi, Jorgito ashkhata yachakorqa.", "e": "En seis meses, Jorgito aprendió mucho."},
+      {"type": "text", "q": "Uj p'unchay, Carlos payta taporqa qhechuapi:", "e": "Un día, Carlos le preguntó en quechua:"},
+      {"type": "text", "q": "Carlos: — ¿Imaynalla kashanki, Jorgito? ¿Quechuata parlayta atinkichu?", "e": "Carlos: — ¿Cómo estás, Jorgito? ¿Podés hablar quechua?"},
+      {"type": "text", "q": "Jorgito qhechuapi kutichin: — Walejlla kashani. Kunanqa parlayta atikuni.", "e": "Jorgito responde en quechua: — Estoy bien. Ahora puedo hablar."},
+      {"type": "text", "q": "Carlos: — ¡Sumaj! ¿Maymanta jamunki?", "e": "Carlos: — ¡Qué hermoso! ¿De dónde vienes?"},
       {"type": "text", "q": "Jorgito: — Orqo llajtamanta kani. Chakipi cursoman jamuni.", "e": "Jorgito: — Soy del pueblo del cerro. Vengo a pie al curso."},
       {"type": "text", "q": "Carlos: — ¿Mashkha watasniyoj kanki?", "e": "Carlos: — ¿Cuántos años tenés?"},
       {"type": "text", "q": "Jorgito: — Iskay chunka kinsayoj watasniyoj kani. ¿Qanrí?", "e": "Jorgito: — Tengo 23 años. ¿Y vos?"},
-      {"type": "text", "q": "Carlos: — Noqa iskay chunka pichqayoj watasniyoj kani. ¡Allillanchu, wawqey!", "e": "Carlos: — Yo tengo 25 años. ¡Hola, hermano!"},
-      {"type": "question", "title": "¿Mashkha killapi yachakurqa Jorgito?", "text": "¿En cuántos meses aprendió Jorgito?", "options": ["Uj killapi (En un mes)", "Kinsa killapi (En tres meses)", "Iskay killapi (En dos meses)"], "correct": 2}
+      {"type": "text", "q": "Carlos: — Noqa iskay chunka pichqayoj watasniyoj kani.", "e": "Carlos: — Yo tengo 25 años."},
+      {"type": "question", "title": "¿Mashkha tiempotaj parlayta yachakorqa Jorgito?", "text": "¿En cuántos meses aprendió Jorgito a hablar?", "options": ["Uj killapi (En un mes)", "Kinsa killapi (En tres meses)", "Sojta killapi (En seis meses)"], "correct": 2}
     ]
   },
   {
@@ -169,17 +170,17 @@
     "icon": "⭐",
     "level": "Intermedio",
     "scenes": [
-      {"type": "text", "q": "Tukuynin leccionkuna tukuriyta hunt'arqa.", "e": "Todas las lecciones llegaron a su fin."},
+      {"type": "text", "q": "Tukuynin leccionesta junt'akorqa.", "e": "Todas las lecciones se completaron."},
       {"type": "text", "q": "Don Roberto yachakojkunaman nin:", "e": "Don Roberto les dice a los alumnos:"},
       {"type": "text", "q": "— ¡Sumajta ruwankichej! Sapa p'unchay yachakusqaykichejrayku, ashkata yachankichej.", "e": "— ¡Lo hicieron muy bien! Por haber aprendido todos los días, saben mucho."},
-      {"type": "text", "q": "Don Roberto Jorgitoman qhawan: — Qanqa, Jorgito, aswan sinchi yachakorkkanki.", "e": "Don Roberto mira a Jorgito: — Vos, Jorgito, aprendiste con más fuerza que todos."},
-      {"type": "text", "q": "Jorgito: — Yachachejníy, qan yachachiwankirajmi. Noqa yachakusaj.", "e": "Jorgito: — Profesor, vos me seguís enseñando. Yo seguiré aprendiendo."},
-      {"type": "text", "q": "Marta: — ¡Q'aya noqanchej tukuyta qhechuata parlarisunchej!", "e": "Marta: — ¡Mañana todos vamos a empezar a hablar quechua!"},
-      {"type": "text", "q": "Carlos: — ¡Arí! ¡Ichá kinsa watapi Jorgito aswan allintas parlanqa!", "e": "Carlos: — ¡Sí! ¡Tal vez en tres años Jorgito hablará aún mejor!"},
-      {"type": "text", "q": "Jorgito sonqompi jatun kallpa taripun. Ñawisninpi kusiy tiyan.", "e": "Jorgito encuentra gran fuerza en su corazón. En sus ojos hay alegría."},
-      {"type": "text", "q": "Payqa yuyarin: 'Mana saqenichu. Sapa p'unchay yachakusaj. Uj p'unchay qhechuata parlayta atisaj.'", "e": "Él piensa: 'No voy a abandonar. Aprenderé todos los días. Algún día podré hablar quechua.'"},
-      {"type": "text", "q": "Chayqa sumaj sueñoy — ¡yachakuyta saqeychu!", "e": "Ese es un hermoso sueño — ¡no abandones el aprendizaje!"},
-      {"type": "question", "title": "¿Imatas yuyarin Jorgito tukukuypi?", "text": "¿Qué piensa Jorgito al final?", "options": ["Ñañas yachani, mañas yachakusajchu (Ya sé, no voy a seguir aprendiendo)", "Mana saqenichu, sapa p'unchay yachakusaj (No voy a abandonar, aprenderé todos los días)", "Wasiman kutisaj, mañas cursoman risajchu (Voy a volver a casa, ya no iré al curso)"], "correct": 1}
+      {"type": "text", "q": "Don Roberto Jorgitoman qhawan: — Qanqa, Jorgito, astawan kallpachakunki yachakunaykipaj.", "e": "Don Roberto mira a Jorgito: — Vos, Jorgito, te esforzaste más por aprender."},
+      {"type": "text", "q": "Jorgito: — Yachachejníy, qan sapa día yachachiwanki. Noqa yachakusaj.", "e": "Jorgito: — Profesor, vos cada dia me enseñas. Yo aprenderé."},
+      {"type": "text", "q": "Marta: — ¡Q'aya noqanchej tukuyta qhechuata parlarisunchej!", "e": "Marta: — ¡Mañana nosotros a todos hablaremos quechua!"},
+      {"type": "text", "q": "Carlos: — ¡Arí! ¡Ichá kinsa watapi Jorgito aswan allinta parlanqa!", "e": "Carlos: — ¡Sí! ¡Tal vez en tres años Jorgito hablará aún mejor!"},
+      {"type": "text", "q": "Jorgito sonqonpi kusikun. Ñawisninpi kusiy tiyan.", "e": "Jorgito se alegra en su corazón. En sus ojos hay alegría."},
+      {"type": "text", "q": "Payqa yuyarin: 'Mana saqenichu. Sapa p'unchay yachakusaj. Uj p'unchay quechuata parlayta atisaj.'", "e": "Él piensa: 'No voy a abandonar. Aprenderé todos los días. Algún día podré hablar quechua.'"},
+      {"type": "text", "q": "Chayqa sumaj meta — ¡Ama saqeychu!", "e": "Esa es una excelente meta — ¡no abandones!"},
+      {"type": "question", "title": "¿Imatá yuyarin Jorgito tukukuypi?", "text": "¿Qué piensa Jorgito al final?", "options": ["Yachaniña, manaña yachakusajchu (Ya sé, no voy a aprender)", "Mana saqesajchu, sapa p'unchay yachakusaj (No voy a abandonar, aprenderé todos los días)", "Wasiman kutisaj, manaña cursoman risajchu (Voy a volver a casa, ya no iré al curso)"], "correct": 1}
     ]
   }
 ]
