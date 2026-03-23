@@ -229,6 +229,7 @@
         .story-question-box { padding: 20px; border-radius: 15px; background: #fef9ec; border: 2px solid var(--duo-yellow); animation: popIn 0.3s ease-out; }
         #storyFooter { padding: 20px; background: white; border-top: 2px solid var(--border); }
         @keyframes popIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        #storyLivesDisplay { transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
         /* --- CHIPS DE CATEGORÍA --- */
         .cat-chip { background: white; color: #aaa; border: 2px solid var(--border); border-bottom: 3px solid var(--border); border-radius: 20px; padding: 5px 12px; font-size: 12px; font-weight: 800; cursor: pointer; width: auto; transition: all 0.15s; text-transform: none; }
@@ -611,6 +612,7 @@
             <div style="flex: 1; height: 15px; background: var(--border); border-radius: 10px; overflow: hidden;">
                 <div id="storyProgressBar" style="width: 0%; height: 100%; background: var(--duo-green); transition: 0.3s;"></div>
             </div>
+            <div id="storyLivesDisplay" style="font-size: 22px; font-weight: 900; letter-spacing: 2px;">❤️❤️</div>
         </div>
         
         <div id="storyContent">
@@ -1021,6 +1023,7 @@
         // --- VARIABLES GLOBALES ---
         let currentStory = null;
         let currentSceneIndex = 0;
+        let storyLives = 2;
         let myChart = null;
         let activityChart = null;
         let timeChart = null;
@@ -1520,7 +1523,9 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
         function startStory(id) {
             currentStory = storiesData.find(s => s.id === id);
             currentSceneIndex = 0;
+            storyLives = 2;
             document.getElementById('storyContent').innerHTML = '';
+            document.getElementById('storyLivesDisplay').innerText = '❤️❤️';
             document.getElementById('storyPlayer').classList.remove('hidden');
             document.getElementById('btnStoryNext').onclick = nextScene;
             nextScene();
@@ -1589,10 +1594,35 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             }
         }
 
+        function updateStoryLivesDisplay() {
+            const display = document.getElementById('storyLivesDisplay');
+            if (storyLives === 2) display.innerText = '❤️❤️';
+            else if (storyLives === 1) display.innerText = '❤️🖤';
+            else display.innerText = '🖤🖤';
+        }
+
+        function showStoryGameOver() {
+            playIncorrectSound();
+            const content = document.getElementById('storyContent');
+            content.innerHTML = `
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; text-align:center; padding:30px; gap:20px;">
+                    <div style="font-size:80px; animation: popIn 0.5s ease-out;">💔</div>
+                    <h2 style="color:var(--duo-red); font-size:28px; margin:0;">¡Se acabaron las vidas!</h2>
+                    <p style="color:#666; font-size:16px; margin:0;">${currentStory.title}</p>
+                    <p style="color:#aaa; font-size:14px; margin:0;">Volvé a intentarlo desde el principio</p>
+                    <div style="display:flex; gap:12px; width:100%; max-width:300px;">
+                        <button type="button" class="special" onclick="startStory(currentStory.id)" style="flex:1;">🔄 Reintentar</button>
+                        <button type="button" class="secondary" onclick="exitStory(); renderStoriesList();" style="flex:1;">🏠 Salir</button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('btnStoryNext').classList.add('hidden');
+        }
+
         function renderStoryQuestion(scene) {
             const container = document.getElementById('storyContent');
             const btnNext = document.getElementById('btnStoryNext');
-            btnNext.disabled = true; // Bloquea avanzar
+            btnNext.disabled = true;
 
             const box = document.createElement('div');
             box.className = 'story-question-box';
@@ -1604,7 +1634,6 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                 optBtn.style = "width: 100%; margin-top: 10px; text-align: left; text-transform: none;";
                 optBtn.innerText = opt;
                 optBtn.onclick = () => {
-                    // Desactivar otros botones para evitar clics múltiples
                     Array.from(box.querySelectorAll('button')).forEach(b => b.disabled = true);
                     
                     if (idx === scene.correct) {
@@ -1614,15 +1643,29 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                         currentSceneIndex++;
                         playCorrectSound();
                     } else {
+                        // Perder una vida
+                        storyLives--;
+                        updateStoryLivesDisplay();
                         optBtn.style.backgroundColor = 'var(--duo-red)';
                         optBtn.style.color = 'white';
                         playIncorrectSound();
-                        // Reactivar si falla
-                        setTimeout(() => {
-                            Array.from(box.querySelectorAll('button')).forEach(b => b.disabled = false);
-                            optBtn.style.backgroundColor = '';
-                            optBtn.style.color = '';
-                        }, 1000);
+
+                        // Animar el corazón
+                        const livesEl = document.getElementById('storyLivesDisplay');
+                        livesEl.style.transform = 'scale(1.4)';
+                        setTimeout(() => livesEl.style.transform = 'scale(1)', 300);
+
+                        if (storyLives <= 0) {
+                            // Sin vidas — game over
+                            setTimeout(() => showStoryGameOver(), 800);
+                        } else {
+                            // Todavía tiene vida — reactivar opciones
+                            setTimeout(() => {
+                                Array.from(box.querySelectorAll('button')).forEach(b => b.disabled = false);
+                                optBtn.style.backgroundColor = '';
+                                optBtn.style.color = '';
+                            }, 1000);
+                        }
                     }
                 };
                 box.appendChild(optBtn);
@@ -1634,6 +1677,9 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
 
         function exitStory() {
             document.getElementById('storyPlayer').classList.add('hidden');
+            document.getElementById('btnStoryNext').classList.remove('hidden');
+            document.getElementById('btnStoryNext').disabled = false;
+            document.getElementById('btnStoryNext').innerText = 'Continuar';
         }
 
         // --- (A PARTIR DE AQUÍ MANTENEMOS TU LÓGICA DE DICCIONARIO, SRS Y PRÁCTICA) ---
