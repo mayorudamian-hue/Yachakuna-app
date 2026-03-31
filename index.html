@@ -1150,6 +1150,8 @@
             ['id', 'title', 'subtitle', 'icon', 'level'].forEach(k => {
                 if (typeof story[k] === 'string') story[k] = fixPossibleMojibake(story[k]);
             });
+            const sectionNum = Number(story.section);
+            if (!Number.isNaN(sectionNum) && sectionNum > 0) story.section = Math.round(sectionNum);
             if (Array.isArray(story.scenes)) {
                 story.scenes = story.scenes.map(scene => {
                     if (!scene || typeof scene !== 'object') return scene;
@@ -1545,46 +1547,127 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                 }, 600);
             }
         }
+        function scrollStoriesToLastPosition() {
+            const lastStoryId = localStorage.getItem('rimay_LastStoryId') || '';
+            const lastStorySection = Number(localStorage.getItem('rimay_LastStorySection') || 0);
+            setTimeout(() => {
+                let target = null;
+                if (lastStoryId) target = document.querySelector(`[data-story-id="${lastStoryId}"]`);
+                if (!target && lastStorySection > 0) target = document.querySelector(`[data-story-section="${lastStorySection}"]`);
+                if (target && typeof target.scrollIntoView === 'function') {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 120);
+        }
+        function scrollPracticeToLastUnit() {
+            const unit = (localStorage.getItem('rimay_LastPracticeUnit') || '').toLowerCase().trim();
+            if (!unit) return;
+            setTimeout(() => {
+                const target = document.querySelector(`[data-unit-name="${unit}"]`);
+                if (target && typeof target.scrollIntoView === 'function') {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 120);
+        }
 
-        // --- LÓGICA DE HISTORIAS ---
+        // --- LÓGICA DE HISTORIAS ACTUALIZADA (POR SECCIÓN) ---
+        function getStorySection(story, fallbackIdx = 0) {
+            const s = Number(story && story.section);
+            if (!Number.isNaN(s) && s > 0) return Math.round(s);
+            const key = ((story && story.id) || (story && story.title) || '').toLowerCase();
+            if (key.includes('atoj') || key.includes('alqo') || key.includes('inti')) return 1;
+            if (key.includes('wayna') || key.includes('yachakoj')) return 2;
+            if (key.includes('carmen') || key.includes('maria')) return 3;
+            return Math.floor(fallbackIdx / 10) + 1;
+        }
         function renderStoriesList() {
             const container = document.getElementById('storiesListContainer');
             if (!container) return;
             container.innerHTML = '';
 
-            const STORIES_PER_SECTION = 10;
-            const totalSections = Math.ceil(storiesData.length / STORIES_PER_SECTION);
+            const indexedStories = storiesData.map((st, idx) => ({ story: st, idx }));
+            const sectionMap = {};
+            indexedStories.forEach(({ story, idx }) => {
+                const sec = getStorySection(story, idx);
+                if (!sectionMap[sec]) sectionMap[sec] = [];
+                sectionMap[sec].push(story);
+            });
+            const getFirstPendingStoryInSection = (sec) => {
+                const stories = sectionMap[sec] || [];
+                return stories.find(st => !completedStories[st.id]) || stories[stories.length - 1] || null;
+            };
 
-            for (let s = 0; s < totalSections; s++) {
-                // La sección N solo aparece si todas las historias de la sección N-1 están completadas
-                if (s > 0) {
-                    const prevSectionStories = storiesData.slice((s - 1) * STORIES_PER_SECTION, s * STORIES_PER_SECTION);
-                    const prevComplete = prevSectionStories.every(st => completedStories[st.id]);
-                    if (!prevComplete && !isProfeMode) break;
+            const sections = [1, 2, 3];
+            let previousSectionComplete = true;
+
+            sections.forEach(secNum => {
+                const sectionStories = sectionMap[secNum] || [];
+                if (sectionStories.length === 0) return;
+                if (!previousSectionComplete && !isProfeMode) {
+                    const lockedSectionDiv = document.createElement('div');
+                    lockedSectionDiv.className = 'path-section';
+                    lockedSectionDiv.style.marginBottom = '16px';
+
+                    const lockedHeader = document.createElement('div');
+                    lockedHeader.className = `path-section-header section-bg-${secNum} collapsed`;
+                    lockedHeader.style.opacity = '0.6';
+                    lockedHeader.style.cursor = 'not-allowed';
+                    lockedHeader.innerHTML = `
+                        <div>
+                            <div class="path-section-title">🔒 Sección ${secNum} bloqueada</div>
+                            <div class="path-section-meta">Completá la sección anterior para desbloquear</div>
+                        </div>
+                        <span class="path-section-arrow">▼</span>
+                    `;
+
+                    const lockedBody = document.createElement('div');
+                    lockedBody.className = 'path-section-body';
+                    lockedBody.style.padding = '10px';
+                    const info = document.createElement('div');
+                    info.style.cssText = 'background:#fff3cd;border:2px solid #f5d58c;border-radius:14px;padding:12px 14px;color:#8a6d1e;font-size:13px;font-weight:800;';
+                    info.textContent = 'Esta sección se desbloquea al completar todas las historias de la sección anterior.';
+                    lockedBody.appendChild(info);
+                    const targetStory = getFirstPendingStoryInSection(secNum - 1);
+                    if (targetStory) {
+                        const goBtn = document.createElement('button');
+                        goBtn.type = 'button';
+                        goBtn.className = 'special';
+                        goBtn.style.cssText = 'margin-top:10px; padding:10px 12px; font-size:13px;';
+                        goBtn.textContent = `Ir a historia pendiente de Sección ${secNum - 1}`;
+                        goBtn.onclick = () => startStory(targetStory.id);
+                        lockedBody.appendChild(goBtn);
+                    }
+
+                    lockedSectionDiv.appendChild(lockedHeader);
+                    lockedSectionDiv.appendChild(lockedBody);
+                    container.appendChild(lockedSectionDiv);
+                    return;
                 }
 
-                const sectionStories = storiesData.slice(s * STORIES_PER_SECTION, (s + 1) * STORIES_PER_SECTION);
-                const isFirstSection = s === 0;
                 const completedInSection = sectionStories.filter(st => completedStories[st.id]).length;
+                const isAllComplete = completedInSection === sectionStories.length;
                 const metaText = `${completedInSection} / ${sectionStories.length} completadas`;
 
-                // Wrapper de sección (reutilizamos estilos de Purina)
-                const section = document.createElement('div');
-                section.className = 'path-section';
-                section.style.marginBottom = '16px';
+                const sectionDiv = document.createElement('div');
+                sectionDiv.className = 'path-section';
+                sectionDiv.style.marginBottom = '16px';
+                sectionDiv.setAttribute('data-story-section', String(secNum));
 
                 const header = document.createElement('div');
-                header.className = 'path-section-header' + (s === 0 ? ' section-bg-1' : s === 1 ? ' section-bg-2' : s === 2 ? ' section-bg-3' : '') + (isFirstSection ? '' : ' collapsed');
+                header.className = `path-section-header section-bg-${secNum}`;
+                if (secNum > 1 && completedInSection === 0) header.classList.add('collapsed');
+
                 header.innerHTML = `
                     <div>
-                        <div class="path-section-title">Sección ${s + 1}</div>
+                        <div class="path-section-title">Sección ${secNum}</div>
                         <div class="path-section-meta">${metaText}</div>
                     </div>
                     <span class="path-section-arrow">▼</span>
                 `;
 
                 const body = document.createElement('div');
-                body.className = 'path-section-body' + (isFirstSection ? '' : ' hidden');
+                body.className = 'path-section-body';
+                if (header.classList.contains('collapsed')) body.classList.add('hidden');
                 body.style.padding = '10px';
 
                 header.onclick = () => {
@@ -1592,13 +1675,21 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                     body.classList.toggle('hidden');
                 };
 
-                sectionStories.forEach((st, localIdx) => {
-                    const globalIdx = s * STORIES_PER_SECTION + localIdx;
+                sectionStories.forEach((st, idx) => {
                     const isDone = completedStories[st.id];
-                    const isLocked = !isProfeMode && globalIdx > 0 && !completedStories[storiesData[globalIdx - 1].id];
+                    let isLocked = false;
+                    if (!isProfeMode) {
+                        if (secNum === 1 && idx > 0) {
+                            isLocked = !completedStories[sectionStories[idx - 1].id];
+                        } else if (secNum > 1) {
+                            if (idx === 0) isLocked = !previousSectionComplete;
+                            else isLocked = !completedStories[sectionStories[idx - 1].id];
+                        }
+                    }
 
                     const card = document.createElement('div');
                     card.className = 'story-card';
+                    card.setAttribute('data-story-id', st.id || '');
 
                     if (isLocked) {
                         card.style.opacity = '0.5';
@@ -1625,14 +1716,22 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                     body.appendChild(card);
                 });
 
-                section.appendChild(header);
-                section.appendChild(body);
-                container.appendChild(section);
-            }
+                sectionDiv.appendChild(header);
+                sectionDiv.appendChild(body);
+                container.appendChild(sectionDiv);
+
+                previousSectionComplete = isAllComplete;
+            });
+            scrollStoriesToLastPosition();
         }
 
         function startStory(id) {
             currentStory = storiesData.find(s => s.id === id);
+            if (currentStory) {
+                const sec = getStorySection(currentStory, storiesData.indexOf(currentStory));
+                localStorage.setItem('rimay_LastStoryId', currentStory.id || '');
+                localStorage.setItem('rimay_LastStorySection', String(sec || 1));
+            }
             currentSceneIndex = 0;
             storyLives = 2;
             document.getElementById('storyContent').innerHTML = '';
@@ -1791,6 +1890,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             document.getElementById('btnStoryNext').classList.remove('hidden');
             document.getElementById('btnStoryNext').disabled = false;
             document.getElementById('btnStoryNext').innerText = 'Continuar';
+            scrollStoriesToLastPosition();
         }
 
         // --- (A PARTIR DE AQUÍ MANTENEMOS TU LÓGICA DE DICCIONARIO, SRS Y PRÁCTICA) ---
@@ -2535,6 +2635,9 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                 currentPracticeSectionIndex = session.sectionIndex;
                 currentPracticeIndex = session.index;
                 lives = session.lives;
+                if (practiceQueue[currentPracticeIndex] && practiceQueue[currentPracticeIndex].unit) {
+                    localStorage.setItem('rimay_LastPracticeUnit', practiceQueue[currentPracticeIndex].unit);
+                }
                 practiceStartTime = Date.now();
                 document.getElementById('practiceMenu').style.display = 'none';
                 document.getElementById('practiceBox').style.display = 'block';
@@ -2559,6 +2662,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             const sectionUnits = units.slice(s * UNITS_PER_SECTION, (s + 1) * UNITS_PER_SECTION);
             const pool = dictionary.filter(d => sectionUnits.includes(d.unit));
             if (pool.length === 0) { alert('No hay palabras en esta sección.'); return; }
+            if (sectionUnits[0]) localStorage.setItem('rimay_LastPracticeUnit', sectionUnits[0]);
             clearPracticeSession();
             practiceStartTime = Date.now();
             practiceQueue = pool.sort(() => 0.5 - Math.random());
@@ -2672,8 +2776,9 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                     const isCurrent = localIdx === currentLocalIdx;
                     const side = zigSides[localIdx % zigSides.length];
 
-                    const node = document.createElement('div');
-                    node.className = 'unit-node-wrapper ' + side;
+                const node = document.createElement('div');
+                node.className = 'unit-node-wrapper ' + side;
+                node.setAttribute('data-unit-name', (u || '').toLowerCase().trim());
 
                     if (!unlocked) {
                         node.style.opacity = '0.5';
@@ -2743,6 +2848,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                 section.appendChild(body);
                 container.appendChild(section);
             }
+            scrollPracticeToLastUnit();
         }
 
         function renderAwards() {
@@ -2945,6 +3051,7 @@ function handlePracticeEnter(e) {
         function startPractice(filter) {
             const specialFilters = new Set(['all', 'favs', 'hard', 'new', 'mistakes-top']);
             currentUnit = specialFilters.has(filter) ? null : filter;
+            if (currentUnit) localStorage.setItem('rimay_LastPracticeUnit', currentUnit);
             let pool = [];
             if (filter === 'all') pool = [...dictionary];
             else if (filter === 'favs') pool = dictionary.filter(d => d.pinned || (d.unit && pinnedUnits[d.unit]));
@@ -3088,6 +3195,7 @@ function handlePracticeEnter(e) {
             }
 
             currentQuestion = practiceQueue[currentPracticeIndex];
+            if (currentQuestion && currentQuestion.unit) localStorage.setItem('rimay_LastPracticeUnit', currentQuestion.unit);
             document.getElementById('practiceProgress').style.width = `${(currentPracticeIndex / practiceQueue.length) * 100}%`;
             document.getElementById('currentUnitTitle').innerText = currentQuestion.unit || 'Repaso General';
 
