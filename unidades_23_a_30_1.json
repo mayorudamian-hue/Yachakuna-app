@@ -4,7 +4,6 @@
         "translation": "Si me equivoco, corrígeme.",
         "unit": "23. En el territorio (Parte 1)",
         "tags": ["Frase"],
-        "audio": "sichus_pantani_chayqa",
         "sentences": [],
         "pinned": false
     },
@@ -13,25 +12,342 @@
         "translation": "¿Vos/Tú hablás quechua?",
         "unit": "23. En el territorio (Parte 1)",
         "tags": ["Frase"],
-        "audio": "qan_quechuata_parlankichu",
         "sentences": [],
         "pinned": false
     },
     {
-        "verb": "Q'ayakama.",
-        "translation": "Hasta mañana.",
+        "verb": "Quechuata yachakushani, runaswan Bibliamanta parlarinaypaj.",
+        "translation": "Estoy aprendiendo quechua para hablar con las personas de la Biblia.",
         "unit": "23. En el territorio (Parte 1)",
         "tags": ["Frase"],
-        "audio": "Q'ayakama",
         "sentences": [],
         "pinned": false
     },
     {
-        "verb": "Tinkunakama.",
-        "translation": "Hasta pronto / Hasta que nos veamos.",
+        "verb": "Uj sumaj tantakuyman wajyarisuyta munayku.",
+        "translation": "Queremos invitarlo a una buena reunión.",
         "unit": "23. En el territorio (Parte 1)",
         "tags": ["Frase"],
-        "audio": "Tinkunakama",
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Wakin runas ninku... qanrí, ¿ima niwajtaj?",
+        "translation": "Algunas personas dicen... y tú, ¿qué dirías?",
+        "unit": "23. En el territorio (Parte 1)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Kunan paqarin vecinoswan tumpata parlarishayku.",
+        "translation": "Esta mañana estamos hablando brevemente con los vecinos.",
+        "unit": "23. En el territorio (Parte 1)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Imaynalla, vecinosniykuman uj tapuyta ruwarishayku. Qan ima niwajtaj?",
+        "translation": "Hola, estamos haciendo una pregunta a nuestros vecinos. ¿Usted qué diría?",
+        "unit": "23. En el territorio (Parte 1)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "¿Imataj kunan tiempopi astawan llakichishasunki?",
+        "translation": "¿Qué le hace angustiar más en este tiempo?",
+        "unit": "23. En el territorio (Parte 1)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Qan ¿Ima niwajtaj?",
+        "translation": "Tú, ¿qué dirías?",
+        "unit": "23. En el territorio (Parte 1)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Ashkhas runas qan jinallata yuyanku.",
+        "translation": "Muchas personas piensan como usted nomás.",
+        "unit": "23. En el territorio (Parte 1)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Ashkhas ajinata piensanku.",
+        "translation": "Muchos piensan así.",
+        "unit": "23. En el territorio (Parte 1)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Leerina kay Proverbios 21:5 nisqanta:",
+        "translation": "Leamos lo que dice Proverbios 21:5:",
+        "unit": "23. En el territorio (Parte 1)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Chaymanta parlaspa, Bibliaqa (texto)pi nin:",
+        "translation": "Hablando de eso, la Biblia en (texto) dice:",
+        "unit": "23. En el territorio (Parte 1)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Jatunmanta leeriwaj Don.",
+        "translation": "Podría leer en voz alta Don. (Compañero de predicación)",
+        "unit": "23. En el territorio (Parte 1)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "(Compañero de predicación) (texto)ta leeripuwayku.",
+        "translation": "(Compañero de predicación) (texto) nos lees.",
+        "unit": "24. En el territorio (Parte 2)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Leerinchej jina.",
+        "translation": "Como leímos.",
+        "unit": "24. En el territorio (Parte 2)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Leesqanchejman jina.",
+        "translation": "Tal como leímos.",
+        "unit": "24. En el territorio (Parte 2)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Kay revistapi chaymanta parlakushan.",
+        "translation": "En esta revista se está hablando de eso.",
+        "unit": "24. En el territorio (Parte 2)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Leerinaykipaj saqerisqayki, ¿ya?",
+        "translation": "Te lo dejaré para que leas. ¿Ya?",
+        "unit": "24. En el territorio (Parte 2)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "¿Ima dia atiwaj?",
+        "translation": "¿Qué día podría?",
+        "unit": "24. En el territorio (Parte 2)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "¿Chaymanta qhepanpi parlarisunmanchu?",
+        "translation": "¿En la próxima podemos hablar de eso?",
+        "unit": "24. En el territorio (Parte 2)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Waj pʼunchay kutimuspa, chaymanta parlarisunman.",
+        "translation": "Cuando vuelva otro día, podemos hablar de eso.",
+        "unit": "24. En el territorio (Parte 2)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Waj pʼunchay kutimuspa kay tapuyman kutichiykiman:",
+        "translation": "Cuando vuelva otro día te puedo responder esta pregunta:",
+        "unit": "24. En el territorio (Parte 2)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Waj kutikama.",
+        "translation": "Hasta otro momento.",
+        "unit": "24. En el territorio (Parte 2)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "¿Yacharqankichu...?",
+        "translation": "¿Sabía usted...?",
+        "unit": "24. En el territorio (Parte 2)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "¿Maykʼajllapis uyarerqankichu kayta nejta...?",
+        "translation": "¿Alguna vez escuchó esto que dicen...?",
+        "unit": "24. En el territorio (Parte 2)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "¿Yacharqankichu tumpamantawan tukuypis sanitos kananchejta?",
+        "translation": "¿Sabía que pronto todos estaremos bien de salud?",
+        "unit": "24. En el territorio (Parte 2)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Biblia prometewanchej.",
+        "translation": "La Biblia nos promete.",
+        "unit": "24. En el territorio (Parte 2)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Uj textitota leeripuyta munayman.",
+        "translation": "Quisiera leerle un textito.",
+        "unit": "25. En el territorio (Parte 3)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Uj Bibliamanta textota leeriyta munani.",
+        "translation": "Quiero leerle un texto de la Biblia.",
+        "unit": "25. En el territorio (Parte 3)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Leeripusqayki.",
+        "translation": "Te leeré.",
+        "unit": "25. En el territorio (Parte 3)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "¿Mayk'aj kanqa?",
+        "translation": "¿Cuándo será?",
+        "unit": "25. En el territorio (Parte 3)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "¿Maykʼajllapis...?",
+        "translation": "¿Alguna vez...?",
+        "unit": "25. En el territorio (Parte 3)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "¿Maykʼajllapis sajra imas chinkanqachu?",
+        "translation": "¿Desaparecerán alguna vez las cosas malas?",
+        "unit": "25. En el territorio (Parte 3)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "¿Imatá kay dibujopi rikunki?",
+        "translation": "¿Qué ves en este dibujo?",
+        "unit": "25. En el territorio (Parte 3)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Waj pʼunchay kutimuspa kay tapuyman kutichisusqayki:",
+        "translation": "Cuando vuelva otro día te responderé esta pregunta:",
+        "unit": "25. En el territorio (Parte 3)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Kay revistataj (orakuy)manta astawan sut'incharishan.",
+        "translation": "Y esta revista está aclarando más de (la oración).",
+        "unit": "25. En el territorio (Parte 3)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Pero, ¿Mayk'aj kanqa chay?",
+        "translation": "Pero, ¿cuándo será eso?",
+        "unit": "25. En el territorio (Parte 3)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Niña sajra runas kajtin, niña makanakuykuna, ni guerraspis kanqachu.",
+        "translation": "Cuando ya no haya personas malas, ya no habrá más peleas ni guerras.",
+        "unit": "25. En el territorio (Parte 3)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Niña sajra runas kajtin, ¿imayná kausay kanqa?",
+        "translation": "Cuando ya no haya personas malas, ¿cómo será la vida?",
+        "unit": "25. En el territorio (Parte 3)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Pero ¿Imatá kaypi nishan?",
+        "translation": "Pero, ¿qué está diciendo aquí?",
+        "unit": "25. En el territorio (Parte 3)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Kaypi, ¿imatá Diosmanta nishawanchej?",
+        "translation": "Aquí, ¿qué nos está diciendo de Dios?",
+        "unit": "25. En el territorio (Parte 3)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Chaypajqa Bibliapi leerisunman (texto)ta:",
+        "translation": "Para eso podemos leer en la Biblia (texto).",
+        "unit": "25. En el territorio (Parte 3)",
+        "tags": ["Frase"],
+        "sentences": [],
+        "pinned": false
+    },
+    {
+        "verb": "Chayta yachanapaj Bibliatapuni leerina.",
+        "translation": "Para saber eso leamos la Biblia.",
+        "unit": "25. En el territorio (Parte 3)",
+        "tags": ["Frase"],
         "sentences": [],
         "pinned": false
     }
