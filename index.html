@@ -676,12 +676,6 @@
                     <button type="button" onclick="resumePracticeSection()" style="width:auto; padding:10px 16px; font-size:14px; background:var(--duo-green); border-bottom:4px solid var(--duo-green-shadow);">Continuar ▶</button>
                 </div>
                 <button type="button" class="secondary" onclick="startPractice('favs')">Favoritos ⭐</button>
-                <button type="button" class="secondary" onclick="startPractice('mistakes')">Repasar errores recientes</button>
-            </div>
-
-            <div id="dataQualityPanel" class="container" style="padding:12px 14px; margin-bottom: 14px; background:#fff;">
-                <div style="font-weight:800; color:var(--duo-blue); font-size:14px; margin-bottom:4px;">Calidad de datos</div>
-                <div id="dataQualitySummary" style="font-size:13px; color:#666;">Analizando...</div>
             </div>
 
             <h2 style="color:var(--text); text-transform:uppercase;">Purina</h2>
@@ -1059,8 +1053,6 @@
         let streakDays = 0;          // Racha actual en días
         let bestStreakDays = 0;      // Mejor racha histórica
         let pinnedUnits = {};        // Unidades marcadas como favoritas para practicar
-        let recentMistakes = [];      // Historial de errores recientes
-        let lastDataImportNote = '';  // Nota breve de validación/importación
 
         function getTodayString() {
             const d = new Date();
@@ -1135,7 +1127,6 @@
             const savedStreak = localStorage.getItem('rimay_StreakDays'); if (savedStreak) streakDays = parseInt(savedStreak);
             const savedBest = localStorage.getItem('rimay_BestStreak'); if (savedBest) bestStreakDays = parseInt(savedBest);
             const savedPinnedUnits = localStorage.getItem('rimay_PinnedUnits'); if (savedPinnedUnits) pinnedUnits = JSON.parse(savedPinnedUnits);
-            const savedMistakes = localStorage.getItem('rimay_RecentMistakes'); if (savedMistakes) recentMistakes = JSON.parse(savedMistakes);
             const today = getTodayString(), yesterday = getYesterdayString();
             if (lastPracticeDate && lastPracticeDate !== today && lastPracticeDate !== yesterday) streakDays = 0;
         } catch (error) {
@@ -1339,162 +1330,6 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             tryNext(tryFormats);
         }
 
-        const DATA_MOJIBAKE_RE = /�.|�|�|’|“|�|?/;
-        function normalizeForCompare(s) { return removeAccents((s || '').toLowerCase().trim()).replace(/[.,�!�?]/g, '').replace(/\s+/g, ' '); }
-        function hasMojibake(value) { return typeof value === 'string' && DATA_MOJIBAKE_RE.test(value); }
-        function defaultSrs() { return { ef: 2.5, interval: 0, reps: 0, due: Date.now() }; }
-
-        function sanitizeVocabItem(raw) {
-            if (!raw || typeof raw !== 'object') return null;
-            const verb = (raw.verb || '').toString().trim();
-            const translation = (raw.translation || '').toString().trim();
-            if (!verb || !translation) return null;
-            const item = {
-                verb, translation,
-                unit: (raw.unit || 'General').toString().trim() || 'General',
-                tags: Array.isArray(raw.tags) ? raw.tags.filter(Boolean).map(t => ('' + t).trim()) : [],
-                sentences: Array.isArray(raw.sentences) ? raw.sentences.filter(s => s && typeof s === 'object').map(s => ({ q: (s.q || '').toString().trim(), e: (s.e || '').toString().trim() })) : [],
-                pinned: !!raw.pinned,
-                srs: (raw.srs && typeof raw.srs === 'object')
-                    ? { ef: Number(raw.srs.ef) || 2.5, interval: Number(raw.srs.interval) || 0, reps: Number(raw.srs.reps) || 0, due: Number(raw.srs.due) || Date.now() }
-                    : defaultSrs()
-            };
-            if (raw.categoria) item.categoria = ('' + raw.categoria).trim();
-            if (raw.emoji) item.emoji = ('' + raw.emoji).trim();
-            return item;
-        }
-
-        function sanitizeScene(scene) {
-            if (!scene || typeof scene !== 'object') return null;
-            const type = (scene.type || '').toString().trim();
-            if (type === 'text') {
-                const q = (scene.q || '').toString().trim();
-                const e = (scene.e || '').toString().trim();
-                if (!q || !e) return null;
-                return { type: 'text', q, e };
-            }
-            if (type === 'question') {
-                const text = (scene.text || '').toString().trim();
-                const title = (scene.title || text || 'Pregunta').toString().trim();
-                const options = Array.isArray(scene.options) ? scene.options.map(o => ('' + o).trim()).filter(Boolean) : [];
-                const correct = Number(scene.correct);
-                if (!text || options.length < 2 || Number.isNaN(correct) || correct < 0 || correct >= options.length) return null;
-                return { type: 'question', title, text, options, correct };
-            }
-            return null;
-        }
-
-        function sanitizeStoryItem(raw, fallbackId) {
-            if (!raw || typeof raw !== 'object') return null;
-            const scenes = Array.isArray(raw.scenes) ? raw.scenes.map(sanitizeScene).filter(Boolean) : [];
-            if (scenes.length === 0) return null;
-            const id = ((raw.id || fallbackId || '') + '').trim();
-            const title = ((raw.title || '') + '').trim();
-            if (!id || !title) return null;
-            return {
-                id, title,
-                subtitle: ((raw.subtitle || '') + '').trim(),
-                icon: ((raw.icon || '??') + '').trim(),
-                level: ((raw.level || 'B�sico') + '').trim(),
-                scenes
-            };
-        }
-
-        function validateVocabDataset(data) {
-            const issues = { invalid: 0, duplicates: 0, mojibake: 0 };
-            const valid = [];
-            const seen = new Set();
-            (data || []).forEach(raw => {
-                const item = sanitizeVocabItem(raw);
-                if (!item) { issues.invalid++; return; }
-                const key = normalizeForCompare(item.verb);
-                if (seen.has(key)) { issues.duplicates++; return; }
-                seen.add(key);
-                if (hasMojibake(item.verb) || hasMojibake(item.translation) || hasMojibake(item.unit)) issues.mojibake++;
-                valid.push(item);
-            });
-            return { valid, issues };
-        }
-
-        function validateStoriesDataset(data) {
-            const issues = { invalid: 0, duplicates: 0, mojibake: 0 };
-            const valid = [];
-            const seen = new Set();
-            (data || []).forEach((raw, idx) => {
-                const item = sanitizeStoryItem(raw, `historia-${idx + 1}`);
-                if (!item) { issues.invalid++; return; }
-                const key = item.id.toLowerCase().trim();
-                if (seen.has(key)) { issues.duplicates++; return; }
-                seen.add(key);
-                if (hasMojibake(item.title) || hasMojibake(item.subtitle)) issues.mojibake++;
-                valid.push(item);
-            });
-            return { valid, issues };
-        }
-
-        function formatIssueSummary(issues) {
-            const parts = [];
-            if (issues.invalid > 0) parts.push(`${issues.invalid} inv�lidos`);
-            if (issues.duplicates > 0) parts.push(`${issues.duplicates} duplicados`);
-            if (issues.mojibake > 0) parts.push(`${issues.mojibake} con texto sospechoso`);
-            return parts.length ? parts.join(' � ') : 'sin observaciones';
-        }
-
-        function registerMistake(question) {
-            if (!question || !question.verb) return;
-            recentMistakes.unshift({ verb: question.verb, ts: Date.now() });
-            if (recentMistakes.length > 300) recentMistakes = recentMistakes.slice(0, 300);
-            localStorage.setItem('rimay_RecentMistakes', JSON.stringify(recentMistakes));
-        }
-
-        function getRecentMistakePool(limit = 30) {
-            const seen = new Set();
-            const result = [];
-            for (const m of recentMistakes) {
-                if (!m || !m.verb) continue;
-                const key = (m.verb || '').toLowerCase().trim();
-                if (seen.has(key)) continue;
-                const found = dictionary.find(d => (d.verb || '').toLowerCase().trim() === key);
-                if (found) { seen.add(key); result.push(found); }
-                if (result.length >= limit) break;
-            }
-            return result;
-        }
-
-        function analyzeDataQuality() {
-            const seen = new Set();
-            let dupVocab = 0, missingVocab = 0, mojibakeVocab = 0;
-            dictionary.forEach(item => {
-                const verb = (item.verb || '').trim();
-                const translation = (item.translation || '').trim();
-                if (!verb || !translation) missingVocab++;
-                const key = normalizeForCompare(verb);
-                if (seen.has(key)) dupVocab++; else seen.add(key);
-                if (hasMojibake(verb) || hasMojibake(translation) || hasMojibake(item.unit || '')) mojibakeVocab++;
-            });
-            let badStories = 0;
-            storiesData.forEach(story => {
-                if (!story || !story.id || !Array.isArray(story.scenes) || story.scenes.length === 0) { badStories++; return; }
-                story.scenes.forEach(sc => {
-                    if (sc.type === 'question') {
-                        if (!Array.isArray(sc.options) || sc.options.length < 2 || Number(sc.correct) < 0 || Number(sc.correct) >= sc.options.length) badStories++;
-                    } else if (sc.type === 'text') {
-                        if (!sc.q || !sc.e) badStories++;
-                    } else badStories++;
-                });
-            });
-            return { dupVocab, missingVocab, mojibakeVocab, badStories };
-        }
-
-        function renderDataQualityPanel() {
-            const summaryEl = document.getElementById('dataQualitySummary');
-            if (!summaryEl) return;
-            const q = analyzeDataQuality();
-            const chunks = [`Vocab: ${dictionary.length}`, `Duplicados: ${q.dupVocab}`, `Vac�os: ${q.missingVocab}`, `Texto sospechoso: ${q.mojibakeVocab}`, `Historias con problemas: ${q.badStories}`];
-            if (lastDataImportNote) chunks.push(`�ltima carga: ${lastDataImportNote}`);
-            summaryEl.textContent = chunks.join(' � ');
-        }
-
         // --- MANEJO DE ARCHIVOS E IMPORTACIÓN ---
         function save(updateChart = false) { 
             localStorage.setItem('rimay_vMaster', JSON.stringify(dictionary)); 
@@ -1508,7 +1343,6 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             localStorage.setItem('rimay_StreakDays', streakDays);
             localStorage.setItem('rimay_BestStreak', bestStreakDays);
             localStorage.setItem('rimay_PinnedUnits', JSON.stringify(pinnedUnits));
-            localStorage.setItem('rimay_RecentMistakes', JSON.stringify(recentMistakes));
             // Log actividad diaria
             const today = getTodayString();
             if (!dailyLog[today]) dailyLog[today] = { xp: 0, timeMs: 0 };
@@ -1525,56 +1359,43 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             reader.onload = function(e) {
                 try {
                     const importedData = JSON.parse(e.target.result);
-                    if (!Array.isArray(importedData) || importedData.length === 0) {
-                        alert("El archivo está vacío o no es una lista válida.");
-                        return;
-                    }
-
-                    const looksLikeStories = importedData[0] && (importedData[0].scenes || importedData[0].id);
-                    if (looksLikeStories) {
-                        const checked = validateStoriesDataset(importedData);
-                        if (checked.valid.length === 0) {
-                            alert("No se encontraron historias válidas para importar.");
-                            return;
-                        }
-                        if (confirm(`¿Deseas cargar ${checked.valid.length} historias válidas?`)) {
-                            checked.valid.forEach(newStory => {
-                                const index = storiesData.findIndex(s => s.id === newStory.id);
-                                if (index !== -1) storiesData[index] = newStory;
-                                else storiesData.push(newStory);
-                            });
-                            localStorage.setItem('rimay_Stories', JSON.stringify(storiesData));
-                            lastDataImportNote = `Historias: ${checked.valid.length} OK (${formatIssueSummary(checked.issues)})`;
-                            renderStoriesList();
-                            renderPath();
-                            renderDataQualityPanel();
-                            alert(`¡Historias cargadas!\nResumen: ${formatIssueSummary(checked.issues)}`);
-                        }
-                    } else if (importedData[0] && importedData[0].verb && importedData[0].translation) {
-                        const checked = validateVocabDataset(importedData);
-                        if (checked.valid.length === 0) {
-                            alert("No se encontraron palabras válidas para importar.");
-                            return;
-                        }
-                        if (confirm(`¿Deseas integrar ${checked.valid.length} palabras válidas a tu biblioteca?`)) {
-                            checked.valid.forEach(newItem => {
-                                const index = dictionary.findIndex(item => item.verb.toLowerCase().trim() === newItem.verb.toLowerCase().trim());
-                                if (index !== -1) {
-                                    const studentPinnedStatus = dictionary[index].pinned;
-                                    const studentSrs = dictionary[index].srs;
-                                    dictionary[index] = { ...dictionary[index], ...newItem, pinned: studentPinnedStatus, srs: studentSrs || newItem.srs };
-                                } else {
-                                    dictionary.push(newItem);
-                                }
-                            });
-                            lastDataImportNote = `Vocab: ${checked.valid.length} OK (${formatIssueSummary(checked.issues)})`;
-                            save(true);
-                            renderCards();
-                            renderDataQualityPanel();
-                            alert(`¡Biblioteca actualizada!\nResumen: ${formatIssueSummary(checked.issues)}`);
+                    if (Array.isArray(importedData) && importedData.length > 0) {
+                        
+                        // ¿Es un archivo de Historias?
+                        if (importedData[0].scenes) {
+                            if(confirm(`¿Deseas cargar ${importedData.length} historias nuevas?`)) {
+                                importedData.forEach(newStory => {
+                                    const index = storiesData.findIndex(s => s.id === newStory.id);
+                                    if (index !== -1) storiesData[index] = newStory;
+                                    else storiesData.push(newStory);
+                                });
+                                localStorage.setItem('rimay_Stories', JSON.stringify(storiesData));
+                                renderStoriesList();
+                                alert("¡Leerinapaj cargadas con éxito! 📖");
+                            }
+                        } 
+                        // Es un archivo de Vocabulario
+                        else if (importedData[0].verb && importedData[0].translation) {
+                            if(confirm(`¿Deseas integrar ${importedData.length} palabras a tu biblioteca?`)) {
+                                importedData.forEach(newItem => {
+                                    const index = dictionary.findIndex(item => item.verb.toLowerCase().trim() === newItem.verb.toLowerCase().trim());
+                                    if (index !== -1) {
+                                        const studentPinnedStatus = dictionary[index].pinned;
+                                        dictionary[index] = { ...dictionary[index], ...newItem };
+                                        dictionary[index].pinned = studentPinnedStatus;
+                                    } else {
+                                        dictionary.push(newItem);
+                                    }
+                                });
+                                save(true);
+                                renderCards();
+                                alert("¡Biblioteca actualizada! ✅");
+                            }
+                        } else {
+                            alert("El archivo no tiene el formato correcto de Yachakuna.");
                         }
                     } else {
-                        alert("El archivo no tiene el formato correcto de Yachakuna.");
+                         alert("El archivo está vacío o no es una lista válida.");
                     }
                 } catch (err) {
                     alert("Error: El archivo JSON no es válido o tiene un formato incorrecto.");
@@ -2904,37 +2725,12 @@ function handlePracticeEnter(e) {
             checkPracticeWritten(); 
         }
     } 
-} 
-
-function handlePracticeHotkeys(e) {
-    const practiceBox = document.getElementById('practiceBox');
-    if (!practiceBox || practiceBox.style.display === 'none') return;
-    const target = e.target;
-    const isTyping = target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA');
-    if (e.key === 'Enter') {
-        if (!document.getElementById('btnNext').classList.contains('hidden')) { e.preventDefault(); nextPractice(); return; }
-        if (!isTyping && !document.getElementById('btnCheck').classList.contains('hidden') && document.getElementById('modeMC').classList.contains('hidden')) { e.preventDefault(); checkPracticeWritten(); return; }
-    }
-    if (isTyping) return;
-    if (!document.getElementById('modeMC').classList.contains('hidden')) {
-        const keyToIndex = { '1': 0, '2': 1, '3': 2, '4': 3 };
-        if (Object.prototype.hasOwnProperty.call(keyToIndex, e.key)) {
-            const btns = Array.from(document.querySelectorAll('#modeMC .btn-mc'));
-            const idx = keyToIndex[e.key];
-            if (btns[idx]) { e.preventDefault(); btns[idx].click(); }
-        }
-    }
 }
-document.addEventListener('keydown', handlePracticeHotkeys);
 
         function startPractice(filter) {
-            currentUnit = (filter !== 'all' && filter !== 'favs' && filter !== 'mistakes') ? filter : null;
-            let pool = [];
-            if (filter === 'all') pool = [...dictionary];
-            else if (filter === 'favs') pool = dictionary.filter(d => d.pinned || (d.unit && pinnedUnits[d.unit]));
-            else if (filter === 'mistakes') pool = getRecentMistakePool(30);
-            else pool = dictionary.filter(d => d.unit === filter);
-            if (pool.length === 0) { alert(filter === 'mistakes' ? "No hay errores recientes para repasar todavía." : "No hay suficientes palabras para practicar."); return; }
+            currentUnit = (filter !== 'all' && filter !== 'favs') ? filter : null;
+            let pool = filter === 'all' ? [...dictionary] : filter === 'favs' ? dictionary.filter(d => d.pinned || (d.unit && pinnedUnits[d.unit])) : dictionary.filter(d => d.unit === filter);
+            if (pool.length === 0) { alert("No hay suficientes palabras para practicar."); return; }
             practiceStartTime = Date.now();
             let mezcladas = pool.sort(() => 0.5 - Math.random());
             practiceQueue = filter === 'all' ? mezcladas.slice(0, 10) : mezcladas; 
@@ -3093,7 +2889,7 @@ document.addEventListener('keydown', handlePracticeHotkeys);
                 btn.innerText = getDisplayAnswer(opt);
                 btn.onclick = () => {
                     const pickedText = btn.innerText;
-                    checkPractice(checkFlexibleMatch(pickedText, q.answer), q.answer, btn, pickedText);
+                    checkPractice(checkFlexibleMatch(pickedText, q.answer), q.answer, btn);
                 };
                 mcContainer.appendChild(btn);
             });
@@ -3164,10 +2960,10 @@ document.addEventListener('keydown', handlePracticeHotkeys);
                 input = document.getElementById('practiceInput').value; 
                 ans = currentQuestion.answer; 
             }
-            checkPractice(checkFlexibleMatch(input, ans), ans, null, input);
+            checkPractice(checkFlexibleMatch(input, ans), ans);
         }
 
-        function checkPractice(isCorrect, correctAnswer, btnNode = null, userAnswer = '') {
+        function checkPractice(isCorrect, correctAnswer, btnNode = null) {
             if (!document.getElementById('btnNext').classList.contains('hidden')) return;
             totalAttempts++; if(isCorrect) correctAttempts++;
             document.getElementById('btnCheck').classList.add('hidden'); document.getElementById('btnNext').classList.remove('hidden');
@@ -3179,10 +2975,7 @@ document.addEventListener('keydown', handlePracticeHotkeys);
             } else {
                 playIncorrectSound(); currentStreak = 0; lives--; document.getElementById('lives').innerHTML = `❤️ ${lives}`;
                 const displayAnswer = getDisplayAnswer(correctAnswer);
-                const displayUserAnswer = (userAnswer || '').trim();
-                const userLine = displayUserAnswer ? `Tu respuesta:<br><strong>${displayUserAnswer}</strong><br>` : '';
-                banner.className = 'practice-banner banner-incorrect';
-                banner.innerHTML = `${userLine}Respuesta correcta:<br><strong>${displayAnswer}</strong><br><button type="button" class="btn-mc" style="margin-top:15px; font-size: 15px; padding: 10px; border-color:var(--duo-red); color:var(--duo-red); background: white;" onclick="overrideCorrect()">⚠️ Mi respuesta es correcta</button>`;
+                banner.className = 'practice-banner banner-incorrect'; banner.innerHTML = `Respuesta correcta:<br><strong>${displayAnswer}</strong><br><button type="button" class="btn-mc" style="margin-top:15px; font-size: 15px; padding: 10px; border-color:var(--duo-red); color:var(--duo-red); background: white;" onclick="overrideCorrect()">⚠️ Mi respuesta es correcta</button>`;
                 if (btnNode) {
                     const pickedText = btnNode.innerText;
                     const actuallyMatches = checkFlexibleMatch(pickedText, correctAnswer);
@@ -3197,7 +2990,6 @@ document.addEventListener('keydown', handlePracticeHotkeys);
                         });
                     }
                 }
-                registerMistake(currentQuestion);
                 practiceQueue.push(currentQuestion); lastFailedQuestion = currentQuestion; lastFailedBtnNode = btnNode;
             }
             document.getElementById('streak').innerHTML = `🔥 ${currentStreak}`; document.getElementById('xp').innerHTML = `⭐ ${totalXP}`; currentPracticeIndex++;
@@ -3279,7 +3071,6 @@ document.addEventListener('keydown', handlePracticeHotkeys);
 
         async function syncFromGitHub() {
             let newWords = [], editedWords = [], updatedStories = false;
-            let syncNotes = [];
 
             const rootFiles = await fetchGitHubJSON('');
             if (!rootFiles || !Array.isArray(rootFiles)) return;
@@ -3291,11 +3082,7 @@ document.addEventListener('keydown', handlePracticeHotkeys);
                 if (!Array.isArray(data) || data.length === 0) continue;
 
                 if (data[0].verb && data[0].translation) {
-                    const checked = validateVocabDataset(data);
-                    const cleanData = checked.valid;
-                    if (cleanData.length === 0) continue;
-                    if (checked.issues.invalid || checked.issues.duplicates || checked.issues.mojibake) syncNotes.push(`${file.name}: ${formatIssueSummary(checked.issues)}`);
-                    cleanData.forEach(newItem => {
+                    data.forEach(newItem => {
                         if (!newItem.verb || !newItem.translation) return;
                         const index = dictionary.findIndex(item => item.verb.toLowerCase().trim() === newItem.verb.toLowerCase().trim());
                         if (index === -1) {
@@ -3312,12 +3099,8 @@ document.addEventListener('keydown', handlePracticeHotkeys);
                             if (tChanged || uChanged || sChanged || gChanged) editedWords.push({ index, newItem });
                         }
                     });
-                } else if (data[0].scenes || data[0].id) {
-                    const checked = validateStoriesDataset(data);
-                    const cleanStories = checked.valid;
-                    if (cleanStories.length === 0) continue;
-                    if (checked.issues.invalid || checked.issues.duplicates || checked.issues.mojibake) syncNotes.push(`${file.name}: ${formatIssueSummary(checked.issues)}`);
-                    cleanStories.forEach(newStory => {
+                } else if (data[0].scenes) {
+                    data.forEach(newStory => {
                         const index = storiesData.findIndex(s => s.id === newStory.id);
                         if (index !== -1) storiesData[index] = newStory;
                         else { storiesData.push(newStory); updatedStories = true; }
@@ -3326,8 +3109,6 @@ document.addEventListener('keydown', handlePracticeHotkeys);
             }
 
             if (updatedStories) { localStorage.setItem('rimay_Stories', JSON.stringify(storiesData)); renderPath(); renderAwards(); }
-
-            if (syncNotes.length > 0) lastDataImportNote = 'Sync: ' + syncNotes.slice(0, 2).join(' | ');
 
             if (newWords.length > 0 || editedWords.length > 0) {
                 // Filtrar palabras que ya fueron sincronizadas antes
@@ -3348,7 +3129,6 @@ document.addEventListener('keydown', handlePracticeHotkeys);
                     }
                 }
             }
-            renderDataQualityPanel();
         }
 
         function applyVocabUpdate() {
@@ -3368,7 +3148,7 @@ document.addEventListener('keydown', handlePracticeHotkeys);
             });
             localStorage.setItem('rimay_syncedWords', JSON.stringify(synced));
             pendingVocabUpdate = null;
-            save(true); renderCards(); renderPath(); renderAwards(); renderDataQualityPanel();
+            save(true); renderCards(); renderPath(); renderAwards();
             const banner = document.getElementById('vocabUpdateBanner');
             if (banner) banner.style.display = 'none';
             // Mini confirmación
@@ -3416,7 +3196,6 @@ document.addEventListener('keydown', handlePracticeHotkeys);
             dictionary.push(newItem);
             save(true);
             renderCards();
-            renderDataQualityPanel();
             populateNewWordUnitSelect();
 
             // Limpiar campos
@@ -3460,7 +3239,7 @@ document.addEventListener('keydown', handlePracticeHotkeys);
         }
 
         // --- ARRANQUE DE LA APP ---
-        renderCards(); renderPath(); renderAwards(); renderDataQualityPanel();
+        renderCards(); renderPath(); renderAwards();
         if (hasAudioSupport) setTimeout(populateVoices, 100);
         setTimeout(syncFromGitHub, 1500);
         checkSavedSession();
