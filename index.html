@@ -532,6 +532,15 @@
                     <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;">
                         <input type="text" id="newWordVerb" placeholder="Quechua (ej: Ripun)" style="margin-bottom:0;">
                         <input type="text" id="newWordTranslation" placeholder="Español (ej: Se va / parte)" style="margin-bottom:0;">
+                        <input type="text" id="newWordAccepted" placeholder="Sinónimos aceptados (opcional, separados por |)" style="margin-bottom:0; font-size:14px;">
+                        <input type="text" id="newWordHint" placeholder="Pista (opcional, se muestra al fallar)" style="margin-bottom:0; font-size:14px;">
+                        <select id="newWordDifficulty" style="margin-bottom:0;">
+                            <option value="1">Dificultad 1 · Muy fácil</option>
+                            <option value="2">Dificultad 2 · Fácil</option>
+                            <option value="3" selected>Dificultad 3 · Normal</option>
+                            <option value="4">Dificultad 4 · Difícil</option>
+                            <option value="5">Dificultad 5 · Muy difícil</option>
+                        </select>
                         <select id="newWordCategoria" style="margin-bottom:0;">
                             <option value="">Categoría (opcional — auto si no elegís)</option>
                             <option value="Verbo">🔤 Verbo</option>
@@ -676,6 +685,14 @@
                     <button type="button" onclick="resumePracticeSection()" style="width:auto; padding:10px 16px; font-size:14px; background:var(--duo-green); border-bottom:4px solid var(--duo-green-shadow);">Continuar ▶</button>
                 </div>
                 <button type="button" class="secondary" onclick="startPractice('favs')">Favoritos ⭐</button>
+                <button type="button" class="secondary" onclick="startPractice('hard')">Solo difíciles (4-5) 💪</button>
+                <button type="button" class="secondary" onclick="startPractice('new')">Solo nuevas 🆕</button>
+            </div>
+
+            <div id="practiceDiagnostics" class="container" style="padding:12px 14px; margin-bottom:14px;">
+                <div style="font-size:13px; font-weight:800; color:var(--duo-blue); margin-bottom:6px;">Top falladas (últimos intentos)</div>
+                <div id="practiceDiagnosticsList" style="font-size:13px; color:#666;">Sin datos todavía.</div>
+                <button type="button" class="secondary" onclick="startPractice('mistakes-top')" style="margin-top:10px;">Practicar Top falladas</button>
             </div>
 
             <h2 style="color:var(--text); text-transform:uppercase;">Purina</h2>
@@ -795,6 +812,18 @@
             <input type="text" id="editVerb" style="width:100%; margin-bottom:12px; box-sizing:border-box;">
             <label style="font-size:12px; font-weight:800; color:#aaa; text-transform:uppercase;">Español</label>
             <input type="text" id="editTranslation" style="width:100%; margin-bottom:12px; box-sizing:border-box;">
+            <label style="font-size:12px; font-weight:800; color:#aaa; text-transform:uppercase;">Sinónimos aceptados (|)</label>
+            <input type="text" id="editAcceptedAnswers" style="width:100%; margin-bottom:12px; box-sizing:border-box;" placeholder="ej: Podría leer | Puede leer en voz alta">
+            <label style="font-size:12px; font-weight:800; color:#aaa; text-transform:uppercase;">Pista</label>
+            <input type="text" id="editHint" style="width:100%; margin-bottom:12px; box-sizing:border-box;" placeholder="ej: Usá el condicional">
+            <label style="font-size:12px; font-weight:800; color:#aaa; text-transform:uppercase;">Dificultad</label>
+            <select id="editDifficulty" style="width:100%; margin-bottom:12px; box-sizing:border-box;">
+                <option value="1">1 · Muy fácil</option>
+                <option value="2">2 · Fácil</option>
+                <option value="3">3 · Normal</option>
+                <option value="4">4 · Difícil</option>
+                <option value="5">5 · Muy difícil</option>
+            </select>
             <label style="font-size:12px; font-weight:800; color:#aaa; text-transform:uppercase;">Unidad</label>
             <input type="text" id="editUnit" style="width:100%; margin-bottom:12px; box-sizing:border-box;">
             <label style="font-size:12px; font-weight:800; color:#aaa; text-transform:uppercase;">Categoría</label>
@@ -1053,6 +1082,7 @@
         let streakDays = 0;          // Racha actual en días
         let bestStreakDays = 0;      // Mejor racha histórica
         let pinnedUnits = {};        // Unidades marcadas como favoritas para practicar
+        let recentMistakes = [];     // Errores recientes para priorizar repaso
 
         function getTodayString() {
             const d = new Date();
@@ -1074,6 +1104,65 @@
             save(true);
         }
 
+        // --- REPARACIÓN DE TEXTO (MOJIBAKE) ---
+        function looksLikeMojibake(str) {
+            if (typeof str !== 'string' || !str) return false;
+            return /Ã.|Â.|â.|ðŸ|Ð.|Ñ.|�/.test(str);
+        }
+        function decodeLatin1AsUtf8(str) {
+            try {
+                const bytes = new Uint8Array(Array.from(str).map(ch => ch.charCodeAt(0) & 0xFF));
+                return new TextDecoder('utf-8').decode(bytes);
+            } catch (e) {
+                return str;
+            }
+        }
+        function fixPossibleMojibake(str) {
+            if (typeof str !== 'string') return str;
+            let out = str;
+            for (let i = 0; i < 2; i++) {
+                if (!looksLikeMojibake(out)) break;
+                const fixed = decodeLatin1AsUtf8(out);
+                if (!fixed || fixed === out) break;
+                out = fixed;
+            }
+            return out;
+        }
+        function sanitizeWordItem(item) {
+            if (!item || typeof item !== 'object') return item;
+            ['verb', 'translation', 'unit', 'categoria', 'audioHint', 'hint'].forEach(k => {
+                if (typeof item[k] === 'string') item[k] = fixPossibleMojibake(item[k]);
+            });
+            if (Array.isArray(item.acceptedAnswers)) item.acceptedAnswers = item.acceptedAnswers.map(v => fixPossibleMojibake((v || '').toString()));
+            if (Array.isArray(item.tags)) item.tags = item.tags.map(v => fixPossibleMojibake((v || '').toString()));
+            if (Array.isArray(item.sentences)) {
+                item.sentences = item.sentences.map(s => {
+                    if (!s || typeof s !== 'object') return s;
+                    if (typeof s.q === 'string') s.q = fixPossibleMojibake(s.q);
+                    if (typeof s.e === 'string') s.e = fixPossibleMojibake(s.e);
+                    return s;
+                });
+            }
+            return item;
+        }
+        function sanitizeStoryItem(story) {
+            if (!story || typeof story !== 'object') return story;
+            ['id', 'title', 'subtitle', 'icon', 'level'].forEach(k => {
+                if (typeof story[k] === 'string') story[k] = fixPossibleMojibake(story[k]);
+            });
+            if (Array.isArray(story.scenes)) {
+                story.scenes = story.scenes.map(scene => {
+                    if (!scene || typeof scene !== 'object') return scene;
+                    ['type', 'title', 'text', 'q', 'e'].forEach(k => {
+                        if (typeof scene[k] === 'string') scene[k] = fixPossibleMojibake(scene[k]);
+                    });
+                    if (Array.isArray(scene.options)) scene.options = scene.options.map(o => fixPossibleMojibake((o || '').toString()));
+                    return scene;
+                });
+            }
+            return story;
+        }
+
         // --- INICIALIZACIÓN DE DATOS GUARDADOS ---
        try {
     // Cargar Diccionario
@@ -1081,6 +1170,7 @@
     if (storedData) {
         // 1. Primero lo guardamos en una variable temporal
         let rawData = JSON.parse(storedData);
+        rawData = Array.isArray(rawData) ? rawData.map(sanitizeWordItem) : rawData;
         
         // 2. APLICAMOS EL FILTRO: Solo nos quedamos con los elementos que realmente tengan verbo y traducción
         dictionary = rawData.filter(item => item && item.verb && item.translation);
@@ -1088,6 +1178,7 @@
         // 3. Asignamos los valores SRS a la data ya limpia
         dictionary.forEach(item => { 
             if (!item.srs) item.srs = { ef: 2.5, interval: 0, reps: 0, due: Date.now() }; 
+            item.difficulty = parseDifficultyValue(item.difficulty);
         });
     }
     // Reinyectar SRS/favoritos si venimos de un reinicio de vocabulario
@@ -1108,7 +1199,8 @@
             // Cargar Historias Guardadas
             const savedStories = localStorage.getItem('rimay_Stories');
             if (savedStories) {
-                const parsed = JSON.parse(savedStories);
+                const parsedRaw = JSON.parse(savedStories);
+                const parsed = Array.isArray(parsedRaw) ? parsedRaw.map(sanitizeStoryItem) : [];
                 parsed.forEach(s => {
                     const index = storiesData.findIndex(ex => ex.id === s.id);
                     if (index !== -1) storiesData[index] = s;
@@ -1127,6 +1219,7 @@
             const savedStreak = localStorage.getItem('rimay_StreakDays'); if (savedStreak) streakDays = parseInt(savedStreak);
             const savedBest = localStorage.getItem('rimay_BestStreak'); if (savedBest) bestStreakDays = parseInt(savedBest);
             const savedPinnedUnits = localStorage.getItem('rimay_PinnedUnits'); if (savedPinnedUnits) pinnedUnits = JSON.parse(savedPinnedUnits);
+            const savedMistakes = localStorage.getItem('rimay_RecentMistakes'); if (savedMistakes) recentMistakes = JSON.parse(savedMistakes);
             const today = getTodayString(), yesterday = getYesterdayString();
             if (lastPracticeDate && lastPracticeDate !== today && lastPracticeDate !== yesterday) streakDays = 0;
         } catch (error) {
@@ -1343,6 +1436,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             localStorage.setItem('rimay_StreakDays', streakDays);
             localStorage.setItem('rimay_BestStreak', bestStreakDays);
             localStorage.setItem('rimay_PinnedUnits', JSON.stringify(pinnedUnits));
+            localStorage.setItem('rimay_RecentMistakes', JSON.stringify(recentMistakes));
             // Log actividad diaria
             const today = getTodayString();
             if (!dailyLog[today]) dailyLog[today] = { xp: 0, timeMs: 0 };
@@ -1365,6 +1459,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                         if (importedData[0].scenes) {
                             if(confirm(`¿Deseas cargar ${importedData.length} historias nuevas?`)) {
                                 importedData.forEach(newStory => {
+                                    newStory = sanitizeStoryItem(newStory);
                                     const index = storiesData.findIndex(s => s.id === newStory.id);
                                     if (index !== -1) storiesData[index] = newStory;
                                     else storiesData.push(newStory);
@@ -1378,12 +1473,28 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                         else if (importedData[0].verb && importedData[0].translation) {
                             if(confirm(`¿Deseas integrar ${importedData.length} palabras a tu biblioteca?`)) {
                                 importedData.forEach(newItem => {
+                                    newItem = sanitizeWordItem(newItem);
+                                    const normalizedAccepted = Array.isArray(newItem.acceptedAnswers)
+                                        ? newItem.acceptedAnswers.map(v => (v || '').toString().trim()).filter(Boolean)
+                                        : [];
+                                    const normalizedHint = (typeof newItem.hint === 'string') ? newItem.hint.trim() : '';
+                                    const normalizedDifficulty = parseDifficultyValue(newItem.difficulty);
                                     const index = dictionary.findIndex(item => item.verb.toLowerCase().trim() === newItem.verb.toLowerCase().trim());
                                     if (index !== -1) {
                                         const studentPinnedStatus = dictionary[index].pinned;
                                         dictionary[index] = { ...dictionary[index], ...newItem };
+                                        if (normalizedAccepted.length > 0) dictionary[index].acceptedAnswers = normalizedAccepted;
+                                        else if (Array.isArray(dictionary[index].acceptedAnswers)) delete dictionary[index].acceptedAnswers;
+                                        if (normalizedHint) dictionary[index].hint = normalizedHint;
+                                        else delete dictionary[index].hint;
+                                        dictionary[index].difficulty = normalizedDifficulty;
                                         dictionary[index].pinned = studentPinnedStatus;
                                     } else {
+                                        if (normalizedAccepted.length > 0) newItem.acceptedAnswers = normalizedAccepted;
+                                        else delete newItem.acceptedAnswers;
+                                        if (normalizedHint) newItem.hint = normalizedHint;
+                                        else delete newItem.hint;
+                                        newItem.difficulty = normalizedDifficulty;
                                         dictionary.push(newItem);
                                     }
                                 });
@@ -1986,6 +2097,9 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             const item = dictionary[index];
             document.getElementById('editVerb').value = item.verb || '';
             document.getElementById('editTranslation').value = item.translation || '';
+            document.getElementById('editAcceptedAnswers').value = Array.isArray(item.acceptedAnswers) ? item.acceptedAnswers.join(' | ') : '';
+            document.getElementById('editHint').value = (typeof item.hint === 'string') ? item.hint : '';
+            document.getElementById('editDifficulty').value = String(parseDifficultyValue(item.difficulty));
             document.getElementById('editUnit').value = item.unit || '';
             document.getElementById('editCategoria').value = item.categoria || '';
             document.getElementById('editModal').setAttribute('data-index', index);
@@ -1994,11 +2108,21 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
 
         function saveEditWord() {
             const index = parseInt(document.getElementById('editModal').getAttribute('data-index'));
-            dictionary[index].verb = document.getElementById('editVerb').value.trim();
-            dictionary[index].translation = document.getElementById('editTranslation').value.trim();
-            dictionary[index].unit = document.getElementById('editUnit').value.trim();
+            dictionary[index].verb = fixPossibleMojibake(document.getElementById('editVerb').value).trim();
+            dictionary[index].translation = fixPossibleMojibake(document.getElementById('editTranslation').value).trim();
+            const acceptedRaw = document.getElementById('editAcceptedAnswers').value.trim();
+            const accepted = acceptedRaw
+                ? acceptedRaw.split(/\s*\|\s*|\n|;/).map(s => fixPossibleMojibake(s).trim()).filter(Boolean)
+                : [];
+            if (accepted.length > 0) dictionary[index].acceptedAnswers = accepted;
+            else delete dictionary[index].acceptedAnswers;
+            const hint = fixPossibleMojibake(document.getElementById('editHint').value).trim();
+            if (hint) dictionary[index].hint = hint;
+            else delete dictionary[index].hint;
+            dictionary[index].difficulty = parseDifficultyValue(document.getElementById('editDifficulty').value);
+            dictionary[index].unit = fixPossibleMojibake(document.getElementById('editUnit').value).trim();
             const cat = document.getElementById('editCategoria').value;
-            if (cat) dictionary[index].categoria = cat;
+            if (cat) dictionary[index].categoria = fixPossibleMojibake(cat);
             else delete dictionary[index].categoria;
             save(true);
             renderCards();
@@ -2047,7 +2171,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                 'rimay_StreakDays', 'rimay_BestStreak', 'rimay_SRSCount',
                 'rimay_SearchCount', 'rimay_NotifiedAch', 'rimay_DailyLog',
                 'rimay_PracticeSession', 'rimay_ForumPosted', 'rimay_likedPosts',
-                'rimay_PinnedUnits', 'rimay_GuideVisited'
+                'rimay_PinnedUnits', 'rimay_GuideVisited', 'rimay_RecentMistakes'
             ];
             keysToRemove.forEach(k => localStorage.removeItem(k));
             dictionary.forEach(w => { delete w.srs; delete w.pinned; });
@@ -2119,6 +2243,9 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                     const globalIndex = dictionary.indexOf(item); const card = document.createElement('div');
                     card.className = "verb-card " + (item.pinned ? 'card-pinned' : '');
                     const emoji = getEmoji(item);
+                    const difficulty = getItemDifficulty(item);
+                    const diffColor = difficulty >= 4 ? '#b91c1c' : difficulty <= 2 ? '#166534' : '#7a5a00';
+                    const badgesHTML = `<div style="margin-top:4px; display:flex; gap:6px; flex-wrap:wrap;"><span style="font-size:11px; font-weight:800; padding:2px 8px; border-radius:10px; background:#f0f0f0; color:#888;">${getCategoria(item)}</span><span style="font-size:11px; font-weight:800; padding:2px 8px; border-radius:10px; background:#fff7ed; color:${diffColor}; border:1px solid #fed7aa;">Dificultad ${difficulty}</span></div>`;
                     const sentencesHTML = (item.sentences && item.sentences.length > 0)
                         ? `<div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
                             ${item.sentences.map(s => `
@@ -2128,7 +2255,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                                 </div>`).join('')}
                            </div>`
                         : '';
-                    card.innerHTML = `<div style="display:flex; gap:15px; align-items:center;"><div style="width:56px; height:56px; font-size:36px; display:flex; align-items:center; justify-content:center; background:var(--card-bg); border-radius:12px; border:2px solid var(--border); flex-shrink:0;">${emoji}</div><button type="button" class="btn-icon btn-speak" onclick="speak('${item.verb.replace(/'/g, "\\'")}', '${(item.audio||'').replace(/'/g, "\\'")}')" >🔊</button><div style="flex-grow:1;"><div style="font-size:18px; font-weight:800;">${item.verb}</div><div style="font-weight:600; font-size:15px; color: var(--duo-blue);">${item.translation}</div><div style="margin-top:4px;"><span style="font-size:11px; font-weight:800; padding:2px 8px; border-radius:10px; background:#f0f0f0; color:#888;">${getCategoria(item)}</span></div>${sentencesHTML}</div><button type="button" class="btn-icon btn-pin ${item.pinned ? 'active' : ''}" onclick="togglePin(${globalIndex})">⭐</button>${isProfeMode ? `<button type="button" class="btn-icon" onclick="editWord(${globalIndex})" style="background:#eaf3ff;border:2px solid #a8cff5;border-bottom:3px solid #a8cff5;color:#1a5fa8;" title="Editar">✏️</button><button type="button" class="btn-icon" onclick="deleteWord(${globalIndex})" style="background:#fde8e8;border:2px solid var(--duo-red);border-bottom:3px solid var(--duo-red-shadow);color:var(--duo-red);" title="Eliminar">🗑️</button>` : ''}</div>`;
+                    card.innerHTML = `<div style="display:flex; gap:15px; align-items:center;"><div style="width:56px; height:56px; font-size:36px; display:flex; align-items:center; justify-content:center; background:var(--card-bg); border-radius:12px; border:2px solid var(--border); flex-shrink:0;">${emoji}</div><button type="button" class="btn-icon btn-speak" onclick="speak('${item.verb.replace(/'/g, "\\'")}', '${(item.audio||'').replace(/'/g, "\\'")}')" >🔊</button><div style="flex-grow:1;"><div style="font-size:18px; font-weight:800;">${item.verb}</div><div style="font-weight:600; font-size:15px; color: var(--duo-blue);">${item.translation}</div>${badgesHTML}${sentencesHTML}</div><button type="button" class="btn-icon btn-pin ${item.pinned ? 'active' : ''}" onclick="togglePin(${globalIndex})">⭐</button>${isProfeMode ? `<button type="button" class="btn-icon" onclick="editWord(${globalIndex})" style="background:#eaf3ff;border:2px solid #a8cff5;border-bottom:3px solid #a8cff5;color:#1a5fa8;" title="Editar">✏️</button><button type="button" class="btn-icon" onclick="deleteWord(${globalIndex})" style="background:#fde8e8;border:2px solid var(--duo-red);border-bottom:3px solid var(--duo-red-shadow);color:var(--duo-red);" title="Eliminar">🗑️</button>` : ''}</div>`;
                     cardsWrap.appendChild(card);
                 });
                 }
@@ -2464,6 +2591,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
 
         function renderPath() {
             const container = document.getElementById('unitPathContainer'); container.innerHTML = '';
+            renderPracticeDiagnostics();
             const units = getUniqueUnits();
             populateSectionSelect();
             if (units.length === 0) { container.innerHTML = '<p style="z-index:2; background:white; padding:10px; border-radius:10px;">Carga unidades para ver el camino.</p>'; return; }
@@ -2725,15 +2853,116 @@ function handlePracticeEnter(e) {
             checkPracticeWritten(); 
         }
     } 
-}
+} 
+
+        function parseDifficultyValue(v) {
+            const n = Number(v);
+            if (Number.isNaN(n)) return 3;
+            return Math.max(1, Math.min(5, Math.round(n)));
+        }
+        function getItemDifficulty(item) {
+            return parseDifficultyValue(item && item.difficulty);
+        }
+        function recordRecentMistake(question) {
+            if (!question || !question.verb) return;
+            recentMistakes.unshift({ verb: question.verb, ts: Date.now() });
+            if (recentMistakes.length > 300) recentMistakes = recentMistakes.slice(0, 300);
+            localStorage.setItem('rimay_RecentMistakes', JSON.stringify(recentMistakes));
+            renderPracticeDiagnostics();
+        }
+        function getMistakeBoost(verb) {
+            if (!verb || !Array.isArray(recentMistakes)) return 0;
+            const key = (verb || '').toLowerCase().trim();
+            const hit = recentMistakes.find(m => (m && m.verb || '').toLowerCase().trim() === key);
+            if (!hit || !hit.ts) return 0;
+            const hours = (Date.now() - Number(hit.ts)) / (1000 * 60 * 60);
+            if (hours <= 24) return 3.0;
+            if (hours <= 72) return 2.0;
+            if (hours <= 168) return 1.0;
+            return 0.4;
+        }
+        function getDueBoost(item) {
+            if (!item || !item.srs || !item.srs.due) return 0;
+            const now = Date.now();
+            const due = Number(item.srs.due);
+            if (Number.isNaN(due) || due > now) return 0;
+            const daysOver = (now - due) / (1000 * 60 * 60 * 24);
+            return Math.min(3, 1 + (daysOver / 2));
+        }
+        function renderPracticeDiagnostics() {
+            const listEl = document.getElementById('practiceDiagnosticsList');
+            if (!listEl) return;
+            if (!Array.isArray(recentMistakes) || recentMistakes.length === 0) {
+                listEl.textContent = 'Sin datos todavía.';
+                return;
+            }
+            const freq = {};
+            for (const m of recentMistakes) {
+                if (!m || !m.verb) continue;
+                const key = (m.verb || '').toLowerCase().trim();
+                if (!key) continue;
+                freq[key] = (freq[key] || 0) + 1;
+            }
+            const top = Object.entries(freq)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5)
+                .map(([key, count]) => {
+                    const item = dictionary.find(d => (d.verb || '').toLowerCase().trim() === key);
+                    const label = item ? `${item.verb} (${item.translation || ''})` : key;
+                    return `• ${label} — ${count}`;
+                });
+            listEl.innerHTML = top.length > 0 ? top.join('<br>') : 'Sin datos todavía.';
+        }
+        function getTopMistakePool(limit = 5) {
+            if (!Array.isArray(recentMistakes) || recentMistakes.length === 0) return [];
+            const freq = {};
+            for (const m of recentMistakes) {
+                if (!m || !m.verb) continue;
+                const key = (m.verb || '').toLowerCase().trim();
+                if (!key) continue;
+                freq[key] = (freq[key] || 0) + 1;
+            }
+            return Object.entries(freq)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, limit)
+                .map(([key]) => dictionary.find(d => (d.verb || '').toLowerCase().trim() === key))
+                .filter(Boolean);
+        }
+        function buildSmartPracticeQueue(pool, limit) {
+            const scored = pool.map(item => {
+                const difficultyBoost = (getItemDifficulty(item) - 1) * 1.1;
+                const mistakeBoost = getMistakeBoost(item.verb);
+                const dueBoost = getDueBoost(item);
+                const newBoost = (!item.srs || !item.srs.reps) ? 0.6 : 0;
+                const jitter = Math.random() * 0.25;
+                const score = difficultyBoost + mistakeBoost + dueBoost + newBoost + jitter;
+                return { item, score };
+            });
+            scored.sort((a, b) => b.score - a.score);
+            return scored.slice(0, Math.min(limit, scored.length)).map(x => x.item);
+        }
 
         function startPractice(filter) {
-            currentUnit = (filter !== 'all' && filter !== 'favs') ? filter : null;
-            let pool = filter === 'all' ? [...dictionary] : filter === 'favs' ? dictionary.filter(d => d.pinned || (d.unit && pinnedUnits[d.unit])) : dictionary.filter(d => d.unit === filter);
-            if (pool.length === 0) { alert("No hay suficientes palabras para practicar."); return; }
+            const specialFilters = new Set(['all', 'favs', 'hard', 'new', 'mistakes-top']);
+            currentUnit = specialFilters.has(filter) ? null : filter;
+            let pool = [];
+            if (filter === 'all') pool = [...dictionary];
+            else if (filter === 'favs') pool = dictionary.filter(d => d.pinned || (d.unit && pinnedUnits[d.unit]));
+            else if (filter === 'hard') pool = dictionary.filter(d => getItemDifficulty(d) >= 4);
+            else if (filter === 'new') pool = dictionary.filter(d => !d.srs || !d.srs.reps || d.srs.reps <= 0);
+            else if (filter === 'mistakes-top') pool = getTopMistakePool(10);
+            else pool = dictionary.filter(d => d.unit === filter);
+
+            if (pool.length === 0) {
+                if (filter === 'hard') alert("No hay tarjetas marcadas como difíciles (4-5).");
+                else if (filter === 'new') alert("No hay tarjetas nuevas pendientes.");
+                else if (filter === 'mistakes-top') alert("No hay suficientes errores registrados todavía.");
+                else alert("No hay suficientes palabras para practicar.");
+                return;
+            }
             practiceStartTime = Date.now();
             let mezcladas = pool.sort(() => 0.5 - Math.random());
-            practiceQueue = filter === 'all' ? mezcladas.slice(0, 10) : mezcladas; 
+            practiceQueue = filter === 'all' ? buildSmartPracticeQueue(mezcladas, 10) : mezcladas; 
             currentPracticeIndex = 0; lives = 3;
             document.getElementById('practiceMenu').style.display = 'none'; document.getElementById('practiceBox').style.display = 'block';
             document.getElementById('progressContainer').style.display = 'block'; document.getElementById('practiceStats').style.display = 'grid';
@@ -2789,6 +3018,7 @@ function handlePracticeEnter(e) {
         function applyDirectionToQuestion(question, dir) {
             question.ask = dir === 'q2e' ? question.verb : question.translation;
             question.answer = dir === 'q2e' ? question.translation : question.verb;
+            question.currentDir = dir;
             document.getElementById('practiceSentence').innerText = question.ask;
             const imgBox = document.getElementById('practiceImageBox');
             const imgEl = document.getElementById('practiceImage');
@@ -2879,7 +3109,7 @@ function handlePracticeEnter(e) {
             Array.from(options).forEach(opt => {
                 const display = getDisplayAnswer(opt);
                 const key = removeAccents(display.toLowerCase().trim())
-                    .replace(/[.,�!�?]/g, '')
+                    .replace(/[.,¡!¿?]/g, '')
                     .replace(/\s+/g, ' ');
                 if (!uniqueByDisplay.has(key)) uniqueByDisplay.set(key, opt);
             });
@@ -2889,7 +3119,7 @@ function handlePracticeEnter(e) {
                 btn.innerText = getDisplayAnswer(opt);
                 btn.onclick = () => {
                     const pickedText = btn.innerText;
-                    checkPractice(checkFlexibleMatch(pickedText, q.answer), q.answer, btn);
+                    checkPractice(checkFlexibleMatch(pickedText, q.answer, q), q.answer, btn);
                 };
                 mcContainer.appendChild(btn);
             });
@@ -2923,21 +3153,50 @@ function handlePracticeEnter(e) {
             // Si la barra está pegada a palabras (sufijos o/a, os/as), construir regex
             return null;
         }
-        function checkFlexibleMatch(input, ans) {
-            let cleanInput = removeAccents(input.toLowerCase().trim()).replace(/[.,¡!¿?]/g, '').replace(/\s+/g, ' ');
-            // Alternativas de frase completa (barra con espacios)
-            const alternatives = getAnswerAlternatives(ans);
-            if (alternatives) {
-                return alternatives.some(alt => alt.replace(/\s+/g, ' ') === cleanInput);
+        function getAcceptedAnswers(question) {
+            if (!question) return [];
+            const out = [];
+            const raw = question.acceptedAnswers;
+            if (Array.isArray(raw)) out.push(...raw);
+            else if (raw && typeof raw === 'object') {
+                if (Array.isArray(raw.all)) out.push(...raw.all);
+                if (Array.isArray(raw.q2e)) out.push(...raw.q2e);
+                if (Array.isArray(raw.e2q)) out.push(...raw.e2q);
             }
-            // Caso inline (sufijos pegados): construir regex
-            let cleanAns = removeAccents(ans.toLowerCase().trim()).replace(/[.,¡!¿?]/g, '');
+            if (Array.isArray(question.acceptedAnswer)) out.push(...question.acceptedAnswer);
+            return out.map(v => (v || '').toString().trim()).filter(Boolean);
+        }
+        function getQuestionHint(question) {
+            if (!question) return '';
+            const h = question.hint;
+            if (typeof h === 'string') return h.trim();
+            if (h && typeof h === 'object') {
+                const dir = question.currentDir || '';
+                const picked = (dir === 'q2e' && typeof h.q2e === 'string') ? h.q2e
+                    : (dir === 'e2q' && typeof h.e2q === 'string') ? h.e2q
+                    : (typeof h.all === 'string') ? h.all
+                    : '';
+                return (picked || '').trim();
+            }
+            return '';
+        }
+        function singleFlexibleMatch(cleanInput, ansVariant) {
+            const alternatives = getAnswerAlternatives(ansVariant);
+            if (alternatives) return alternatives.some(alt => alt.replace(/\s+/g, ' ') === cleanInput);
+
+            let cleanAns = removeAccents(ansVariant.toLowerCase().trim()).replace(/[.,¡!¿?]/g, '');
             cleanAns = cleanAns
                 .replace(/(\w+)os\s*\/\s*as\b/g, (_, stem) => `(?:${escapeRegexChars(stem)}os|${escapeRegexChars(stem)}as)`)
                 .replace(/(\w+)o\s*\/\s*a\b/g,  (_, stem) => `(?:${escapeRegexChars(stem)}o|${escapeRegexChars(stem)}a)`)
                 .replace(/(\S+)\s*\/\s*(\S+)/g,  (_, a, b) => `(?:${escapeRegexChars(a)}|${escapeRegexChars(b)})`);
             cleanAns = cleanAns.replace(/\s+/g, ' ');
             try { return new RegExp('^' + cleanAns + '$', 'i').test(cleanInput); } catch(e) { return cleanInput === cleanAns; }
+        }
+        function checkFlexibleMatch(input, ans, question = null) {
+            let cleanInput = removeAccents(input.toLowerCase().trim()).replace(/[.,¡!¿?]/g, '').replace(/\s+/g, ' ');
+            if (singleFlexibleMatch(cleanInput, ans)) return true;
+            const extras = getAcceptedAnswers(question);
+            return extras.some(extra => singleFlexibleMatch(cleanInput, extra));
         }
         // Retorna la respuesta limpia para mostrar al usuario (sin barras)
         function getDisplayAnswer(ans) {
@@ -2960,7 +3219,7 @@ function handlePracticeEnter(e) {
                 input = document.getElementById('practiceInput').value; 
                 ans = currentQuestion.answer; 
             }
-            checkPractice(checkFlexibleMatch(input, ans), ans);
+            checkPractice(checkFlexibleMatch(input, ans, currentQuestion), ans);
         }
 
         function checkPractice(isCorrect, correctAnswer, btnNode = null) {
@@ -2975,10 +3234,12 @@ function handlePracticeEnter(e) {
             } else {
                 playIncorrectSound(); currentStreak = 0; lives--; document.getElementById('lives').innerHTML = `❤️ ${lives}`;
                 const displayAnswer = getDisplayAnswer(correctAnswer);
-                banner.className = 'practice-banner banner-incorrect'; banner.innerHTML = `Respuesta correcta:<br><strong>${displayAnswer}</strong><br><button type="button" class="btn-mc" style="margin-top:15px; font-size: 15px; padding: 10px; border-color:var(--duo-red); color:var(--duo-red); background: white;" onclick="overrideCorrect()">⚠️ Mi respuesta es correcta</button>`;
+                const hint = getQuestionHint(currentQuestion);
+                const hintLine = hint ? `<div style="margin:8px 0 10px 0; font-size:14px; color:#7a4b00; background:#fff8e1; border:1px solid #f0d899; border-radius:10px; padding:8px 10px;">💡 Pista: ${hint}</div>` : '';
+                banner.className = 'practice-banner banner-incorrect'; banner.innerHTML = `Respuesta correcta:<br><strong>${displayAnswer}</strong><br>${hintLine}<button type="button" class="btn-mc" style="margin-top:10px; font-size: 15px; padding: 10px; border-color:var(--duo-red); color:var(--duo-red); background: white;" onclick="overrideCorrect()">⚠️ Mi respuesta es correcta</button>`;
                 if (btnNode) {
                     const pickedText = btnNode.innerText;
-                    const actuallyMatches = checkFlexibleMatch(pickedText, correctAnswer);
+                    const actuallyMatches = checkFlexibleMatch(pickedText, correctAnswer, currentQuestion);
 
                     btnNode.classList.remove('mc-correct', 'mc-wrong');
                     btnNode.classList.add(actuallyMatches ? 'mc-correct' : 'mc-wrong');
@@ -2986,10 +3247,11 @@ function handlePracticeEnter(e) {
                     if (!actuallyMatches) {
                         document.querySelectorAll('.btn-mc').forEach(b => {
                             b.classList.remove('mc-correct');
-                            if (checkFlexibleMatch(b.innerText, correctAnswer)) b.classList.add('mc-correct');
+                            if (checkFlexibleMatch(b.innerText, correctAnswer, currentQuestion)) b.classList.add('mc-correct');
                         });
                     }
                 }
+                recordRecentMistake(currentQuestion);
                 practiceQueue.push(currentQuestion); lastFailedQuestion = currentQuestion; lastFailedBtnNode = btnNode;
             }
             document.getElementById('streak').innerHTML = `🔥 ${currentStreak}`; document.getElementById('xp').innerHTML = `⭐ ${totalXP}`; currentPracticeIndex++;
@@ -3083,7 +3345,18 @@ function handlePracticeEnter(e) {
 
                 if (data[0].verb && data[0].translation) {
                     data.forEach(newItem => {
+                        newItem = sanitizeWordItem(newItem);
                         if (!newItem.verb || !newItem.translation) return;
+                        const normalizedAccepted = Array.isArray(newItem.acceptedAnswers)
+                            ? newItem.acceptedAnswers.map(v => (v || '').toString().trim()).filter(Boolean)
+                            : [];
+                        const normalizedHint = (typeof newItem.hint === 'string') ? newItem.hint.trim() : '';
+                        const normalizedDifficulty = parseDifficultyValue(newItem.difficulty);
+                        if (normalizedAccepted.length > 0) newItem.acceptedAnswers = normalizedAccepted;
+                        else delete newItem.acceptedAnswers;
+                        if (normalizedHint) newItem.hint = normalizedHint;
+                        else delete newItem.hint;
+                        newItem.difficulty = normalizedDifficulty;
                         const index = dictionary.findIndex(item => item.verb.toLowerCase().trim() === newItem.verb.toLowerCase().trim());
                         if (index === -1) {
                             newWords.push(newItem);
@@ -3101,6 +3374,7 @@ function handlePracticeEnter(e) {
                     });
                 } else if (data[0].scenes) {
                     data.forEach(newStory => {
+                        newStory = sanitizeStoryItem(newStory);
                         const index = storiesData.findIndex(s => s.id === newStory.id);
                         if (index !== -1) storiesData[index] = newStory;
                         else { storiesData.push(newStory); updatedStories = true; }
@@ -3170,10 +3444,13 @@ function handlePracticeEnter(e) {
         }
 
         function addNewWord() {
-            const verb = document.getElementById('newWordVerb').value.trim();
-            const translation = document.getElementById('newWordTranslation').value.trim();
+            const verb = fixPossibleMojibake(document.getElementById('newWordVerb').value).trim();
+            const translation = fixPossibleMojibake(document.getElementById('newWordTranslation').value).trim();
+            const acceptedRaw = document.getElementById('newWordAccepted').value.trim();
+            const hintRaw = fixPossibleMojibake(document.getElementById('newWordHint').value).trim();
+            const difficultyRaw = document.getElementById('newWordDifficulty').value;
             const unitSelect = document.getElementById('newWordUnit').value.trim();
-            const unitCustom = document.getElementById('newWordUnitCustom').value.trim();
+            const unitCustom = fixPossibleMojibake(document.getElementById('newWordUnitCustom').value).trim();
             const unit = unitCustom || unitSelect;
 
             if (!verb) { alert('Escribí la palabra en quechua.'); return; }
@@ -3188,9 +3465,15 @@ function handlePracticeEnter(e) {
 
             const newItem = {
                 verb, translation, unit,
+                acceptedAnswers: [],
+                difficulty: parseDifficultyValue(difficultyRaw),
                 tags: [], sentences: [], pinned: false,
                 srs: { ef: 2.5, interval: 0, reps: 0, due: Date.now() }
             };
+            if (acceptedRaw) {
+                newItem.acceptedAnswers = acceptedRaw.split(/\s*\|\s*|\n|;/).map(s => fixPossibleMojibake(s).trim()).filter(Boolean);
+            }
+            if (hintRaw) newItem.hint = hintRaw;
             const cat = document.getElementById('newWordCategoria').value;
             if (cat) newItem.categoria = cat;
             dictionary.push(newItem);
@@ -3201,6 +3484,9 @@ function handlePracticeEnter(e) {
             // Limpiar campos
             document.getElementById('newWordVerb').value = '';
             document.getElementById('newWordTranslation').value = '';
+            document.getElementById('newWordAccepted').value = '';
+            document.getElementById('newWordHint').value = '';
+            document.getElementById('newWordDifficulty').value = '3';
             document.getElementById('newWordUnit').value = '';
             document.getElementById('newWordUnitCustom').value = '';
             document.getElementById('newWordCategoria').value = '';
