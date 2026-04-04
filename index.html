@@ -1084,6 +1084,12 @@
         let practiceStartTime = 0;
         let lastFailedQuestion = null;
         let lastFailedBtnNode = null;
+        let currentPracticeMode = '';
+        let currentPracticeDir = '';
+        let currentPracticeFilter = '';
+        let practiceSessionAnswers = 0;
+        let practiceSessionCorrect = 0;
+        let practiceSessionWrong = 0;
         let srsQueue = [];
         let currentSrsCardIndex = -1;
         let lastPracticeDate = '';   // Última fecha que practicó (YYYY-MM-DD)
@@ -1100,6 +1106,11 @@
             const d = new Date();
             d.setDate(d.getDate() - 1);
             return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+        }
+        function trackAnalyticsEvent(name, params = {}) {
+            try {
+                if (typeof gtag === 'function') gtag('event', name, params || {});
+            } catch (e) {}
         }
         function updateStreakDays() {
             const today = getTodayString();
@@ -1543,7 +1554,7 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                 if(el) el.classList.add('hidden');
             }); 
             document.getElementById('section-'+t).classList.remove('hidden'); 
-            if (typeof gtag !== 'undefined') gtag('event', 'section_view', { section: t });
+            trackAnalyticsEvent('section_view', { section: t, section_name: t });
             if(t==='practice') renderPath(); 
             if(t==='awards') { renderAwards(); renderStatsChart(); }
             if(t==='stories') renderStoriesList();
@@ -1747,6 +1758,11 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
                 const sec = getStorySection(currentStory, storiesData.indexOf(currentStory));
                 localStorage.setItem('rimay_LastStoryId', currentStory.id || '');
                 localStorage.setItem('rimay_LastStorySection', String(sec || 1));
+                trackAnalyticsEvent('story_start', {
+                    story_id: currentStory.id || '',
+                    story_title: currentStory.title || '',
+                    section: Number(sec || 1)
+                });
             }
             currentSceneIndex = 0;
             storyLives = 2;
@@ -1764,6 +1780,13 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
         const isFirstTime = !completedStories[currentStory.id];
         const xpEarned = isFirstTime ? 15 : 5;
         totalXP += xpEarned;
+        trackAnalyticsEvent('story_complete', {
+            story_id: (currentStory && currentStory.id) || '',
+            story_title: (currentStory && currentStory.title) || '',
+            is_first_time: isFirstTime ? 1 : 0,
+            xp_earned: xpEarned,
+            lives_left: storyLives
+        });
         
         if (isFirstTime) completedStories[currentStory.id] = true;
         updateStreakDays();
@@ -1829,6 +1852,11 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
 
         function showStoryGameOver() {
             playIncorrectSound();
+            trackAnalyticsEvent('story_fail', {
+                story_id: (currentStory && currentStory.id) || '',
+                story_title: (currentStory && currentStory.title) || '',
+                failed_at_scene: Number(currentSceneIndex || 0)
+            });
             const content = document.getElementById('storyContent');
             content.innerHTML = `
                 <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; text-align:center; padding:30px; gap:20px;">
@@ -3085,6 +3113,7 @@ function handlePracticeEnter(e) {
         function startPractice(filter) {
             const specialFilters = new Set(['all', 'favs', 'hard', 'new', 'mistakes-top']);
             currentUnit = specialFilters.has(filter) ? null : filter;
+            currentPracticeFilter = filter || 'all';
             if (currentUnit) localStorage.setItem('rimay_LastPracticeUnit', currentUnit);
             let pool = [];
             if (filter === 'all') pool = [...dictionary];
@@ -3105,6 +3134,14 @@ function handlePracticeEnter(e) {
             let mezcladas = pool.sort(() => 0.5 - Math.random());
             practiceQueue = filter === 'all' ? buildSmartPracticeQueue(mezcladas, 10) : mezcladas; 
             currentPracticeIndex = 0; lives = 3;
+            practiceSessionAnswers = 0;
+            practiceSessionCorrect = 0;
+            practiceSessionWrong = 0;
+            trackAnalyticsEvent('practice_start', {
+                filter: currentPracticeFilter,
+                unit: currentUnit || 'all',
+                queue_size: Number(practiceQueue.length || 0)
+            });
             document.getElementById('practiceMenu').style.display = 'none'; document.getElementById('practiceBox').style.display = 'block';
             document.getElementById('progressContainer').style.display = 'block'; document.getElementById('practiceStats').style.display = 'grid';
             document.getElementById('lives').innerHTML = `❤️ ${lives}`; document.getElementById('streak').innerHTML = `🔥 ${currentStreak}`;
@@ -3112,6 +3149,17 @@ function handlePracticeEnter(e) {
         }
 
         function endPractice(completed) {
+            trackAnalyticsEvent('practice_finish', {
+                completed: completed ? 1 : 0,
+                filter: currentPracticeFilter || '',
+                unit: currentUnit || 'all',
+                mode: currentPracticeMode || '',
+                direction: currentPracticeDir || '',
+                answered: Number(practiceSessionAnswers || 0),
+                correct: Number(practiceSessionCorrect || 0),
+                wrong: Number(practiceSessionWrong || 0),
+                lives_left: Number(lives || 0)
+            });
             if (practiceStartTime > 0) {
                 const elapsed = Date.now() - practiceStartTime;
                 studyTimeMs += elapsed;
@@ -3234,6 +3282,8 @@ function handlePracticeEnter(e) {
             document.getElementById('currentUnitTitle').innerText = currentQuestion.unit || 'Repaso General';
 
             const { mode, dir } = getPracticeConfig();
+            currentPracticeMode = mode;
+            currentPracticeDir = dir;
             setupPracticeQuestionDisplay();
             applyDirectionToQuestion(currentQuestion, dir);
             showPracticeMode(mode, dir);
@@ -3388,6 +3438,17 @@ function handlePracticeEnter(e) {
         function checkPractice(isCorrect, correctAnswer, btnNode = null) {
             if (!document.getElementById('btnNext').classList.contains('hidden')) return;
             totalAttempts++; if(isCorrect) correctAttempts++;
+            practiceSessionAnswers++;
+            if (isCorrect) practiceSessionCorrect++;
+            else practiceSessionWrong++;
+            trackAnalyticsEvent('practice_answer', {
+                is_correct: isCorrect ? 1 : 0,
+                mode: currentPracticeMode || '',
+                direction: currentPracticeDir || '',
+                unit: (currentQuestion && currentQuestion.unit) || (currentUnit || 'all'),
+                question_key: (currentQuestion && currentQuestion.verb) || (currentQuestion && currentQuestion.translation) || '',
+                index: Number(currentPracticeIndex + 1)
+            });
             document.getElementById('btnCheck').classList.add('hidden'); document.getElementById('btnNext').classList.remove('hidden');
             const banner = document.getElementById('practiceResult'); banner.style.display = 'block';
             if (isCorrect) {
@@ -3424,6 +3485,13 @@ function handlePracticeEnter(e) {
 
         function overrideCorrect() {
             lives++; currentStreak = 1; correctAttempts++;
+            if (practiceSessionWrong > 0) practiceSessionWrong--;
+            practiceSessionCorrect++;
+            trackAnalyticsEvent('practice_override_correct', {
+                mode: currentPracticeMode || '',
+                direction: currentPracticeDir || '',
+                unit: (currentQuestion && currentQuestion.unit) || (currentUnit || 'all')
+            });
             document.getElementById('lives').innerHTML = `❤️ ${lives}`; document.getElementById('streak').innerHTML = `🔥 ${currentStreak}`;
             if (practiceQueue.length > 0 && practiceQueue[practiceQueue.length - 1] === lastFailedQuestion) practiceQueue.pop();
             const banner = document.getElementById('practiceResult'); banner.className = 'practice-banner banner-correct'; banner.innerHTML = '¡Aceptado como correcto! ✨';
