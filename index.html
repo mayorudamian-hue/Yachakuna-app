@@ -519,8 +519,12 @@
                         🗑️ Borrar mi progreso
                     </button>
                 </div>
+                <button type="button" onclick="repairSavedTexts()" style="margin-top:10px; background:#5f6caf; border-bottom:4px solid #4d578e; font-size:13px; padding:12px 10px;">
+                    🛠️ Corregir textos raros (ñ, tildes y /)
+                </button>
                 <p style="font-size: 11px; color: #bbb; margin-top:8px; text-align:center; line-height:1.4;">
                     <b>Actualizar vocabulario / historias</b>: respaldo manual por si la detección automática no funcionó.<br>
+                    <b>Corregir textos raros</b>: repara caracteres dañados y barras mal separadas en datos guardados.<br>
                     <b>Borrar progreso</b>: si querés empezar de cero, elimina XP, racha, SRS y estadísticas (no borra el vocabulario).
                 </p>
             </div>
@@ -1132,18 +1136,26 @@
             }
             return out;
         }
+        function normalizeLoadedText(str) {
+            if (typeof str !== 'string') return str;
+            // 1) Arregla mojibake.
+            let out = fixPossibleMojibake(str);
+            // 2) Normaliza barras de género/sufijo sin tocar URLs ni rutas.
+            out = out.replace(/([A-Za-z0-9ÁÉÍÓÚÜÑáéíóúüñ])\s*\/\s*([A-Za-z0-9ÁÉÍÓÚÜÑáéíóúüñ])/g, '$1/$2');
+            return out;
+        }
         function sanitizeWordItem(item) {
             if (!item || typeof item !== 'object') return item;
             ['verb', 'translation', 'unit', 'categoria', 'audioHint', 'hint'].forEach(k => {
-                if (typeof item[k] === 'string') item[k] = fixPossibleMojibake(item[k]);
+                if (typeof item[k] === 'string') item[k] = normalizeLoadedText(item[k]);
             });
-            if (Array.isArray(item.acceptedAnswers)) item.acceptedAnswers = item.acceptedAnswers.map(v => fixPossibleMojibake((v || '').toString()));
-            if (Array.isArray(item.tags)) item.tags = item.tags.map(v => fixPossibleMojibake((v || '').toString()));
+            if (Array.isArray(item.acceptedAnswers)) item.acceptedAnswers = item.acceptedAnswers.map(v => normalizeLoadedText((v || '').toString()));
+            if (Array.isArray(item.tags)) item.tags = item.tags.map(v => normalizeLoadedText((v || '').toString()));
             if (Array.isArray(item.sentences)) {
                 item.sentences = item.sentences.map(s => {
                     if (!s || typeof s !== 'object') return s;
-                    if (typeof s.q === 'string') s.q = fixPossibleMojibake(s.q);
-                    if (typeof s.e === 'string') s.e = fixPossibleMojibake(s.e);
+                    if (typeof s.q === 'string') s.q = normalizeLoadedText(s.q);
+                    if (typeof s.e === 'string') s.e = normalizeLoadedText(s.e);
                     return s;
                 });
             }
@@ -1152,7 +1164,7 @@
         function sanitizeStoryItem(story) {
             if (!story || typeof story !== 'object') return story;
             ['id', 'title', 'subtitle', 'icon', 'level'].forEach(k => {
-                if (typeof story[k] === 'string') story[k] = fixPossibleMojibake(story[k]);
+                if (typeof story[k] === 'string') story[k] = normalizeLoadedText(story[k]);
             });
             const sectionNum = Number(story.section);
             if (!Number.isNaN(sectionNum) && sectionNum > 0) story.section = Math.round(sectionNum);
@@ -1160,9 +1172,9 @@
                 story.scenes = story.scenes.map(scene => {
                     if (!scene || typeof scene !== 'object') return scene;
                     ['type', 'title', 'text', 'q', 'e'].forEach(k => {
-                        if (typeof scene[k] === 'string') scene[k] = fixPossibleMojibake(scene[k]);
+                        if (typeof scene[k] === 'string') scene[k] = normalizeLoadedText(scene[k]);
                     });
-                    if (Array.isArray(scene.options)) scene.options = scene.options.map(o => fixPossibleMojibake((o || '').toString()));
+                    if (Array.isArray(scene.options)) scene.options = scene.options.map(o => normalizeLoadedText((o || '').toString()));
                     return scene;
                 });
             }
@@ -2283,6 +2295,37 @@ osc.connect(gainNode); gainNode.connect(audioCtx.destination);
             alert('✅ Progreso borrado. ¡A empezar de nuevo!');
             location.reload();
         }
+        function repairSavedTexts() {
+            if (!confirm('¿Corregir textos guardados?\n\nSe intentará reparar caracteres raros (ej: ñ, tildes) y barras mal separadas (/).\nNo borra progreso ni vocabulario.')) return;
+            let fixedWords = 0;
+            let fixedStories = 0;
+
+            if (Array.isArray(dictionary)) {
+                dictionary = dictionary.map(item => {
+                    const before = JSON.stringify(item || {});
+                    const out = sanitizeWordItem(item);
+                    if (JSON.stringify(out || {}) !== before) fixedWords++;
+                    return out;
+                });
+                save(true);
+            }
+
+            if (Array.isArray(storiesData)) {
+                storiesData = storiesData.map(st => {
+                    const before = JSON.stringify(st || {});
+                    const out = sanitizeStoryItem(st);
+                    if (JSON.stringify(out || {}) !== before) fixedStories++;
+                    return out;
+                });
+                localStorage.setItem('rimay_Stories', JSON.stringify(storiesData));
+            }
+
+            renderCards();
+            renderPath();
+            renderStoriesList();
+            renderAwards();
+            alert(`✅ Corrección aplicada.\n\nVocabulario ajustado: ${fixedWords}\nHistorias ajustadas: ${fixedStories}`);
+        }
 
         function renderCards() {
             const container = document.getElementById('entriesContainer');
@@ -3240,11 +3283,20 @@ function handlePracticeEnter(e) {
         }
 
         function removeAccents(str) { return str.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
+        function normalizeSlashSpacing(str) { return (str || '').replace(/\s*\/\s*/g, '/'); }
+        function normalizeQuechuaSoft(str) {
+            return (str || '')
+                // Tolerancia suave para aspiradas frecuentes en escritura de estudiantes.
+                .replace(/([ptkq])h/g, '$1')
+                .replace(/[’'`´]/g, '');
+        }
         function escapeRegexChars(str) { return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
         // Devuelve todas las alternativas válidas de una respuesta con barras.
         // "hola / buenos días / buenas" → ["hola", "buenos días", "buenas"]
         function getAnswerAlternatives(ans) {
             const cleaned = removeAccents(ans.toLowerCase().trim()).replace(/[.,¡!¿?]/g, '');
+            // Si es barra de género/sufijo (cansado / a, enojados / as), NO separar toda la frase.
+            if (/\b\w+os\s*\/\s*as\b/.test(cleaned) || /\b\w+o\s*\/\s*a\b/.test(cleaned)) return null;
             // Si hay barras con espacios alrededor, son alternativas de frase completa
             if (/\s\/\s/.test(cleaned)) {
                 return cleaned.split(/\s*\/\s*/).map(s => s.trim()).filter(s => s.length > 0);
@@ -3289,10 +3341,22 @@ function handlePracticeEnter(e) {
                 .replace(/(\w+)o\s*\/\s*a\b/g,  (_, stem) => `(?:${escapeRegexChars(stem)}o|${escapeRegexChars(stem)}a)`)
                 .replace(/(\S+)\s*\/\s*(\S+)/g,  (_, a, b) => `(?:${escapeRegexChars(a)}|${escapeRegexChars(b)})`);
             cleanAns = cleanAns.replace(/\s+/g, ' ');
-            try { return new RegExp('^' + cleanAns + '$', 'i').test(cleanInput); } catch(e) { return cleanInput === cleanAns; }
+            try {
+                if (new RegExp('^' + cleanAns + '$', 'i').test(cleanInput)) return true;
+                // Segundo intento: comparación flexible para variantes de escritura (ph/p, th/t, etc.)
+                const softInput = normalizeQuechuaSoft(cleanInput);
+                const softAns = normalizeQuechuaSoft(cleanAns);
+                return new RegExp('^' + softAns + '$', 'i').test(softInput);
+            } catch(e) {
+                if (cleanInput === cleanAns) return true;
+                return normalizeQuechuaSoft(cleanInput) === normalizeQuechuaSoft(cleanAns);
+            }
         }
         function checkFlexibleMatch(input, ans, question = null) {
-            let cleanInput = removeAccents(input.toLowerCase().trim()).replace(/[.,¡!¿?]/g, '').replace(/\s+/g, ' ');
+            let cleanInput = removeAccents(input.toLowerCase().trim())
+                .replace(/[.,¡!¿?]/g, '')
+                .replace(/\s+/g, ' ');
+            cleanInput = normalizeSlashSpacing(cleanInput);
             if (singleFlexibleMatch(cleanInput, ans)) return true;
             const extras = getAcceptedAnswers(question);
             return extras.some(extra => singleFlexibleMatch(cleanInput, extra));
@@ -3302,7 +3366,7 @@ function handlePracticeEnter(e) {
             const alternatives = getAnswerAlternatives(ans);
             if (alternatives) return alternatives[0];
             // Quitar barras inline: "niño/a" → "niño/a" se deja, pero barras con espacios se limpian
-            return ans.replace(/\s*\/\s*/g, ' / ');
+            return ans.replace(/\s*\/\s*/g, '/');
         }
 
         function checkPracticeWritten() {
