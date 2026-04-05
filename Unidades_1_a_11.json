@@ -566,7 +566,7 @@
     },
     {
         "verb": "Chaykunaqa willaykuna",
-        "translation": "Esos son mensajes",
+        "translation": "Esos son mensajes/noticias",
         "unit": "7. Los Plurales",
         "tags": [
             "Gramática",
@@ -589,8 +589,8 @@
         "pinned": false
     },
     {
-        "verb": "Chaykunaqa yachajkuna",
-        "translation": "Esos son maestros",
+        "verb": "Chaykunaqa yachachejkuna",
+        "translation": "Esos son maestros/profesores",
         "unit": "7. Los Plurales",
         "tags": [
             "Gramática",
