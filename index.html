@@ -3347,11 +3347,11 @@ function handlePracticeEnter(e) {
             const cleaned = removeAccents(ans.toLowerCase().trim()).replace(/[.,¡!¿?]/g, '');
             // Si es barra de género/sufijo (cansado / a, enojados / as), NO separar toda la frase.
             if (/\b\w+os\s*\/\s*as\b/.test(cleaned) || /\b\w+o\s*\/\s*a\b/.test(cleaned)) return null;
-            // Si hay barras con espacios alrededor, son alternativas de frase completa
-            if (/\s\/\s/.test(cleaned)) {
-                return cleaned.split(/\s*\/\s*/).map(s => s.trim()).filter(s => s.length > 0);
+            // Si hay barras (con o sin espacios) y hay múltiples segmentos, son alternativas de frase
+            if (/\//.test(cleaned)) {
+                const parts = cleaned.split(/\s*\/\s*/).map(s => s.trim()).filter(s => s.length > 0);
+                if (parts.length >= 2) return parts;
             }
-            // Si la barra está pegada a palabras (sufijos o/a, os/as), construir regex
             return null;
         }
         function getAcceptedAnswers(question) {
@@ -4060,5 +4060,3 @@ function handlePracticeEnter(e) {
     </div><!-- /app-content -->
 </body>
 </html>
-
-
