@@ -3347,10 +3347,18 @@ function handlePracticeEnter(e) {
             const cleaned = removeAccents(ans.toLowerCase().trim()).replace(/[.,¡!¿?]/g, '');
             // Si es barra de género/sufijo (cansado / a, enojados / as), NO separar toda la frase.
             if (/\b\w+os\s*\/\s*as\b/.test(cleaned) || /\b\w+o\s*\/\s*a\b/.test(cleaned)) return null;
-            // Si hay barras (con o sin espacios) y hay múltiples segmentos, son alternativas de frase
-            if (/\//.test(cleaned)) {
+            // Solo separar como alternativas si la barra tiene espacios a ambos lados
+            // Y CADA parte tiene al menos 2 palabras (son frases completas, no pronombres/sufijos)
+            if (/\s\/\s/.test(cleaned)) {
                 const parts = cleaned.split(/\s*\/\s*/).map(s => s.trim()).filter(s => s.length > 0);
-                if (parts.length >= 2) return parts;
+                const allMultiWord = parts.every(p => p.split(/\s+/).length >= 2);
+                if (parts.length >= 2 && allMultiWord) return parts;
+            }
+            // Barra sin espacios y cada lado tiene varias palabras (ej: "todos los dias/cada dia")
+            if (/\w\/\w/.test(cleaned)) {
+                const parts = cleaned.split(/\//).map(s => s.trim()).filter(s => s.length > 0);
+                const allMultiWord = parts.every(p => p.split(/\s+/).length >= 2);
+                if (parts.length >= 2 && allMultiWord) return parts;
             }
             return null;
         }
