@@ -1006,17 +1006,6 @@
         "pinned": false
     },
     {
-        "verb": "Chakipi",
-        "translation": "A pie (En pie)",
-        "unit": "10. Medios de transporte (-pi)",
-        "tags": [
-            "Vocabulario",
-            "Transporte"
-        ],
-        "sentences": null,
-        "pinned": false
-    },
-    {
         "verb": "Autopi",
         "translation": "En auto",
         "unit": "10. Medios de transporte (-pi)",
