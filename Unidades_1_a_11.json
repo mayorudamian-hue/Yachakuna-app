@@ -1050,8 +1050,8 @@
         "pinned": false
     },
     {
-        "verb": "¿Kunanrí, mayman rishanki?",
-        "translation": "¿Y ahora adónde estás yendo?",
+        "verb": "¿Munankichu?",
+        "translation": "¿Quieres?",
         "unit": "11. Sufijo -chu en pregunta",
         "tags": [
             "Unidad 11",
@@ -1062,8 +1062,8 @@
         "pinned": false
     },
     {
-        "verb": "9 de Abril llajtaman rishani.",
-        "translation": "Estoy yendo a la ciudad de 9 de Abril.",
+        "verb": "Arí, munani.",
+        "translation": "Sí, quiero.",
         "unit": "11. Sufijo -chu en pregunta",
         "tags": [
             "Unidad 11",
@@ -1074,8 +1074,8 @@
         "pinned": false
     },
     {
-        "verb": "¿Qhechua cursomanchu?",
-        "translation": "¿Vas al curso de quechua?",
+        "verb": "¿Qhechua cursomanchu rinki?",
+        "translation": "¿Irás al curso de quechua?",
         "unit": "11. Sufijo -chu en pregunta",
         "tags": [
             "Unidad 11",
@@ -1098,8 +1098,8 @@
         "pinned": false
     },
     {
-        "verb": "Antoniowan, doña Mariawan, don Juliowan.",
-        "translation": "He venido con Antonio, doña María y don Julio.",
+        "verb": "¿Antoniowan jamunkichu?",
+        "translation": "¿Has venido con Antonio?",
         "unit": "11. Sufijo -chu en pregunta",
         "tags": [
             "Unidad 11",
@@ -1207,7 +1207,7 @@
     },
     {
         "verb": "Ari, a, jatun llajta.",
-        "translation": "Sí, pues, es un pueblo grande.",
+        "translation": "Sí, es un pueblo grande.",
         "unit": "11. Sufijo -chu en pregunta",
         "tags": [
             "Unidad 11",
