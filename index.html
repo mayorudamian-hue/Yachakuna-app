@@ -3345,20 +3345,12 @@ function handlePracticeEnter(e) {
         // "hola / buenos días / buenas" → ["hola", "buenos días", "buenas"]
         function getAnswerAlternatives(ans) {
             const cleaned = removeAccents(ans.toLowerCase().trim()).replace(/[.,¡!¿?]/g, '');
-            // Si es barra de género/sufijo (cansado / a, enojados / as), NO separar toda la frase.
-            if (/\b\w+os\s*\/\s*as\b/.test(cleaned) || /\b\w+o\s*\/\s*a\b/.test(cleaned)) return null;
-            // Solo separar como alternativas si la barra tiene espacios a ambos lados
-            // Y CADA parte tiene al menos 2 palabras (son frases completas, no pronombres/sufijos)
-            if (/\s\/\s/.test(cleaned)) {
+            // Si es barra de género/sufijo pegada (cansado/a, enojados/as), NO separar.
+            if (/\b\w+os\/as\b/.test(cleaned) || /\b\w+o\/a\b/.test(cleaned)) return null;
+            // Cualquier barra (con o sin espacios): separar como alternativas
+            if (/\//.test(cleaned)) {
                 const parts = cleaned.split(/\s*\/\s*/).map(s => s.trim()).filter(s => s.length > 0);
-                const allMultiWord = parts.every(p => p.split(/\s+/).length >= 2);
-                if (parts.length >= 2 && allMultiWord) return parts;
-            }
-            // Barra sin espacios y cada lado tiene varias palabras (ej: "todos los dias/cada dia")
-            if (/\w\/\w/.test(cleaned)) {
-                const parts = cleaned.split(/\//).map(s => s.trim()).filter(s => s.length > 0);
-                const allMultiWord = parts.every(p => p.split(/\s+/).length >= 2);
-                if (parts.length >= 2 && allMultiWord) return parts;
+                if (parts.length >= 2) return parts;
             }
             return null;
         }
@@ -3419,12 +3411,11 @@ function handlePracticeEnter(e) {
             const extras = getAcceptedAnswers(question);
             return extras.some(extra => singleFlexibleMatch(cleanInput, extra));
         }
-        // Retorna la respuesta limpia para mostrar al usuario (sin barras)
+        // Retorna la respuesta limpia para mostrar al usuario
         function getDisplayAnswer(ans) {
             const alternatives = getAnswerAlternatives(ans);
             if (alternatives) return alternatives[0];
-            // Quitar barras inline: "niño/a" → "niño/a" se deja, pero barras con espacios se limpian
-            return ans.replace(/\s*\/\s*/g, '/');
+            return ans;
         }
 
         function checkPracticeWritten() {
